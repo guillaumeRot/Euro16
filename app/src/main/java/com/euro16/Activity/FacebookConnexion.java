@@ -1,4 +1,4 @@
-package com.euro16;
+package com.euro16.Activity;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -7,8 +7,12 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.widget.TextView;
 
+import com.euro16.API.RestClient;
+import com.euro16.MessageBox.AlertMsgBox;
+import com.euro16.R;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -16,14 +20,19 @@ import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import cz.msebera.android.httpclient.Header;
 
 public class FacebookConnexion extends FragmentActivity {
 
     private LoginButton loginButton;
     private CallbackManager callbackManager;
     private TextView info;
-
-    private static final String TAG = "Euro16";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +46,19 @@ public class FacebookConnexion extends FragmentActivity {
                 }
             });
         }
+
+        RestClient.get("getUtilisateurs", null, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                // If the response is JSONObject instead of expected JSONArray
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray timeline) {
+                Log.i("Euro 16", String.valueOf(statusCode));
+                Log.i("Euro 16", timeline.toString());
+            }
+        });
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();

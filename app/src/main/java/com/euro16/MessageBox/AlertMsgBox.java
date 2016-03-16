@@ -1,4 +1,4 @@
-package com.euro16;
+package com.euro16.MessageBox;
 
 import android.app.Activity;
 import android.app.AlertDialog;
