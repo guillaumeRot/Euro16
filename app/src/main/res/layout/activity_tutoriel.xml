@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".Activity.TutorielActivity">
+    tools:context=".Activity.TutorielActivity"
+    android:gravity="center">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/container"
@@ -32,11 +33,10 @@
         android:layout_height="wrap_content"
         android:text="Passer"
         android:id="@+id/button"
-        android:layout_marginBottom="48dp"
         android:textColor="#6273f0"
         android:background="#00ffffff"
-        android:layout_marginEnd="40dp"
-        android:layout_alignParentBottom="true"
+        android:textSize="11dp"
+        android:layout_alignBottom="@+id/indicator"
         android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

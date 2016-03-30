@@ -23,6 +23,8 @@ public class MainPageActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        toolbar.setSubtitle(R.string.title_activity_left_menu);
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -30,8 +32,11 @@ public class MainPageActivity extends AppCompatActivity
         toggle.syncState();
         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        NavigationView navigationViewLeft = (NavigationView) findViewById(R.id.nav_view_left);
+        navigationViewLeft.setNavigationItemSelectedListener(this);
+
+        NavigationView navigationViewRight = (NavigationView) findViewById(R.id.nav_view_right);
+        navigationViewRight.setNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -47,7 +52,7 @@ public class MainPageActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.left_menu, menu);
+        getMenuInflater().inflate(R.menu.right_menu, menu);
         return true;
     }
 
@@ -59,7 +64,9 @@ public class MainPageActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_right_menu) {
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.openDrawer(GravityCompat.END);
             return true;
         }
 

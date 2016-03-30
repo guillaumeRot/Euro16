@@ -15,11 +15,11 @@
         android:layout_height="wrap_content"
         android:text="Global"
         android:id="@+id/button2"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="108dp"
         android:background="#00ffffff"
-        android:textColor="#7c93df" />
+        android:textColor="#7c93df"
+        android:layout_above="@+id/button3"
+        android:layout_alignStart="@+id/button3"
+        android:layout_marginBottom="77dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -36,9 +36,9 @@
         android:layout_height="wrap_content"
         android:text="Groupe"
         android:id="@+id/button4"
-        android:layout_below="@+id/button3"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="98dp"
+        android:layout_marginTop="89dp"
         android:textColor="#7c93df"
-        android:background="#00ffffff" />
+        android:background="#00ffffff"
+        android:layout_below="@+id/button3"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

@@ -15,8 +15,26 @@ public class ChoixMondeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choix_monde);
 
+        getSupportActionBar().setSubtitle(R.string.title_choix_monde);
+
         Button btnGlobal = (Button) findViewById(R.id.button2);
         btnGlobal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ChoixMondeActivity.this, MainPageActivity.class));
+            }
+        });
+
+        Button btnCommunaute = (Button) findViewById(R.id.button3);
+        btnCommunaute.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ChoixMondeActivity.this, MainPageActivity.class));
+            }
+        });
+
+        Button btnGroupe = (Button) findViewById(R.id.button4);
+        btnGroupe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ChoixMondeActivity.this, MainPageActivity.class));

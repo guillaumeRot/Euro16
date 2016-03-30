@@ -9,14 +9,24 @@
     tools:context=".Activity.TutorielActivity$PlaceholderFragment"
     android:background="@color/grey">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="410dp"
+        android:src="@drawable/screen5"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="30dp" />
+
     <TextView
         android:id="@+id/section_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tuto"
+        android:text="Page de tuto d&apos;exemple"
         android:textColor="#f30c0c"
         android:textSize="50px"
-        android:layout_centerVertical="true"
+        android:layout_marginBottom="44dp"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
