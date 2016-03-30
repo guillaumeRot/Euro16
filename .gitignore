@@ -2,7 +2,10 @@
 .gradle
 /local.properties
 /.idea
-.DS_Store
 /build
-/captures
-app/src/main/java/com/euro16/config.java
+/gradle
+/hs_err_pid5500.log
+/replay_pid5500.log
+/app/proguard-rules.pro
+/gradle.properties
+/app/src/main/java/com/euro16/Config.java
