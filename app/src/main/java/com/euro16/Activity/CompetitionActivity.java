@@ -7,21 +7,26 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.euro16.R;
 
-public class MainPageActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class CompetitionActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    @SuppressWarnings("deprecation")
+    public static String nomCurrentMonde;
+    public static int typeCurrentMonde;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_page);
+        setContentView(R.layout.activity_competition);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Log.i("Euro 16", "monde courant : " + nomCurrentMonde);
+        Log.i("Euro 16", "type monde courant : " + typeCurrentMonde);
 
         toolbar.setSubtitle(R.string.title_activity_left_menu);
 

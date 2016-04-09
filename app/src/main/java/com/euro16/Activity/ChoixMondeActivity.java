@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.euro16.R;
+import com.euro16.Utils.EMonde;
 
 public class ChoixMondeActivity extends AppCompatActivity {
 
@@ -17,27 +18,29 @@ public class ChoixMondeActivity extends AppCompatActivity {
 
         getSupportActionBar().setSubtitle(R.string.title_choix_monde);
 
-        Button btnGlobal = (Button) findViewById(R.id.button2);
+        Button btnGlobal = (Button) findViewById(R.id.btnGlobal);
         btnGlobal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ChoixMondeActivity.this, MainPageActivity.class));
+                CompetitionActivity.nomCurrentMonde = EMonde.GLOBAL.getNomMonde();
+                CompetitionActivity.typeCurrentMonde = EMonde.GLOBAL.getTypeMonde();
+                startActivity(new Intent(ChoixMondeActivity.this, CompetitionActivity.class));
             }
         });
 
-        Button btnCommunaute = (Button) findViewById(R.id.button3);
+        Button btnCommunaute = (Button) findViewById(R.id.btnChoixCommunaute);
         btnCommunaute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ChoixMondeActivity.this, MainPageActivity.class));
+                startActivity(new Intent(ChoixMondeActivity.this, ChoixCommunauteActivity.class));
             }
         });
 
-        Button btnGroupe = (Button) findViewById(R.id.button4);
+        Button btnGroupe = (Button) findViewById(R.id.btnGroupe);
         btnGroupe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ChoixMondeActivity.this, MainPageActivity.class));
+                startActivity(new Intent(ChoixMondeActivity.this, ChoixGroupeActivity.class));
             }
         });
     }

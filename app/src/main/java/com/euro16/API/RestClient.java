@@ -1,5 +1,7 @@
 package com.euro16.API;
 
+import android.util.Log;
+
 import com.euro16.Activity.FacebookConnexion;
 import com.euro16.Config;
 import com.loopj.android.http.AsyncHttpClient;
@@ -12,6 +14,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import cz.msebera.android.httpclient.entity.StringEntity;
+import cz.msebera.android.httpclient.protocol.HTTP;
 
 /**
  * Créé par Guillaume le 16/03/2016.
@@ -32,6 +35,18 @@ public class RestClient {
         get(getAbsoluteUrl("getUtilisateur") + "&id_facebook=" + idFacebook, responseHandler);
     }
 
+    public static void getCommunautes(String idFacebook, AsyncHttpResponseHandler responseHandler) {
+        get(getAbsoluteUrl("getCommunautes") + "&id_facebook=" + idFacebook, responseHandler);
+    }
+
+    public static void getCommunautesUtilisateur(String idFacebook, AsyncHttpResponseHandler responseHandler) {
+        get(getAbsoluteUrl("getCommunautesUtilisateur") + "&id_facebook=" + idFacebook, responseHandler);
+    }
+
+    public static void getGroupesUtilisateur(String idFacebook, AsyncHttpResponseHandler responseHandler) {
+        get(getAbsoluteUrl("getGroupesUtilisateur") + "&id_facebook=" + idFacebook, responseHandler);
+    }
+
     /** POST METHOD **/
 
     public static void post(String url, StringEntity entity, AsyncHttpResponseHandler responseHandler) {
@@ -47,9 +62,62 @@ public class RestClient {
             json.put("photo", photo);
             json.put("id_facebook", idFacebook);
 
-            entity = new StringEntity(json.toString());
+            entity = new StringEntity(json.toString(), HTTP.UTF_8);
+            entity.setContentType("application/json");
 
             post("creerUtilisateur", entity, httpResponseHandler);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void creerCommunaute(String nom, String admin, String photo, String type, AsyncHttpResponseHandler httpResponseHandler) {
+        JSONObject json = new JSONObject();
+        StringEntity entity;
+        try {
+            json.put("nom", nom);
+            json.put("admin", admin);
+            json.put("photo", photo);
+            json.put("type", type);
+
+            entity = new StringEntity(json.toString(), HTTP.UTF_8);
+            entity.setContentType("application/json");
+
+            post("creerCommunaute", entity, httpResponseHandler);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void creerGroupe(String nom, String admin, String photo, AsyncHttpResponseHandler httpResponseHandler) {
+        JSONObject json = new JSONObject();
+        StringEntity entity;
+        try {
+            json.put("nom", nom);
+            json.put("admin", admin);
+            json.put("photo", photo);
+
+            entity = new StringEntity(json.toString(), HTTP.UTF_8);
+            entity.setContentType("application/json");
+
+            post("creerGroupe", entity, httpResponseHandler);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void ajouterUtilisateurCommunaute(String idFacebook, String communaute, int statut, AsyncHttpResponseHandler httpResponseHandler) {
+        JSONObject json = new JSONObject();
+        StringEntity entity;
+        try {
+            json.put("id_facebook", idFacebook);
+            json.put("communaute", communaute);
+            json.put("statut", statut);
+
+            entity = new StringEntity(json.toString(), HTTP.UTF_8);
+            entity.setContentType("application/json");
+
+            post("ajouterUtilisateurCommunaute", entity, httpResponseHandler);
         } catch(Exception e) {
             e.printStackTrace();
         }

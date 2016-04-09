@@ -13,10 +13,13 @@ import android.widget.TextView;
 import com.euro16.API.RestClient;
 import com.euro16.R;
 import com.euro16.Utils.AlertMsgBox;
+import com.euro16.Utils.Utilisateur;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.appevents.AppEventsLogger;
@@ -25,7 +28,10 @@ import com.facebook.login.widget.LoginButton;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Arrays;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -42,7 +48,7 @@ public class FacebookConnexion extends FragmentActivity {
         super.onCreate(savedInstanceState);
 
         if (!isOnline(this)) {
-            new AlertMsgBox(this, "Pas de réseau", "Aucune connexion internet n'a été trouvé, veuillez réessayer lorsque la connexion sera rétablie.", "ok", new DialogInterface.OnClickListener() {
+            new AlertMsgBox(this, getResources().getString(R.string.title_msg_box), getResources().getString(R.string.body_msg_box), getResources().getString(R.string.button_msg_box), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     finish();
@@ -57,9 +63,40 @@ public class FacebookConnexion extends FragmentActivity {
         setContentView(R.layout.activity_facebook_connexion);
         info = (TextView) findViewById(R.id.info);
         loginButton = (LoginButton) findViewById(R.id.login_button);
+        loginButton.setReadPermissions(Arrays.asList("public_profile", "email", "user_birthday", "user_friends"));
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+
+                /*Log.i("Euro 16", "onsuccess login");
+                GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+                                try {
+                                    /*Utilisateur.id = object.getInt("id");
+                                    Utilisateur.prenom = object.getString("first_name");
+                                    Utilisateur.nom = object.getString("last_name");
+                                    Utilisateur.email = object.getString("email");
+                                    Utilisateur.photoUrl = object.getString("public_profile");
+                                    Log.i("Euro 16", object.get("public_profile").toString());
+
+                                    /*Log.i("Euro 16", Utilisateur.id + " : " + Utilisateur.prenom + " : " + Utilisateur.nom + " : "
+                                            + Utilisateur.email + " : " + Utilisateur.photoUrl);
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                    Log.i("Euro 16", "fail");
+                                }
+                            }
+                        });
+                /*Bundle parameters = new Bundle();
+                parameters.putString("fields", "first_name,last_name,email,public_profile,user_birthday,user_friends");
+                request.setParameters(parameters);
+                request.executeAsync();
+                Log.i("Euro 16", "onsuccess login after");*/
+
+
                 if (Profile.getCurrentProfile() == null) {
                     final ProfileTracker profilTracker = new ProfileTracker() {
                         @Override
@@ -102,7 +139,7 @@ public class FacebookConnexion extends FragmentActivity {
     }
 
     public void creationUtilisateur() {
-        RestClient.creerUtilisateur(profil.getLastName(), profil.getFirstName(), profil.getProfilePictureUri(300, 300).toString(), profil.getId(), new AsyncHttpResponseHandler() {
+        RestClient.creerUtilisateur(Utilisateur.nom, Utilisateur.prenom, profil.getProfilePictureUri(300, 300).toString(), profil.getId(), new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 // L'utilisateur a bien été ajouté dans la base

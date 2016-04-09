@@ -50,7 +50,7 @@ public class TutorielActivity extends AppCompatActivity {
         CirclePageIndicator circleIndicator = (CirclePageIndicator) findViewById(R.id.indicator);
         circleIndicator.setViewPager(mViewPager);
 
-        Button btnPasser = (Button) findViewById(R.id.button);
+        Button btnPasser = (Button) findViewById(R.id.btnPasserTuto);
         btnPasser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

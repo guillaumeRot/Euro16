@@ -14,31 +14,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Global"
-        android:id="@+id/button2"
+        android:id="@+id/btnGlobal"
         android:background="#00ffffff"
-        android:textColor="#7c93df"
-        android:layout_above="@+id/button3"
-        android:layout_alignStart="@+id/button3"
+        android:textColor="@color/bleu"
+        android:layout_above="@+id/btnChoixCommunaute"
+        android:layout_alignStart="@+id/btnChoixCommunaute"
         android:layout_marginBottom="77dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Communaute"
-        android:id="@+id/button3"
+        android:id="@+id/btnChoixCommunaute"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:textColor="#7c93df"
+        android:textColor="@color/bleu"
         android:background="#00ffffff" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Groupe"
-        android:id="@+id/button4"
+        android:id="@+id/btnGroupe"
         android:layout_marginTop="89dp"
-        android:textColor="#7c93df"
+        android:textColor="@color/bleu"
         android:background="#00ffffff"
-        android:layout_below="@+id/button3"
+        android:layout_below="@+id/btnChoixCommunaute"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>
