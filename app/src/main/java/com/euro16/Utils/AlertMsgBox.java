@@ -11,12 +11,23 @@ public class AlertMsgBox {
 
     public Activity activity;
 
-    public AlertMsgBox(final Activity activity, String title, String message, String textButton, DialogInterface.OnClickListener listener) {
+    public AlertMsgBox(Activity activity, String title, String message, String textButton, DialogInterface.OnClickListener listener) {
         this.activity = activity;
         AlertDialog LDialog = new AlertDialog.Builder(this.activity)
                 .setTitle(title)
                 .setMessage(message)
                 .setPositiveButton(textButton, listener).create();
+        LDialog.show();
+    }
+
+    public AlertMsgBox(Activity activity, String title, String message, String textBtnPos, String textBtnNeg, DialogInterface.OnClickListener listenerBtnPos, DialogInterface.OnClickListener listenerBtnNeg) {
+        this.activity = activity;
+        AlertDialog LDialog = new AlertDialog.Builder(this.activity)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(textBtnPos, listenerBtnPos)
+                .setNegativeButton(textBtnNeg, listenerBtnNeg)
+                .create();
         LDialog.show();
     }
 }

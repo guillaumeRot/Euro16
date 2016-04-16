@@ -2,8 +2,6 @@
     <string name="app_name">Euro16</string>
     <string name="facebook_app_id">882396735180931</string>
     <string name="action_settings">Settings</string>
-    <!-- <string name="urlImageDefaultGroups">http://euro16.miscusi-family.fr/images/test_default_groupe.png</string> -->
-    <string name="urlImageDefaultGroups">https://scontent.xx.fbcdn.net/hprofile-frc1/v/t1.0-1/p200x200/10400029_10205372004770006_628601020294879703_n.jpg?oh=2da2bd571e2ddd268fb9b7b600de2192un&amp;oe=5788AEE3</string>
 
     <string name="title_msg_box">Pas de réseau</string>
     <string name="body_msg_box">Aucune connexion internet n\'a été trouvée, veuillez réessayer lorsque la connexion sera rétablie.</string>
@@ -12,6 +10,11 @@
     <string name="title_activity_tutoriel">Tutoriel</string>
     <string name="title_choix_monde">Choix du monde</string>
     <string name="title_activity_left_menu">Compétition</string>
+    <string name="title_activity_choix_groupe">Choix d\'un groupe</string>
+    <string name="title_activity_creer_groupe">Créer un groupe</string>
+    <string name="title_activity_choix_communaute">Choix d\'une communauté</string>
+    <string name="title_activity_rejoindre_communaute">Rejoindre une communauté</string>
+    <string name="title_activity_creer_communaute">Créer une communauté</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

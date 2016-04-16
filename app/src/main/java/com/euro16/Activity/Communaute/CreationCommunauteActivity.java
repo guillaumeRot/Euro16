@@ -1,4 +1,4 @@
-package com.euro16.Activity;
+package com.euro16.Activity.Communaute;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,6 +15,9 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.euro16.API.RestClient;
+import com.euro16.Activity.CompetitionActivity;
+import com.euro16.Activity.Facebook.FacebookConnexion;
+import com.euro16.Model.CurrentSession;
 import com.euro16.R;
 import com.euro16.Utils.AlertMsgBox;
 import com.euro16.Utils.ETypeCommunaute;
@@ -32,6 +35,8 @@ public class CreationCommunauteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creation_communaute);
+
+        getSupportActionBar().setSubtitle(R.string.title_activity_creer_communaute);
 
         final EditText editTextNom = (EditText) findViewById(R.id.nomCommunaute);
         Button btnCreerCommunaute = (Button) findViewById(R.id.btnCreerCommunaute);
@@ -66,13 +71,13 @@ public class CreationCommunauteActivity extends AppCompatActivity {
             btnCreerCommunaute.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (editTextNom.getText().toString().equals("")) {
+                    if (editTextNom.getText().toString().length() < 5) {
                         Toast.makeText(getApplicationContext(), "Pas de nom de communauté", Toast.LENGTH_SHORT).show();
                     } else {
-                        RestClient.creerCommunaute(editTextNom.getText().toString(), FacebookConnexion.profil.getId(), "Image1", selectedType, new AsyncHttpResponseHandler() {
+                        RestClient.creerCommunaute(editTextNom.getText().toString(), CurrentSession.utilisateur.getId(), "Image1", selectedType, new AsyncHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                                Log.i("Euro 16", editTextNom.getText().toString() + " : " + FacebookConnexion.profil.getId() + " : " + selectedType);
+                                Log.i("Euro 16", editTextNom.getText().toString() + " : " + CurrentSession.utilisateur.getId() + " : " + selectedType);
                                 startActivity(new Intent(CreationCommunauteActivity.this, CompetitionActivity.class));
                             }
 

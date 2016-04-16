@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.euro16.Activity.Communaute.ChoixCommunauteActivity;
+import com.euro16.Activity.Groupe.ChoixGroupeActivity;
+import com.euro16.Model.CurrentSession;
 import com.euro16.R;
 import com.euro16.Utils.EMonde;
 
@@ -22,8 +25,8 @@ public class ChoixMondeActivity extends AppCompatActivity {
         btnGlobal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CompetitionActivity.nomCurrentMonde = EMonde.GLOBAL.getNomMonde();
-                CompetitionActivity.typeCurrentMonde = EMonde.GLOBAL.getTypeMonde();
+                CurrentSession.communaute = null;
+                CurrentSession.groupe = null;
                 startActivity(new Intent(ChoixMondeActivity.this, CompetitionActivity.class));
             }
         });

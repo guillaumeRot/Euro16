@@ -1,5 +1,6 @@
 package com.euro16.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -11,12 +12,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.euro16.Activity.Facebook.FacebookConnexion;
+import com.euro16.Model.CurrentSession;
 import com.euro16.R;
+import com.facebook.login.LoginManager;
 
 public class CompetitionActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
-    public static String nomCurrentMonde;
-    public static int typeCurrentMonde;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +26,16 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Log.i("Euro 16", "monde courant : " + nomCurrentMonde);
-        Log.i("Euro 16", "type monde courant : " + typeCurrentMonde);
+        if(CurrentSession.communaute != null) {
+            Log.i("Euro 16", "Communaute : " + CurrentSession.communaute.toString());
+        }
+        if(CurrentSession.groupe != null) {
+            Log.i("Euro 16", "Groupe : " + CurrentSession.groupe.toString());
+        }
+        if(CurrentSession.communaute == null && CurrentSession.groupe == null) {
+            Log.i("Euro 16", "Mode GLOBAL");
+        }
+
 
         toolbar.setSubtitle(R.string.title_activity_left_menu);
 
@@ -90,8 +99,12 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
 
         } else if (id == R.id.nav_slideshow) {
 
-        } else if (id == R.id.nav_manage) {
-
+        } else if (id == R.id.nav_change_monde) {
+            startActivity(new Intent(CompetitionActivity.this, ChoixMondeActivity.class));
+        } else if(id == R.id.nav_deconnexion) {
+            LoginManager.getInstance().logOut();
+            CurrentSession.utilisateur = null;
+            startActivity(new Intent(CompetitionActivity.this, FacebookConnexion.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

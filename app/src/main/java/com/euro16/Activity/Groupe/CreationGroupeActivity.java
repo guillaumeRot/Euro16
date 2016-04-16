@@ -1,4 +1,4 @@
-package com.euro16.Activity;
+package com.euro16.Activity.Groupe;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,6 +11,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.euro16.API.RestClient;
+import com.euro16.Activity.CompetitionActivity;
+import com.euro16.Activity.Facebook.FacebookConnexion;
+import com.euro16.Model.CurrentSession;
+import com.euro16.Model.Groupe;
 import com.euro16.R;
 import com.euro16.Utils.AlertMsgBox;
 import com.euro16.Utils.EMonde;
@@ -25,6 +29,8 @@ public class CreationGroupeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creation_groupe);
 
+        getSupportActionBar().setSubtitle(R.string.title_activity_creer_groupe);
+
         final EditText editTextNom = (EditText) findViewById(R.id.nomGroupe);
 
         Button btnCreerGroupe = (Button) findViewById(R.id.btnCreerGroupe);
@@ -32,15 +38,15 @@ public class CreationGroupeActivity extends AppCompatActivity {
             btnCreerGroupe.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (editTextNom.getText().toString().equals("")) {
-                        Toast.makeText(getApplicationContext(), "Veuillez mettre un nom de groupe", Toast.LENGTH_SHORT).show();
+                    if (editTextNom.getText().toString().length() < 5) {
+                        Toast.makeText(getApplicationContext(), "Le nom de groupe est incorrect", Toast.LENGTH_SHORT).show();
                     } else {
-                        RestClient.creerGroupe(editTextNom.getText().toString(), FacebookConnexion.profil.getId(), "Image1", new AsyncHttpResponseHandler() {
+                        RestClient.creerGroupe(editTextNom.getText().toString(), CurrentSession.utilisateur.getId(), "Image1", new AsyncHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                                Log.i("Euro 16", editTextNom.getText().toString() + " : " + FacebookConnexion.profil.getId());
-                                CompetitionActivity.nomCurrentMonde = editTextNom.getText().toString();
-                                CompetitionActivity.typeCurrentMonde = EMonde.GROUPE.getTypeMonde();
+                                Log.i("Euro 16", editTextNom.getText().toString() + " : " + CurrentSession.utilisateur.getId());
+                                CurrentSession.communaute = null;
+                                CurrentSession.groupe = new Groupe(editTextNom.getText().toString(), CurrentSession.utilisateur.getId(), "Image 1");
                                 startActivity(new Intent(CreationGroupeActivity.this, CompetitionActivity.class));
                             }
 

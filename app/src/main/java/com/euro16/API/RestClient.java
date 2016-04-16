@@ -1,9 +1,7 @@
 package com.euro16.API;
 
-import android.util.Log;
-
-import com.euro16.Activity.FacebookConnexion;
 import com.euro16.Config;
+import com.euro16.Model.CurrentSession;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -125,26 +123,94 @@ public class RestClient {
 
     /** PUT METHOD **/
 
-    public static void put(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-        client.get(getAbsoluteUrl(url), params, responseHandler);
+    public static void put(String url, StringEntity entity, AsyncHttpResponseHandler responseHandler) {
+        client.put(null, getAbsoluteUrl(url), entity, "application/json", responseHandler);
+    }
+
+    public static void updateStatutUtilisateurGroupe(String nomGroupe, String idFacebook, int statut, AsyncHttpResponseHandler httpResponseHandler) {
+        JSONObject json = new JSONObject();
+        StringEntity entity;
+        try {
+            json.put("nom_groupe", nomGroupe);
+            json.put("id_facebook", idFacebook);
+            json.put("new_statut", statut);
+
+            entity = new StringEntity(json.toString(), HTTP.UTF_8);
+            entity.setContentType("application/json");
+
+            put("updateStatutUtilisateurGroupe", entity, httpResponseHandler);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void updateStatutUtilisateurCommunaute(String nomCommunaute, String idFacebook, int statut, AsyncHttpResponseHandler httpResponseHandler) {
+        JSONObject json = new JSONObject();
+        StringEntity entity;
+        try {
+            json.put("nom_communaute", nomCommunaute);
+            json.put("id_facebook", idFacebook);
+            json.put("new_statut", statut);
+
+            entity = new StringEntity(json.toString(), HTTP.UTF_8);
+            entity.setContentType("application/json");
+
+            put("updateStatutUtilisateurCommunaute", entity, httpResponseHandler);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /** DELETE METHOD **/
 
-    public static void delete(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-        client.get(getAbsoluteUrl(url), params, responseHandler);
+    public static void delete(String url, StringEntity entity, AsyncHttpResponseHandler responseHandler) {
+        client.delete(null, getAbsoluteUrl(url), entity, "application/json", responseHandler);
     }
 
+    public static void deleteUtilisateurGroupe(String groupe, String idFacebook, AsyncHttpResponseHandler httpResponseHandler) {
+        JSONObject json = new JSONObject();
+        StringEntity entity;
+        try {
+            json.put("groupe", groupe);
+            json.put("id_facebook", idFacebook);
+
+            entity = new StringEntity(json.toString(), HTTP.UTF_8);
+            entity.setContentType("application/json");
+
+            delete("deleteUtilisateurGroupe", entity, httpResponseHandler);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteUtilisateurCommunaute(String communaute, String idFacebook, AsyncHttpResponseHandler httpResponseHandler) {
+        JSONObject json = new JSONObject();
+        StringEntity entity;
+        try {
+            json.put("communaute", communaute);
+            json.put("id_facebook", idFacebook);
+
+            entity = new StringEntity(json.toString(), HTTP.UTF_8);
+            entity.setContentType("application/json");
+
+            delete("deleteUtilisateurCommunaute", entity, httpResponseHandler);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**********************************/
+
     private static String getAbsoluteUrl(String relativeUrl) {
-        return BASE_URL + relativeUrl + "&cle=" + CLE + "&id=" + FacebookConnexion.profil.getId();
+        return BASE_URL + relativeUrl + "&cle=" + CLE + "&id=" + CurrentSession.utilisateur.getId();
     }
 
     private static String getCle() {
         try {
             MessageDigest digest = MessageDigest.getInstance("MD5");
 
-            if(FacebookConnexion.profil != null) {
-                String mdp = FacebookConnexion.profil.getId() + Config.motCle;
+            if(CurrentSession.utilisateur != null) {
+                String mdp = CurrentSession.utilisateur.getId() + Config.motCle;
                 digest.update(mdp.getBytes());
                 byte messageDigest[] = digest.digest();
 

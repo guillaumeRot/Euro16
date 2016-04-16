@@ -1,4 +1,4 @@
-package com.euro16.Activity;
+package com.euro16.Activity.Facebook;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,27 +8,31 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.euro16.API.RestClient;
+import com.euro16.Activity.ChoixMondeActivity;
+import com.euro16.Activity.Tutoriel.TutorielActivity;
+import com.euro16.Model.CurrentSession;
+import com.euro16.Model.Utilisateur;
 import com.euro16.R;
 import com.euro16.Utils.AlertMsgBox;
-import com.euro16.Utils.Utilisateur;
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.Profile;
-import com.facebook.ProfileTracker;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
@@ -40,8 +44,6 @@ public class FacebookConnexion extends FragmentActivity {
     private LoginButton loginButton;
     private CallbackManager callbackManager;
     private TextView info;
-
-    public static Profile profil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,54 +65,35 @@ public class FacebookConnexion extends FragmentActivity {
         setContentView(R.layout.activity_facebook_connexion);
         info = (TextView) findViewById(R.id.info);
         loginButton = (LoginButton) findViewById(R.id.login_button);
-        loginButton.setReadPermissions(Arrays.asList("public_profile", "email", "user_birthday", "user_friends"));
+        loginButton.setReadPermissions(Arrays.asList("public_profile", "email", "user_friends"));
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-
-                /*Log.i("Euro 16", "onsuccess login");
                 GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(),
                         new GraphRequest.GraphJSONObjectCallback() {
                             @Override
                             public void onCompleted(JSONObject object, GraphResponse response) {
                                 try {
-                                    /*Utilisateur.id = object.getInt("id");
-                                    Utilisateur.prenom = object.getString("first_name");
-                                    Utilisateur.nom = object.getString("last_name");
-                                    Utilisateur.email = object.getString("email");
-                                    Utilisateur.photoUrl = object.getString("public_profile");
-                                    Log.i("Euro 16", object.get("public_profile").toString());
+                                    if (object.getString("id") != null && object.getString("first_name") != null && object.getString("last_name") != null) {
+                                        String email = "no email";
+                                        if (object.has("email")) {
+                                            email = object.getString("email");
+                                        }
+                                        CurrentSession.utilisateur = new Utilisateur(object.getString("id"), object.getString("last_name"), object.getString("first_name"), email, "http://graph.facebook.com/" + object.getString("id") + "/picture?type=large");
+                                        getUtilisateur();
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "Impossible de récupérer les données", Toast.LENGTH_SHORT).show();
+                                    }
 
-                                    /*Log.i("Euro 16", Utilisateur.id + " : " + Utilisateur.prenom + " : " + Utilisateur.nom + " : "
-                                            + Utilisateur.email + " : " + Utilisateur.photoUrl);
-
-                                } catch (JSONException e) {
+                                } catch (Exception e) {
                                     e.printStackTrace();
-                                    Log.i("Euro 16", "fail");
                                 }
                             }
                         });
-                /*Bundle parameters = new Bundle();
-                parameters.putString("fields", "first_name,last_name,email,public_profile,user_birthday,user_friends");
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,first_name,last_name,email");
                 request.setParameters(parameters);
                 request.executeAsync();
-                Log.i("Euro 16", "onsuccess login after");*/
-
-
-                if (Profile.getCurrentProfile() == null) {
-                    final ProfileTracker profilTracker = new ProfileTracker() {
-                        @Override
-                        protected void onCurrentProfileChanged(Profile profile, Profile profile1) {
-                            profil = profile1;
-                            getUtilisateur();
-                            this.stopTracking();
-                        }
-                    };
-                    profilTracker.startTracking();
-                } else {
-                    profil = Profile.getCurrentProfile();
-                    getUtilisateur();
-                }
             }
 
             @Override
@@ -139,7 +122,7 @@ public class FacebookConnexion extends FragmentActivity {
     }
 
     public void creationUtilisateur() {
-        RestClient.creerUtilisateur(Utilisateur.nom, Utilisateur.prenom, profil.getProfilePictureUri(300, 300).toString(), profil.getId(), new AsyncHttpResponseHandler() {
+        RestClient.creerUtilisateur(CurrentSession.utilisateur.getNom(), CurrentSession.utilisateur.getPrenom(), CurrentSession.utilisateur.getPhoto(), CurrentSession.utilisateur.getId(), new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 // L'utilisateur a bien été ajouté dans la base
@@ -153,10 +136,10 @@ public class FacebookConnexion extends FragmentActivity {
     }
 
     public void getUtilisateur() {
-        RestClient.getUtilisateur(profil.getId(), new JsonHttpResponseHandler() {
+        RestClient.getUtilisateur(CurrentSession.utilisateur.getId(), new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                if(statusCode == 204) {
+                if (statusCode == 204) {
                     creationUtilisateur();
                     startActivity(new Intent(FacebookConnexion.this, TutorielActivity.class));
                 } else {

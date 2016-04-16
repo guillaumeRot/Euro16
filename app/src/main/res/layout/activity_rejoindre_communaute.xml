@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.euro16.Activity.ChoixGroupeActivity"
+    tools:context="com.euro16.Activity.Groupe.ChoixGroupeActivity"
     android:background="@color/grey">
 
     <RelativeLayout
@@ -32,17 +32,6 @@
             android:layout_alignParentStart="true"
             android:layout_above="@+id/btnRejoindreComm"
             android:layout_below="@+id/inputSearch" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Rejoindre cette communaute"
-            android:id="@+id/btnRejoindreComm"
-            android:textColor="@color/bleu"
-            android:background="#00ffffff"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"/>
     </RelativeLayout>
 
 </RelativeLayout>
