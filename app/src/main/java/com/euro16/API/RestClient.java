@@ -33,6 +33,14 @@ public class RestClient {
         get(getAbsoluteUrl("getUtilisateur") + "&id_facebook=" + idFacebook, responseHandler);
     }
 
+    public static void getGroupe(String groupe, AsyncHttpResponseHandler responseHandler) {
+        get(getAbsoluteUrl("getGroupe") + "&groupe=" + groupe, responseHandler);
+    }
+
+    public static void getCommunaute(String communaute, AsyncHttpResponseHandler responseHandler) {
+        get(getAbsoluteUrl("getCommunaute") + "&communaute=" + communaute, responseHandler);
+    }
+
     public static void getCommunautes(String idFacebook, AsyncHttpResponseHandler responseHandler) {
         get(getAbsoluteUrl("getCommunautes") + "&id_facebook=" + idFacebook, responseHandler);
     }
@@ -43,6 +51,10 @@ public class RestClient {
 
     public static void getGroupesUtilisateur(String idFacebook, AsyncHttpResponseHandler responseHandler) {
         get(getAbsoluteUrl("getGroupesUtilisateur") + "&id_facebook=" + idFacebook, responseHandler);
+    }
+
+    public static void getUtilisateursCommunaute(String communaute, AsyncHttpResponseHandler responseHandler) {
+        get(getAbsoluteUrl("getUtilisateursCommunaute") + "&communaute=" + communaute, responseHandler);
     }
 
     /** POST METHOD **/
@@ -163,40 +175,24 @@ public class RestClient {
 
     /** DELETE METHOD **/
 
-    public static void delete(String url, StringEntity entity, AsyncHttpResponseHandler responseHandler) {
-        client.delete(null, getAbsoluteUrl(url), entity, "application/json", responseHandler);
+    public static void delete(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+        client.delete(getAbsoluteUrl(url), params, responseHandler);
     }
 
     public static void deleteUtilisateurGroupe(String groupe, String idFacebook, AsyncHttpResponseHandler httpResponseHandler) {
-        JSONObject json = new JSONObject();
-        StringEntity entity;
-        try {
-            json.put("groupe", groupe);
-            json.put("id_facebook", idFacebook);
+        RequestParams params = new RequestParams();
+        params.put("groupe", groupe);
+        params.put("id_facebook", idFacebook);
 
-            entity = new StringEntity(json.toString(), HTTP.UTF_8);
-            entity.setContentType("application/json");
-
-            delete("deleteUtilisateurGroupe", entity, httpResponseHandler);
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
+        delete("deleteUtilisateurGroupe", params, httpResponseHandler);
     }
 
     public static void deleteUtilisateurCommunaute(String communaute, String idFacebook, AsyncHttpResponseHandler httpResponseHandler) {
-        JSONObject json = new JSONObject();
-        StringEntity entity;
-        try {
-            json.put("communaute", communaute);
-            json.put("id_facebook", idFacebook);
+        RequestParams params = new RequestParams();
+        params.put("communaute", communaute);
+        params.put("id_facebook", idFacebook);
 
-            entity = new StringEntity(json.toString(), HTTP.UTF_8);
-            entity.setContentType("application/json");
-
-            delete("deleteUtilisateurCommunaute", entity, httpResponseHandler);
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
+        delete("deleteUtilisateurCommunaute", params, httpResponseHandler);
     }
 
     /**********************************/

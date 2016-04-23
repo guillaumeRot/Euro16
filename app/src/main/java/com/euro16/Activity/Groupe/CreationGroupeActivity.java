@@ -2,8 +2,8 @@ package com.euro16.Activity.Groupe;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +17,6 @@ import com.euro16.Model.CurrentSession;
 import com.euro16.Model.Groupe;
 import com.euro16.R;
 import com.euro16.Utils.AlertMsgBox;
-import com.euro16.Utils.EMonde;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import cz.msebera.android.httpclient.Header;
@@ -39,7 +38,7 @@ public class CreationGroupeActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if (editTextNom.getText().toString().length() < 5) {
-                        Toast.makeText(getApplicationContext(), "Le nom de groupe est incorrect", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Le nom du groupe doit contenir au moins 5 caractères", Toast.LENGTH_LONG).show();
                     } else {
                         RestClient.creerGroupe(editTextNom.getText().toString(), CurrentSession.utilisateur.getId(), "Image1", new AsyncHttpResponseHandler() {
                             @Override

@@ -2,11 +2,10 @@ package com.euro16.Activity.Communaute;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -17,7 +16,9 @@ import android.widget.Toast;
 import com.euro16.API.RestClient;
 import com.euro16.Activity.CompetitionActivity;
 import com.euro16.Activity.Facebook.FacebookConnexion;
+import com.euro16.Model.Communaute;
 import com.euro16.Model.CurrentSession;
+import com.euro16.Model.Groupe;
 import com.euro16.R;
 import com.euro16.Utils.AlertMsgBox;
 import com.euro16.Utils.ETypeCommunaute;
@@ -72,12 +73,14 @@ public class CreationCommunauteActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if (editTextNom.getText().toString().length() < 5) {
-                        Toast.makeText(getApplicationContext(), "Pas de nom de communauté", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Le nom de la communauté doit contenir au moins 5 caractères", Toast.LENGTH_LONG).show();
                     } else {
                         RestClient.creerCommunaute(editTextNom.getText().toString(), CurrentSession.utilisateur.getId(), "Image1", selectedType, new AsyncHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                                 Log.i("Euro 16", editTextNom.getText().toString() + " : " + CurrentSession.utilisateur.getId() + " : " + selectedType);
+                                CurrentSession.groupe = null;
+                                CurrentSession.communaute = new Communaute(editTextNom.getText().toString(), CurrentSession.utilisateur.getId(), "Image 1", selectedType);
                                 startActivity(new Intent(CreationCommunauteActivity.this, CompetitionActivity.class));
                             }
 

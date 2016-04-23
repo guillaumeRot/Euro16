@@ -3,17 +3,25 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
+            android:id="@+id/nav_competition"
+            android:icon="@drawable/soccer"
             android:title="Compétition" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
+            android:id="@+id/nav_pronostics"
+            android:icon="@drawable/soccer"
             android:title="Pronostics" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:id="@+id/nav_actualites"
+            android:icon="@drawable/news"
             android:title="Actualités" />
+        <item
+            android:id="@+id/nav_gerer_monde"
+            android:icon="@drawable/gerer_monde"
+            android:title="" />
+        <item
+            android:id="@+id/nav_parametres"
+            android:icon="@drawable/gerer_monde"
+            android:title="Paramètres" />
         <item
             android:id="@+id/nav_change_monde"
             android:icon="@drawable/change_monde"

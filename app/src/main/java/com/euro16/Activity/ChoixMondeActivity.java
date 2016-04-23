@@ -10,7 +10,6 @@ import com.euro16.Activity.Communaute.ChoixCommunauteActivity;
 import com.euro16.Activity.Groupe.ChoixGroupeActivity;
 import com.euro16.Model.CurrentSession;
 import com.euro16.R;
-import com.euro16.Utils.EMonde;
 
 public class ChoixMondeActivity extends AppCompatActivity {
 
