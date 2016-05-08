@@ -1,4 +1,4 @@
-package com.euro16.Utils;
+package com.euro16.Utils.RowsChoix;
 
 /**
  * Created by Guillaume on 16/04/2016.

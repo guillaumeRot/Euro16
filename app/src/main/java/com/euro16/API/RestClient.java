@@ -57,6 +57,22 @@ public class RestClient {
         get(getAbsoluteUrl("getUtilisateursCommunaute") + "&communaute=" + communaute, responseHandler);
     }
 
+    public static void getUtilisateursGroupe(String groupe, AsyncHttpResponseHandler responseHandler) {
+        get(getAbsoluteUrl("getUtilisateursGroupe") + "&groupe=" + groupe, responseHandler);
+    }
+
+    public static void getMatchs(AsyncHttpResponseHandler responseHandler) {
+        get(getAbsoluteUrl("getMatchs"), responseHandler);
+    }
+
+    public static void getMatch(String equipe1, String equipe2, String dateMatch, AsyncHttpResponseHandler responseHandler) {
+        get(getAbsoluteUrl("getMatch") + "&equipe1=" + equipe1 + "&equipe2=" + equipe2 + "&date_match=" + dateMatch, responseHandler);
+    }
+
+    public static void getPronostic(String idFacebook, String equipe1, String equipe2, String dateMatch, AsyncHttpResponseHandler responseHandler) {
+        get(getAbsoluteUrl("getPronostic") + "&utilisateur=" + idFacebook + "&equipe1=" + equipe1 + "&equipe2=" + equipe2 + "&date_match=" + dateMatch, responseHandler);
+    }
+
     /** POST METHOD **/
 
     public static void post(String url, StringEntity entity, AsyncHttpResponseHandler responseHandler) {
@@ -128,6 +144,23 @@ public class RestClient {
             entity.setContentType("application/json");
 
             post("ajouterUtilisateurCommunaute", entity, httpResponseHandler);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void ajouterUtilisateurGroupe(String idFacebook, String groupe, int statut, AsyncHttpResponseHandler httpResponseHandler) {
+        JSONObject json = new JSONObject();
+        StringEntity entity;
+        try {
+            json.put("id_facebook", idFacebook);
+            json.put("groupe", groupe);
+            json.put("statut", statut);
+
+            entity = new StringEntity(json.toString(), HTTP.UTF_8);
+            entity.setContentType("application/json");
+
+            post("ajouterUtilisateurGroupe", entity, httpResponseHandler);
         } catch(Exception e) {
             e.printStackTrace();
         }

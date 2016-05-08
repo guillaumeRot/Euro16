@@ -1,4 +1,4 @@
-package com.euro16.Activity;
+package com.euro16.Activity.Competition;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -18,8 +18,10 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.euro16.API.RestClient;
+import com.euro16.Activity.ChoixMondeActivity;
 import com.euro16.Activity.Facebook.FacebookConnexion;
 import com.euro16.Activity.Parametres.GererMondeFragment;
+import com.euro16.Activity.Parametres.ParametresFragment;
 import com.euro16.Model.CurrentSession;
 import com.euro16.R;
 import com.euro16.Utils.AlertMsgBox;
@@ -43,7 +45,7 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if(CurrentSession.communaute != null) {
+        /*if(CurrentSession.communaute != null) {
             Log.i("Euro 16", "Communaute : " + CurrentSession.communaute.toString());
         }
         if(CurrentSession.groupe != null) {
@@ -51,7 +53,7 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
         }
         if(CurrentSession.communaute == null && CurrentSession.groupe == null) {
             Log.i("Euro 16", "Mode GLOBAL");
-        }
+        }*/
 
         if(CurrentSession.communaute != null) {
             if(CurrentSession.communaute.getNom().length() <= 16) {
@@ -84,6 +86,23 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
 
         NavigationView navigationViewRight = (NavigationView) findViewById(R.id.nav_view_right);
         navigationViewRight.setNavigationItemSelectedListener(this);
+
+        FragmentManager fragmentManager = getFragmentManager();
+        Fragment frag = null;
+        try {
+            frag = CompetitionFragment.class.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        if(frag != null) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.view_container, frag)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .addToBackStack(null)
+                    .commit();
+        }
     }
 
     @Override
@@ -126,14 +145,23 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
         FragmentManager fragmentManager = getFragmentManager();
         int id = item.getItemId();
 
+        Fragment frag = null;
         if (id == R.id.nav_competition) {
+
+            try {
+                frag = CompetitionFragment.class.newInstance();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
 
         } else if (id == R.id.nav_pronostics) {
 
         } else if (id == R.id.nav_actualites) {
 
         } else if (id == R.id.nav_gerer_monde) {
-            Fragment frag = null;
+
             try {
                 frag = GererMondeFragment.class.newInstance();
             } catch (InstantiationException e) {
@@ -142,14 +170,15 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
                 e.printStackTrace();
             }
 
-            // update the main content by replacing fragments
-            fragmentManager.beginTransaction()
-                    .replace(R.id.view_container, frag)
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .addToBackStack(null)
-                    .commit();
-
         } else if (id == R.id.nav_parametres) {
+
+            try {
+                frag = ParametresFragment.class.newInstance();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
 
         } else if (id == R.id.nav_change_monde) {
             startActivity(new Intent(CompetitionActivity.this, ChoixMondeActivity.class));
@@ -157,6 +186,14 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
             LoginManager.getInstance().logOut();
             CurrentSession.utilisateur = null;
             startActivity(new Intent(CompetitionActivity.this, FacebookConnexion.class));
+        }
+
+        if(frag != null) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.view_container, frag)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .addToBackStack(null)
+                    .commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

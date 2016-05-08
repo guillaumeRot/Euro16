@@ -15,15 +15,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.euro16.API.RestClient;
-import com.euro16.Activity.CompetitionActivity;
+import com.euro16.Activity.Competition.CompetitionActivity;
 import com.euro16.Activity.Facebook.FacebookConnexion;
 import com.euro16.Model.Communaute;
 import com.euro16.Model.CurrentSession;
 import com.euro16.R;
 import com.euro16.Utils.AlertMsgBox;
-import com.euro16.Utils.EUtilisateurStatut;
-import com.euro16.Utils.ListViewAdapterCommunaute;
-import com.euro16.Utils.RowChoixCommunaute;
+import com.euro16.Utils.Enums.EUtilisateurStatut;
+import com.euro16.Utils.ListsView.ListViewAdapterCommunaute;
+import com.euro16.Utils.RowsChoix.RowChoixCommunaute;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -108,18 +108,20 @@ public class ChoixCommunauteActivity extends AppCompatActivity {
                     listCommunautesUtil.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            String nomCommunaute = adapter.getItem(position-1).getNom();
-                            if(hmCommunauteStatut.get(nomCommunaute) == EUtilisateurStatut.PARTICIPE.getStatut()) {
-                                CurrentSession.groupe = null;
-                                CurrentSession.communaute = new Communaute(nomCommunaute, CurrentSession.utilisateur.getId(), hmComUtil.get(nomCommunaute).getPhoto(), hmComUtil.get(nomCommunaute).getType());
-                                startActivity(new Intent(ChoixCommunauteActivity.this, CompetitionActivity.class));
-                            } else if (hmCommunauteStatut.get(nomCommunaute) == EUtilisateurStatut.DEMANDE_PARTICIPE.getStatut()) {
-                                new AlertMsgBox(ChoixCommunauteActivity.this, "En attente", "L'administrateur de la communauté \"" + nomCommunaute + "\" n'a pas encore validé votre demande, vous ne pouvez donc pas encore rejoindre ce groupe.", "ok", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        //finish();
-                                    }
-                                });
+                            if(position != 0) {
+                                String nomCommunaute = adapter.getItem(position - 1).getNom();
+                                if (hmCommunauteStatut.get(nomCommunaute) == EUtilisateurStatut.PARTICIPE.getStatut()) {
+                                    CurrentSession.groupe = null;
+                                    CurrentSession.communaute = new Communaute(nomCommunaute, CurrentSession.utilisateur.getId(), hmComUtil.get(nomCommunaute).getPhoto(), hmComUtil.get(nomCommunaute).getType());
+                                    startActivity(new Intent(ChoixCommunauteActivity.this, CompetitionActivity.class));
+                                } else if (hmCommunauteStatut.get(nomCommunaute) == EUtilisateurStatut.DEMANDE_PARTICIPE.getStatut()) {
+                                    new AlertMsgBox(ChoixCommunauteActivity.this, "En attente", "L'administrateur de la communauté \"" + nomCommunaute + "\" n'a pas encore validé votre demande, vous ne pouvez donc pas encore rejoindre ce groupe.", "ok", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            //finish();
+                                        }
+                                    });
+                                }
                             }
                         }
                     });

@@ -16,13 +16,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.euro16.API.RestClient;
-import com.euro16.Activity.CompetitionActivity;
+import com.euro16.Activity.Competition.CompetitionActivity;
 import com.euro16.Activity.Facebook.FacebookConnexion;
 import com.euro16.Model.CurrentSession;
 import com.euro16.Model.Groupe;
 import com.euro16.R;
 import com.euro16.Utils.AlertMsgBox;
-import com.euro16.Utils.EUtilisateurStatut;
+import com.euro16.Utils.Enums.EUtilisateurStatut;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -98,10 +98,12 @@ public class ChoixGroupeActivity extends AppCompatActivity {
                     listGroupes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            String nomGroupe = parent.getItemAtPosition(position).toString();
-                            CurrentSession.communaute = null;
-                            CurrentSession.groupe = new Groupe(nomGroupe, CurrentSession.utilisateur.getId(), hmGrpUtil.get(nomGroupe).getPhoto());
-                            startActivity(new Intent(ChoixGroupeActivity.this, CompetitionActivity.class));
+                            if(position != 0) {
+                                String nomGroupe = parent.getItemAtPosition(position).toString();
+                                CurrentSession.communaute = null;
+                                CurrentSession.groupe = new Groupe(nomGroupe, CurrentSession.utilisateur.getId(), hmGrpUtil.get(nomGroupe).getPhoto());
+                                startActivity(new Intent(ChoixGroupeActivity.this, CompetitionActivity.class));
+                            }
                         }
                     });
                 }

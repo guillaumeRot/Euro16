@@ -19,8 +19,8 @@ import com.euro16.Model.Communaute;
 import com.euro16.Model.CurrentSession;
 import com.euro16.R;
 import com.euro16.Utils.AlertMsgBox;
-import com.euro16.Utils.ETypeCommunaute;
-import com.euro16.Utils.EUtilisateurStatut;
+import com.euro16.Utils.Enums.ETypeCommunaute;
+import com.euro16.Utils.Enums.EUtilisateurStatut;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 

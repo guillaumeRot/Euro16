@@ -1,4 +1,4 @@
-package com.euro16.Utils;
+package com.euro16.Utils.ListsView;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.euro16.R;
+import com.euro16.Utils.RowsChoix.RowChoixCommunaute;
 
 /**
  * Created by Guillaume on 16/04/2016.

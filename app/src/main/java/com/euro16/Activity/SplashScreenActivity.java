@@ -23,6 +23,7 @@ import org.json.JSONObject;
 public class SplashScreenActivity extends AppCompatActivity {
 
     private static boolean isConnected = false;
+    public static AccessToken accessToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +51,9 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     }
 
-    private class FetchData extends AsyncTask<Void, Void, Void> {
+    public class FetchData extends AsyncTask<Void, Void, Void> {
 
         private AccessTokenTracker accessTokenTracker;
-        private AccessToken accessToken;
 
         @Override
         protected void onPreExecute() {

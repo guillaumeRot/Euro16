@@ -1,11 +1,7 @@
-package com.euro16.Utils;
+package com.euro16.Utils.ListsView;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.euro16.R;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
+import com.euro16.Utils.ImageFromUrl;
+import com.euro16.Utils.RowsChoix.RowChoixUtilisateur;
 
 /**
  * Created by Guillaume on 16/04/2016.

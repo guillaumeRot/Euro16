@@ -14,14 +14,13 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.euro16.API.RestClient;
-import com.euro16.Activity.CompetitionActivity;
+import com.euro16.Activity.Competition.CompetitionActivity;
 import com.euro16.Activity.Facebook.FacebookConnexion;
 import com.euro16.Model.Communaute;
 import com.euro16.Model.CurrentSession;
-import com.euro16.Model.Groupe;
 import com.euro16.R;
 import com.euro16.Utils.AlertMsgBox;
-import com.euro16.Utils.ETypeCommunaute;
+import com.euro16.Utils.Enums.ETypeCommunaute;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import java.util.ArrayList;

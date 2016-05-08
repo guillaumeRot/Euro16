@@ -48,7 +48,7 @@
             android:screenOrientation="nosensor"
             android:theme="@style/Theme.AppCompat.Light" />
         <activity
-            android:name=".Activity.CompetitionActivity"
+            android:name=".Activity.Competition.CompetitionActivity"
             android:label="@string/app_name"
             android:screenOrientation="nosensor" />
         <activity
@@ -76,6 +76,12 @@
             android:label="@string/app_name"
             android:screenOrientation="nosensor"
             android:theme="@style/Theme.AppCompat.Light" />
+        <activity
+            android:name=".Activity.Parametres.InviteFriendsActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="nosensor"
+            android:theme="@style/Theme.AppCompat.Light" >
+        </activity>
     </application>
 
 </manifest>

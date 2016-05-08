@@ -1,0 +1,52 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.euro16.Activity.Parametres.ParametresFragment"
+    android:background="@color/grey">
+
+    <!-- android:layout_height="431dp" -->
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/titleParametres"
+            android:layout_gravity="center_horizontal|top"
+            android:textColor="@color/bleu"
+            android:text="Paramètres"
+            android:layout_above="@+id/relLayout"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="61dp"
+            android:text="Se désinscrire"
+            android:textColor="@color/rouge"
+            android:background="#00ffffff"
+            android:id="@+id/btnDesinscrire"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal" />
+
+        <ScrollView
+            android:id="@+id/relLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_above="@+id/btnDesinscrire">
+
+            <TextView
+                android:id="@+id/mentionsLegales"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"/>
+        </ScrollView>
+
+    </LinearLayout>
+
+</FrameLayout>

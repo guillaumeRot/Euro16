@@ -1,4 +1,4 @@
-package com.euro16.Utils;
+package com.euro16.Utils.Enums;
 
 /**
  * Créé par Guillaume le 06/04/2016.
