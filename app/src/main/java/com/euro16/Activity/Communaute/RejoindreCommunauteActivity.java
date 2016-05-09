@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.euro16.API.RestClient;
 import com.euro16.Activity.Facebook.FacebookConnexion;
@@ -106,6 +107,7 @@ public class RejoindreCommunauteActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    Toast.makeText(getApplicationContext(), "Impossible de récupérer les communautés", Toast.LENGTH_SHORT).show();
                     Log.i("Euro 16", "Impossible de récupérer les communautés de l'utilisateur, statut : " + statusCode);
                 }
             });

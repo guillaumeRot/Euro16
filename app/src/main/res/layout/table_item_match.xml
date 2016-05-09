@@ -4,6 +4,13 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal" >
 
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:id="@+id/iconEquipe1"
+        android:layout_weight="0.06"
+        android:gravity="center" />
+
     <TextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -12,29 +19,64 @@
         android:gravity="left"
         android:textColor="@color/black" />
 
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:id="@+id/score1"
-        android:layout_weight="0.1"
-        android:gravity="center"
-        android:textColor="@color/black"/>
+    <TableLayout>
+        <TableRow>
 
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.1"
-        android:gravity="center"
-        android:textColor="@color/black"
-        android:text=" - "/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/score1"
+                android:layout_weight="0.1"
+                android:gravity="center"
+                android:textColor="@color/black"/>
 
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:id="@+id/score2"
-        android:layout_weight="0.1"
-        android:gravity="center"
-        android:textColor="@color/black"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:text=" - "/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/score2"
+                android:layout_weight="0.1"
+                android:gravity="center"
+                android:textColor="@color/black"/>
+
+        </TableRow>
+        <TableRow>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/prono1"
+                android:layout_weight="0.1"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:text="3"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:text=" - "/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/prono2"
+                android:layout_weight="0.1"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:text="0"/>
+
+        </TableRow>
+    </TableLayout>
 
     <TextView
         android:layout_width="0dp"
@@ -43,5 +85,12 @@
         android:layout_weight="0.35"
         android:gravity="right"
         android:textColor="@color/black"/>
+
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:id="@+id/iconEquipe2"
+        android:layout_weight="0.06"
+        android:gravity="center" />
 
 </TableRow>

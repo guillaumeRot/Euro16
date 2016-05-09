@@ -42,7 +42,7 @@ public class RestClient {
     }
 
     public static void getCommunautes(String idFacebook, AsyncHttpResponseHandler responseHandler) {
-        get(getAbsoluteUrl("getCommunautes") + "&id_facebook=" + idFacebook, responseHandler);
+        get(getAbsoluteUrl("getCommunautes") + "&utilisateur=" + idFacebook, responseHandler);
     }
 
     public static void getCommunautesUtilisateur(String idFacebook, AsyncHttpResponseHandler responseHandler) {

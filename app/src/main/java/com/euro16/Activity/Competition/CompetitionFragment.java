@@ -319,6 +319,13 @@ public class CompetitionFragment extends Fragment {
         for (Match match : CurrentSession.getMatchs(groupe)) {
 
             View rowLayout = LayoutInflater.from(getActivity().getApplicationContext()).inflate(R.layout.table_item_match, null, false);
+
+            ImageView iconEquipe1 = (ImageView) rowLayout.findViewById(R.id.iconEquipe1);
+            String icon1 = EEquipeIcon.getNomIcon(match.getEquipe1().getNom());
+            if(icon1 != null) {
+                iconEquipe1.setImageResource(getResources().getIdentifier(icon1, "drawable", getActivity().getPackageName()));
+            }
+
             TextView nomEquipe1 = (TextView) rowLayout.findViewById(R.id.nomEquipe1);
             nomEquipe1.setText(match.getEquipe1().getNom());
 
@@ -332,6 +339,12 @@ public class CompetitionFragment extends Fragment {
 
             TextView nomEquipe2 = (TextView) rowLayout.findViewById(R.id.nomEquipe2);
             nomEquipe2.setText(match.getEquipe2().getNom());
+
+            ImageView iconEquipe2 = (ImageView) rowLayout.findViewById(R.id.iconEquipe2);
+            String icon2 = EEquipeIcon.getNomIcon(match.getEquipe2().getNom());
+            if(icon2 != null) {
+                iconEquipe2.setImageResource(getResources().getIdentifier(icon2, "drawable", getActivity().getPackageName()));
+            }
 
             TableLayout.LayoutParams layoutParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT);
             layoutParams.setMargins(0, 10, 0, 10);
