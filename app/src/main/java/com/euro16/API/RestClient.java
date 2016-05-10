@@ -73,6 +73,10 @@ public class RestClient {
         get(getAbsoluteUrl("getPronostic") + "&utilisateur=" + idFacebook + "&equipe1=" + equipe1 + "&equipe2=" + equipe2 + "&date_match=" + dateMatch, responseHandler);
     }
 
+    public static void getPronosticsUtilisateur(String idFacebook, AsyncHttpResponseHandler responseHandler) {
+        get(getAbsoluteUrl("getPronosticsUtilisateur") + "&utilisateur=" + idFacebook, responseHandler);
+    }
+
     /** POST METHOD **/
 
     public static void post(String url, StringEntity entity, AsyncHttpResponseHandler responseHandler) {

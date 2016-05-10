@@ -37,11 +37,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -53,6 +55,8 @@ public class CompetitionFragment extends Fragment {
     private FrameLayout layout;
 
     private ArrayList<String> nomPhases;
+
+    private HashMap<Match, String> matchResultat;
 
     private TableLayout gridClassement;
     private TableLayout gridMatchs;
@@ -106,7 +110,7 @@ public class CompetitionFragment extends Fragment {
         selectGroupes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                initTableaux();
+                initClassement();
             }
 
             @Override
@@ -153,7 +157,7 @@ public class CompetitionFragment extends Fragment {
                             e.printStackTrace();
                         }
                     }
-                    initTableaux();
+                    initClassement();
                     initOnSelectedItem();
                 }
 
@@ -232,13 +236,13 @@ public class CompetitionFragment extends Fragment {
         equipe.setGoalAverage(equipe.getGoalAverage() + resultatDiff);
     }
 
-    public void initTableaux() {
+    public void initClassement() {
         // Suppression des tableaux précédents
         gridClassement.removeAllViews();
         gridMatchs.removeAllViews();
 
         // Récupération groupe selectionné
-        EGroupeEuro groupe = EGroupeEuro.getGroupeEuro(selectGroupes.getSelectedItem().toString());
+        final EGroupeEuro groupe = EGroupeEuro.getGroupeEuro(selectGroupes.getSelectedItem().toString());
 
         // Initialisation classement
         if(groupe.hasClassement()) {
@@ -315,6 +319,63 @@ public class CompetitionFragment extends Fragment {
             }
         }
 
+        if(FacebookConnexion.isOnline(getActivity())) {
+            RestClient.getPronosticsUtilisateur(CurrentSession.utilisateur.getId(), new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Erreur : Aucun match n'est disponible", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONArray arrayResponse) {
+                    Log.i("Euro 16", "success : " + arrayResponse);
+                    matchResultat = new HashMap<Match, String>();
+                    for (int i = 0; i < arrayResponse.length(); i++) {
+                        try {
+                            Equipe equipe1 = new Equipe(arrayResponse.getJSONObject(i).getString("Equipe1"), 0, 0, 0, 0, 0, 0);
+                            Equipe equipe2 = new Equipe(arrayResponse.getJSONObject(i).getString("Equipe2"), 0, 0, 0, 0, 0, 0);
+                            String resultat = arrayResponse.getJSONObject(i).getString("Resultat");
+
+                            Timestamp timestamp = new Timestamp(Long.parseLong(arrayResponse.getJSONObject(i).getString("DateMatch") + "000"));
+                            Date dateMatch = new Date(timestamp.getTime());
+                            DateFormat dateFormat = new SimpleDateFormat(EDateFormat.DATETIME_GET_MATCH.getFormatDate());
+
+                            Match match = new Match(equipe1, equipe2, dateMatch);
+
+                            matchResultat.put(match, resultat);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    initMatchs(groupe, matchResultat);
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Erreur : Impossible de récupérer les matchs", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            new AlertMsgBox(getActivity(), getResources().getString(R.string.title_msg_box), getResources().getString(R.string.body_msg_box), getResources().getString(R.string.button_msg_box), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    getActivity().finish();
+                }
+            });
+        }
+    }
+
+    public Match getMatchInMatchResultat(String equipe1, String equipe2, Date date) {
+        for(Match match : matchResultat.keySet()) {
+            if(match.getEquipe1().getNom().equalsIgnoreCase(equipe1) && match.getEquipe2().getNom().equalsIgnoreCase(equipe2)
+                    && match.getDateMatch().compareTo(date)==0) {
+                return match;
+            }
+        }
+        return null;
+    }
+
+    public void initMatchs(EGroupeEuro groupe, HashMap<Match, String> matchResultat) {
         // Initialisation match
         for (Match match : CurrentSession.getMatchs(groupe)) {
 
@@ -335,6 +396,15 @@ public class CompetitionFragment extends Fragment {
 
                 TextView score2 = (TextView) rowLayout.findViewById(R.id.score2);
                 score2.setText(String.valueOf(match.getScore2()));
+
+                int resultMatch = match.getScore1() - match.getScore2();
+                Match matchFromHm = getMatchInMatchResultat(match.getEquipe1().getNom(), match.getEquipe2().getNom(), match.getDateMatch());
+                if((resultMatch > 0 && matchResultat.get(match).equalsIgnoreCase("1"))
+                        ||(resultMatch < 0 && matchResultat.get(match).equalsIgnoreCase("2"))
+                        || (resultMatch == 0 && matchResultat.get(match).equalsIgnoreCase("N"))
+                        || (resultMatch == 0 && matchResultat.get(match).equalsIgnoreCase("n"))) {
+                    Log.i("Euro 16", "En vert");
+                } // TODO : Sinon on regarde la date et vérifier si le match à été pronostiqué ou non
             }
 
             TextView nomEquipe2 = (TextView) rowLayout.findViewById(R.id.nomEquipe2);
