@@ -99,49 +99,66 @@ public class PronosticFragment extends Fragment {
     }
 
     public void initListeners(Equipe equipe1, Equipe equipe2, Date dateMatch) {
-        if(FacebookConnexion.isOnline(getActivity())) {
-
-            SimpleDateFormat dateFormat = new SimpleDateFormat(EDateFormat.DATETIME_GET_MATCH.getFormatDate());
-            RestClient.getPronostic(CurrentSession.utilisateur.getId(), equipe1.getNom(), equipe2.getNom(), dateFormat.format(dateMatch), new JsonHttpResponseHandler() {
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Success : Aucun match n'est disponible", Toast.LENGTH_SHORT).show();
-                    Log.i("Euro 16", "response : " + jsonObject);
-                }
-
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONArray arrayResponse) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Success : le match est dispo", Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Erreur : Impossible de récupérer les matchs : " + statusCode, Toast.LENGTH_SHORT).show();
-                    Log.i("Euro 16", "response failure 2 : " + responseString);
-                }
-
-                @Override
-                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject jsonObject) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Erreur : Impossible de récupérer les matchs", Toast.LENGTH_SHORT).show();
-                    Log.i("Euro 16", "response failure : " + jsonObject.toString());
-                }
-            });
-        } else {
-            new AlertMsgBox(getActivity(), getResources().getString(R.string.title_msg_box), getResources().getString(R.string.body_msg_box), getResources().getString(R.string.button_msg_box), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    getActivity().finish();
-                }
-            });
-        }
-
-
-//        Button btnProno1 = (Button) layout.findViewById(R.id.choix1Prono);
-//        btnProno1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
+//        if(FacebookConnexion.isOnline(getActivity())) {
 //
-//            }
-//        });
+//            SimpleDateFormat dateFormat = new SimpleDateFormat(EDateFormat.DATETIME_GET_MATCH.getFormatDate());
+//            RestClient.getPronostic(CurrentSession.utilisateur.getId(), equipe1.getNom(), equipe2.getNom(), dateFormat.format(dateMatch), new JsonHttpResponseHandler() {
+//                @Override
+//                public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
+//                    Toast.makeText(getActivity().getApplicationContext(), "Success : Aucun match n'est disponible", Toast.LENGTH_SHORT).show();
+//                    Log.i("Euro 16", "response : " + jsonObject);
+//                }
+//
+//                @Override
+//                public void onSuccess(int statusCode, Header[] headers, JSONArray arrayResponse) {
+//                    Toast.makeText(getActivity().getApplicationContext(), "Success : le match est dispo", Toast.LENGTH_SHORT).show();
+//                }
+//
+//                @Override
+//                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+//                    Toast.makeText(getActivity().getApplicationContext(), "Erreur : Impossible de récupérer les matchs : " + statusCode, Toast.LENGTH_SHORT).show();
+//                    Log.i("Euro 16", "response failure 2 : " + responseString);
+//                }
+//            });
+//        } else {
+//            new AlertMsgBox(getActivity(), getResources().getString(R.string.title_msg_box), getResources().getString(R.string.body_msg_box), getResources().getString(R.string.button_msg_box), new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    getActivity().finish();
+//                }
+//            });
+//        }
+
+
+        Button btnProno1 = (Button) layout.findViewById(R.id.choix1Prono);
+        btnProno1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(FacebookConnexion.isOnline(getActivity())) {
+
+                    SimpleDateFormat dateFormat = new SimpleDateFormat(EDateFormat.DATETIME_BASE.getFormatDate());
+                    RestClient.creerPronostic(CurrentSession.utilisateur.getId(), match.getEquipe1().getNom(), match.getEquipe2().getNom(), dateFormat.format(match.getDateMatch()), String.valueOf("1"), new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
+                            Toast.makeText(getActivity().getApplicationContext(), "Success : Prono créé", Toast.LENGTH_SHORT).show();
+                            Log.i("Euro 16", "response : " + jsonObject);
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                            Toast.makeText(getActivity().getApplicationContext(), "Erreur : Impossible de créér le pronostic : " + statusCode, Toast.LENGTH_SHORT).show();
+                            Log.i("Euro 16", "response failure 2 : " + responseString);
+                        }
+                    });
+                } else {
+                    new AlertMsgBox(getActivity(), getResources().getString(R.string.title_msg_box), getResources().getString(R.string.body_msg_box), getResources().getString(R.string.button_msg_box), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            getActivity().finish();
+                        }
+                    });
+                }
+            }
+        });
     }
 }

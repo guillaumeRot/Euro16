@@ -1,5 +1,7 @@
 package com.euro16.API;
 
+import android.util.Log;
+
 import com.euro16.Config;
 import com.euro16.Model.CurrentSession;
 import com.loopj.android.http.AsyncHttpClient;
@@ -160,6 +162,25 @@ public class RestClient {
             json.put("id_facebook", idFacebook);
             json.put("groupe", groupe);
             json.put("statut", statut);
+
+            entity = new StringEntity(json.toString(), HTTP.UTF_8);
+            entity.setContentType("application/json");
+
+            post("ajouterUtilisateurGroupe", entity, httpResponseHandler);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void creerPronostic(String idFacebook, String equipe1, String equipe2, String dateMatch, String resultat, AsyncHttpResponseHandler httpResponseHandler) {
+        JSONObject json = new JSONObject();
+        StringEntity entity;
+        try {
+            json.put("id_facebook", idFacebook);
+            json.put("equipe1", equipe1);
+            json.put("equipe2", equipe2);
+            json.put("date_match", dateMatch);
+            json.put("resultat", resultat);
 
             entity = new StringEntity(json.toString(), HTTP.UTF_8);
             entity.setContentType("application/json");
