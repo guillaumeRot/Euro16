@@ -94,4 +94,17 @@ public class Equipe {
         }
         return diffPts;
     }
+
+    @Override
+    public String toString() {
+        return "Equipe{" +
+                "nom='" + nom + '\'' +
+                ", pts=" + pts +
+                ", joues=" + joues +
+                ", gagnes=" + gagnes +
+                ", nuls=" + nuls +
+                ", perdus=" + perdus +
+                ", goalAverage=" + goalAverage +
+                '}';
+    }
 }

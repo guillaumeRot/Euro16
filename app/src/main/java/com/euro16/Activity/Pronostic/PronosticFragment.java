@@ -1,10 +1,13 @@
 package com.euro16.Activity.Pronostic;
 
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.euro16.API.RestClient;
+import com.euro16.Activity.Competition.CompetitionFragment;
 import com.euro16.Activity.Facebook.FacebookConnexion;
 import com.euro16.Model.CurrentSession;
 import com.euro16.Model.Equipe;
@@ -24,6 +28,7 @@ import com.euro16.Utils.AlertMsgBox;
 import com.euro16.Utils.Enums.EDateFormat;
 import com.euro16.Utils.Enums.EEquipeIcon;
 import com.euro16.Utils.Enums.EGroupeEuro;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -33,6 +38,7 @@ import org.json.JSONObject;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import cz.msebera.android.httpclient.Header;
@@ -46,6 +52,8 @@ public class PronosticFragment extends Fragment {
 
     private Match match;
 
+    private boolean callFromCompetition;
+
     public PronosticFragment() {
         // Required empty public constructor
     }
@@ -58,10 +66,13 @@ public class PronosticFragment extends Fragment {
         layout = (FrameLayout) inflater.inflate(R.layout.fragment_pronostic, container, false);
 
         match = getArguments().getParcelable("match");
+        getArguments().remove("match");
 
-        Log.i("Euro 16", "THE SUPER MATCH : " + match.toString());
+        callFromCompetition = getArguments().getBoolean("callFromCompetition");
+        getArguments().remove("callFromCompetition");
 
         initDate(match.getDateMatch());
+        initGroupe(match.getGroupe());
         initEquipes(match.getEquipe1(), match.getEquipe2());
         initListeners(match.getEquipe1(), match.getEquipe2(), match.getDateMatch());
 
@@ -72,6 +83,11 @@ public class PronosticFragment extends Fragment {
         SimpleDateFormat dateFormat = new SimpleDateFormat(EDateFormat.DATETIME_PRONOSTIC.getFormatDate());
         TextView tvDate = (TextView) layout.findViewById(R.id.tvDateTimeProno);
         tvDate.setText(dateFormat.format(dateMatch));
+    }
+
+    public void initGroupe(EGroupeEuro groupe) {
+        TextView tvDate = (TextView) layout.findViewById(R.id.tvGroupeProno);
+        tvDate.setText(groupe.getNomGrp());
     }
 
     public void initEquipes(Equipe equipe1, Equipe equipe2) {
@@ -99,66 +115,104 @@ public class PronosticFragment extends Fragment {
     }
 
     public void initListeners(Equipe equipe1, Equipe equipe2, Date dateMatch) {
-//        if(FacebookConnexion.isOnline(getActivity())) {
-//
-//            SimpleDateFormat dateFormat = new SimpleDateFormat(EDateFormat.DATETIME_GET_MATCH.getFormatDate());
-//            RestClient.getPronostic(CurrentSession.utilisateur.getId(), equipe1.getNom(), equipe2.getNom(), dateFormat.format(dateMatch), new JsonHttpResponseHandler() {
-//                @Override
-//                public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
-//                    Toast.makeText(getActivity().getApplicationContext(), "Success : Aucun match n'est disponible", Toast.LENGTH_SHORT).show();
-//                    Log.i("Euro 16", "response : " + jsonObject);
-//                }
-//
-//                @Override
-//                public void onSuccess(int statusCode, Header[] headers, JSONArray arrayResponse) {
-//                    Toast.makeText(getActivity().getApplicationContext(), "Success : le match est dispo", Toast.LENGTH_SHORT).show();
-//                }
-//
-//                @Override
-//                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-//                    Toast.makeText(getActivity().getApplicationContext(), "Erreur : Impossible de récupérer les matchs : " + statusCode, Toast.LENGTH_SHORT).show();
-//                    Log.i("Euro 16", "response failure 2 : " + responseString);
-//                }
-//            });
-//        } else {
-//            new AlertMsgBox(getActivity(), getResources().getString(R.string.title_msg_box), getResources().getString(R.string.body_msg_box), getResources().getString(R.string.button_msg_box), new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//                    getActivity().finish();
-//                }
-//            });
-//        }
+
 
 
         Button btnProno1 = (Button) layout.findViewById(R.id.choix1Prono);
         btnProno1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(FacebookConnexion.isOnline(getActivity())) {
-
-                    SimpleDateFormat dateFormat = new SimpleDateFormat(EDateFormat.DATETIME_BASE.getFormatDate());
-                    RestClient.creerPronostic(CurrentSession.utilisateur.getId(), match.getEquipe1().getNom(), match.getEquipe2().getNom(), dateFormat.format(match.getDateMatch()), String.valueOf("1"), new JsonHttpResponseHandler() {
-                        @Override
-                        public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
-                            Toast.makeText(getActivity().getApplicationContext(), "Success : Prono créé", Toast.LENGTH_SHORT).show();
-                            Log.i("Euro 16", "response : " + jsonObject);
-                        }
-
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                            Toast.makeText(getActivity().getApplicationContext(), "Erreur : Impossible de créér le pronostic : " + statusCode, Toast.LENGTH_SHORT).show();
-                            Log.i("Euro 16", "response failure 2 : " + responseString);
-                        }
-                    });
-                } else {
-                    new AlertMsgBox(getActivity(), getResources().getString(R.string.title_msg_box), getResources().getString(R.string.body_msg_box), getResources().getString(R.string.button_msg_box), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            getActivity().finish();
-                        }
-                    });
-                }
+                creerPronosticListener("1");
             }
         });
+
+        Button btnProno2 = (Button) layout.findViewById(R.id.choix2Prono);
+        btnProno2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                creerPronosticListener("2");
+            }
+        });
+
+        Button btnPronoN = (Button) layout.findViewById(R.id.choixNProno);
+        btnPronoN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                creerPronosticListener("N");
+            }
+        });
+    }
+
+    public void creerPronosticListener(String resultat) {
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(match.getDateMatch());
+        cal.add(Calendar.MINUTE, -10);
+        final Date dateValid = cal.getTime();
+
+        //if(dateValid.after(new Date())) {
+            if(FacebookConnexion.isOnline(getActivity())) {
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat(EDateFormat.DATETIME_GET_MATCH.getFormatDate());
+                RestClient.creerPronostic(CurrentSession.utilisateur.getId(), match.getEquipe1().getNom(), match.getEquipe2().getNom(), dateFormat.format(match.getDateMatch()), resultat, new AsyncHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                        Toast.makeText(getActivity().getApplicationContext(), "Le pronostic a été créé", Toast.LENGTH_SHORT).show();
+
+                        if(!callFromCompetition) {
+                            CurrentSession.matchNonPronostiques.removeFirst();
+                        }
+
+                        Log.i("Euro 16", "callFromCompetition : " + callFromCompetition);
+                        if(callFromCompetition || CurrentSession.matchNonPronostiques.isEmpty()) {
+                            CurrentSession.matchNonPronostiques.remove(match);
+                            FragmentManager fragmentManager = getFragmentManager();
+                            Fragment frag = null;
+                            try {
+                                frag = CompetitionFragment.class.newInstance();
+                            } catch (java.lang.InstantiationException e) {
+                                e.printStackTrace();
+                            } catch (IllegalAccessException e) {
+                                e.printStackTrace();
+                            }
+                            fragmentManager.beginTransaction()
+                                    .replace(R.id.view_container, frag)
+                                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                    .commit();
+                        } else {
+                            if (CurrentSession.matchNonPronostiques.getFirst() != null) {
+                                PronosticFragment pronoFragment = new PronosticFragment();
+                                Bundle bundle = new Bundle();
+                                bundle.putParcelable("match", CurrentSession.matchNonPronostiques.getFirst());
+                                pronoFragment.setArguments(bundle);
+
+                                getFragmentManager().beginTransaction()
+                                        .replace(R.id.layoutCompetition, pronoFragment)
+                                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                        .addToBackStack(null)
+                                        .commit();
+                            } else {
+                                Toast.makeText(getActivity().getApplicationContext(), "Impossible de récupérer les informations de ce match", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                        Toast.makeText(getActivity().getApplicationContext(), "Erreur : Impossible de créér le pronostic", Toast.LENGTH_SHORT).show();
+                        Log.i("Euro 16", "impossible de créer le pronostic : " + statusCode);
+                    }
+                });
+            } else {
+                new AlertMsgBox(getActivity(), getResources().getString(R.string.title_msg_box), getResources().getString(R.string.body_msg_box), getResources().getString(R.string.button_msg_box), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        getActivity().finish();
+                    }
+                });
+            }
+//        } else {
+//            Toast.makeText(getActivity().getApplicationContext(), "La date pour pronostiquer le match est dépassée", Toast.LENGTH_LONG).show();
+//        }
     }
 }

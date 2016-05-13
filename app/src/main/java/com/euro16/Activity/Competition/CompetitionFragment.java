@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +40,7 @@ import org.json.JSONObject;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -152,6 +155,8 @@ public class CompetitionFragment extends Fragment {
                                 matchs.add(match);
                                 CurrentSession.groupeMatchs.put(groupe, matchs);
                             }
+
+                            initMatchsNonPronostiques();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -323,7 +328,8 @@ public class CompetitionFragment extends Fragment {
             RestClient.getPronosticsUtilisateur(CurrentSession.utilisateur.getId(), new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Erreur : Aucun match n'est disponible", Toast.LENGTH_SHORT).show();
+                    matchResultat = new HashMap<Match, String>();
+                    initMatchs(groupe, matchResultat);
                 }
 
                 @Override
@@ -336,14 +342,15 @@ public class CompetitionFragment extends Fragment {
                             Equipe equipe2 = new Equipe(arrayResponse.getJSONObject(i).getString("Equipe2"), 0, 0, 0, 0, 0, 0);
                             String resultat = arrayResponse.getJSONObject(i).getString("Resultat");
 
-                            Timestamp timestamp = new Timestamp(Long.parseLong(arrayResponse.getJSONObject(i).getString("DateMatch") + "000"));
-                            Date dateMatch = new Date(timestamp.getTime());
-                            DateFormat dateFormat = new SimpleDateFormat(EDateFormat.DATETIME_GET_MATCH.getFormatDate());
+                            DateFormat dateFormat = new SimpleDateFormat(EDateFormat.DATETIME_BASE.getFormatDate());
+                            Date dateMatch = dateFormat.parse(arrayResponse.getJSONObject(i).getString("DateMatch"));
 
-                            Match match = new Match(equipe1, equipe2, dateMatch);
+                            Match match = CurrentSession.getMatch(equipe1.getNom(), equipe2.getNom(), dateMatch);
 
                             matchResultat.put(match, resultat);
                         } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (ParseException e) {
                             e.printStackTrace();
                         }
                     }
@@ -398,13 +405,21 @@ public class CompetitionFragment extends Fragment {
                 score2.setText(String.valueOf(match.getScore2()));
 
                 int resultMatch = match.getScore1() - match.getScore2();
-                Match matchFromHm = getMatchInMatchResultat(match.getEquipe1().getNom(), match.getEquipe2().getNom(), match.getDateMatch());
-                if((resultMatch > 0 && matchResultat.get(match).equalsIgnoreCase("1"))
-                        ||(resultMatch < 0 && matchResultat.get(match).equalsIgnoreCase("2"))
-                        || (resultMatch == 0 && matchResultat.get(match).equalsIgnoreCase("N"))
-                        || (resultMatch == 0 && matchResultat.get(match).equalsIgnoreCase("n"))) {
-                    Log.i("Euro 16", "En vert");
-                } // TODO : Sinon on regarde la date et vérifier si le match à été pronostiqué ou non
+                if(matchResultat.get(match) != null) {
+                    if((resultMatch > 0 && matchResultat.get(match).equalsIgnoreCase("1"))
+                            ||(resultMatch < 0 && matchResultat.get(match).equalsIgnoreCase("2"))
+                            || (resultMatch == 0 && matchResultat.get(match).equalsIgnoreCase("N"))
+                            || (resultMatch == 0 && matchResultat.get(match).equalsIgnoreCase("n"))) {
+                        rowLayout.setBackgroundColor(getResources().getColor(R.color.green));
+                    }
+                } else {
+                    rowLayout.setBackgroundColor(getResources().getColor(R.color.rouge));
+                }
+
+            } else {
+                if(matchResultat.get(match) != null) {
+                    rowLayout.setBackgroundColor(getResources().getColor(R.color.orange));
+                }
             }
 
             TextView nomEquipe2 = (TextView) rowLayout.findViewById(R.id.nomEquipe2);
@@ -414,6 +429,14 @@ public class CompetitionFragment extends Fragment {
             String icon2 = EEquipeIcon.getNomIcon(match.getEquipe2().getNom());
             if(icon2 != null) {
                 iconEquipe2.setImageResource(getResources().getIdentifier(icon2, "drawable", getActivity().getPackageName()));
+            }
+
+            if(matchResultat.get(match) != null) {
+                if(matchResultat.get(match).equalsIgnoreCase("1")) {
+                    nomEquipe1.setTypeface(null, Typeface.BOLD);
+                } else if(matchResultat.get(match).equalsIgnoreCase("2")) {
+                    nomEquipe2.setTypeface(null, Typeface.BOLD);
+                }
             }
 
             TableLayout.LayoutParams layoutParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT);
@@ -458,13 +481,15 @@ public class CompetitionFragment extends Fragment {
 
                                 if (match != null) {
                                     PronosticFragment pronoFragment = new PronosticFragment();
-                                    Bundle carBundle = new Bundle();
-                                    carBundle.putParcelable("match", match);
-                                    pronoFragment.setArguments(carBundle);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putParcelable("match", match);
+                                    bundle.putBoolean("callFromCompetition", true);
+                                    pronoFragment.setArguments(bundle);
 
                                     getFragmentManager().beginTransaction()
                                             .replace(R.id.layoutCompetition, pronoFragment)
                                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                            .addToBackStack(null)
                                             .commit();
                                 } else {
                                     Toast.makeText(getActivity().getApplicationContext(), "Impossible de récupérer les informations de ce match", Toast.LENGTH_LONG).show();
@@ -486,10 +511,18 @@ public class CompetitionFragment extends Fragment {
                     }
                 }
             });
-
             gridClassement.addView(rowLayout);
         }
     }
 
-
+    public void initMatchsNonPronostiques() {
+        // Il faudra implémenter ici la méthode qui appelera les matchs non pronostiqués
+        for(Match match : CurrentSession.getMatchs(EGroupeEuro.GROUPE_A)) {
+            if(!CurrentSession.matchNonPronostiques.contains(match)) {
+                Log.i("Euro 16", "match : " + match);
+                CurrentSession.matchNonPronostiques.add(match);
+            }
+        }
+        //Log.i("Euro 16", "matchs non prono : " + CurrentSession.matchNonPronostiques);
+    }
 }

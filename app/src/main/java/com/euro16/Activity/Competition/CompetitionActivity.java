@@ -15,6 +15,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.euro16.API.RestClient;
@@ -22,20 +26,37 @@ import com.euro16.Activity.ChoixMondeActivity;
 import com.euro16.Activity.Facebook.FacebookConnexion;
 import com.euro16.Activity.Parametres.GererMondeFragment;
 import com.euro16.Activity.Parametres.ParametresFragment;
+import com.euro16.Activity.Pronostic.PronosticFragment;
+import com.euro16.Model.Communaute;
 import com.euro16.Model.CurrentSession;
+import com.euro16.Model.Match;
 import com.euro16.R;
 import com.euro16.Utils.AlertMsgBox;
+import com.euro16.Utils.Enums.EGroupeEuro;
+import com.euro16.Utils.Enums.EUtilisateurStatut;
+import com.euro16.Utils.ListsView.ListViewAdapterClassement;
+import com.euro16.Utils.ListsView.ListViewAdapterCommunaute;
+import com.euro16.Utils.RowsChoix.RowChoixCommunaute;
+import com.euro16.Utils.RowsChoix.RowChoixUtilisateur;
+import com.euro16.Utils.RowsChoix.RowClassementUtilisateur;
 import com.facebook.login.LoginManager;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
 public class CompetitionActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private NavigationView navigationViewLeft;
+    private NavigationView classementView;
+
+    private ListViewAdapterClassement adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +105,12 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
 
         isAdmin();
 
-        NavigationView navigationViewRight = (NavigationView) findViewById(R.id.nav_view_right);
-        navigationViewRight.setNavigationItemSelectedListener(this);
+        classementView = (NavigationView) findViewById(R.id.nav_view_right);
+        classementView.setNavigationItemSelectedListener(this);
+
+        initClassement();
+
+        // TODO  : Faire l'appel aux matchs non pronostiqués ici => initMatchsNonPronostiques();
 
         FragmentManager fragmentManager = getFragmentManager();
         Fragment frag = null;
@@ -110,6 +135,11 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        }
+
+        FragmentManager fm = getFragmentManager();
+        if (fm.getBackStackEntryCount() > 0) {
+            fm.popBackStack();
         } else {
             super.onBackPressed();
         }
@@ -158,6 +188,22 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
 
         } else if (id == R.id.nav_pronostics) {
 
+            if (CurrentSession.matchNonPronostiques.getFirst() != null) {
+                PronosticFragment pronoFragment = new PronosticFragment();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("match", CurrentSession.matchNonPronostiques.getFirst());
+                bundle.putBoolean("callFromCompetition", false);
+                pronoFragment.setArguments(bundle);
+
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.layoutCompetition, pronoFragment)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .addToBackStack(null)
+                        .commit();
+            } else {
+                Toast.makeText(getApplicationContext(), "Impossible de récupérer les informations de ce match", Toast.LENGTH_LONG).show();
+            }
+
         } else if (id == R.id.nav_actualites) {
 
         } else if (id == R.id.nav_gerer_monde) {
@@ -192,7 +238,7 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
             fragmentManager.beginTransaction()
                     .replace(R.id.view_container, frag)
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .addToBackStack(null)
+                    .addToBackStack(frag.getClass().getName())
                     .commit();
         }
 
@@ -255,4 +301,113 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
             });
         }
     }
+
+    public void initClassement() {
+        if(CurrentSession.communaute != null) {
+            if(FacebookConnexion.isOnline(CompetitionActivity.this)) {
+                    RestClient.getClassementCommunaute(CurrentSession.communaute.getNom(), new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONArray arrayResponse) {
+                            remplirClassement(arrayResponse);
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                            Toast.makeText(getApplicationContext(), "Impossible de récupérer le classement de la communauté", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+            } else {
+                new AlertMsgBox(CompetitionActivity.this, getResources().getString(R.string.title_msg_box), getResources().getString(R.string.body_msg_box), getResources().getString(R.string.button_msg_box), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+            }
+        } else if(CurrentSession.groupe != null) {
+            if(FacebookConnexion.isOnline(CompetitionActivity.this)) {
+                RestClient.getClassementGroupe(CurrentSession.groupe.getNom(), new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONArray arrayResponse) {
+                        remplirClassement(arrayResponse);
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                        Toast.makeText(getApplicationContext(), "Impossible de récupérer le classement du groupe", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                new AlertMsgBox(CompetitionActivity.this, getResources().getString(R.string.title_msg_box), getResources().getString(R.string.body_msg_box), getResources().getString(R.string.button_msg_box), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+            }
+        } else {
+            if(FacebookConnexion.isOnline(CompetitionActivity.this)) {
+                RestClient.getClassementGlobal(new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONArray arrayResponse) {
+                        remplirClassement(arrayResponse);
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                        Toast.makeText(getApplicationContext(), "Impossible de récupérer le classement global", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                new AlertMsgBox(CompetitionActivity.this, getResources().getString(R.string.title_msg_box), getResources().getString(R.string.body_msg_box), getResources().getString(R.string.button_msg_box), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+            }
+        }
+    }
+
+    public void remplirClassement(JSONArray arrayResponse) {
+
+        ListView listClassement = (ListView) classementView.findViewById(R.id.list_classement);
+        adapter = new ListViewAdapterClassement(CompetitionActivity.this, R.layout.list_item_communaute);
+        listClassement.setAdapter(adapter);
+
+        for (int i = 0; i < arrayResponse.length(); i++) {
+            try {
+                String nomUti = arrayResponse.getJSONObject(i).getString("NomUti");
+                String prenomUti = arrayResponse.getJSONObject(i).getString("PrenomUti");
+                String photoUti = arrayResponse.getJSONObject(i).getString("PhotoUti");
+                String ptsUti = arrayResponse.getJSONObject(i).getString("Points");
+                String idFacebook = arrayResponse.getJSONObject(i).getString("ID_Facebook");
+
+                if(idFacebook.equalsIgnoreCase(CurrentSession.utilisateur.getId())) {
+                    // TODO  : Afficher l'user courant dans une autre couleur
+                }
+
+                if(i < 6 || idFacebook.equalsIgnoreCase(CurrentSession.utilisateur.getId()) || i == arrayResponse.length()-1) {
+                    RowClassementUtilisateur row = new RowClassementUtilisateur(nomUti, prenomUti, photoUti, ptsUti);
+                    adapter.add(row);
+                } else if(i == 6 || i == arrayResponse.length()-2) {
+                    RowClassementUtilisateur row = new RowClassementUtilisateur("...", "", "", "");
+                    adapter.add(row);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        listClassement.setItemsCanFocus(false);
+    }
+
+//    public void initMatchsNonPronostiques() {
+//        // Il faudra implémenter ici la méthode qui appelera les matchs non pronostiqués
+//        for(ArrayList<Match> matches : CurrentSession.groupeMatchs.values()) {
+//            for(Match match : matches) {
+//                CurrentSession.matchNonPronostiques.add(match);
+//            }
+//        }
+//        Log.i("Euro 16", "matchs non prono : " + CurrentSession.matchNonPronostiques);
+//    }
 }

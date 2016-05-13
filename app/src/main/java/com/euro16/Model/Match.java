@@ -2,6 +2,7 @@ package com.euro16.Model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.euro16.Utils.Enums.EDateFormat;
 import com.euro16.Utils.Enums.EGroupeEuro;
@@ -116,6 +117,7 @@ public class Match implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        Log.i("Euro 16", equipe1.toString());
         dest.writeValue(equipe1);
         dest.writeValue(equipe2);
         dest.writeValue(groupe);

@@ -79,6 +79,22 @@ public class RestClient {
         get(getAbsoluteUrl("getPronosticsUtilisateur") + "&utilisateur=" + idFacebook, responseHandler);
     }
 
+    public static void getClassementGlobal(AsyncHttpResponseHandler responseHandler) {
+        get(getAbsoluteUrl("getClassementGlobal"), responseHandler);
+    }
+
+    public static void getClassementCommunaute(String communaute, AsyncHttpResponseHandler responseHandler) {
+        get(getAbsoluteUrl("getClassementCommunaute") + "&communaute=" + communaute, responseHandler);
+    }
+
+    public static void getClassementGroupe(String groupe, AsyncHttpResponseHandler responseHandler) {
+        get(getAbsoluteUrl("getClassementGroupe") + "&groupe=" + groupe, responseHandler);
+    }
+
+    public static void getCotesMatch(String date, AsyncHttpResponseHandler responseHandler) {
+        get("https://www.parionssport.fr/api/1n2/offre?sport=100&date=20160516", responseHandler);
+    }
+
     /** POST METHOD **/
 
     public static void post(String url, StringEntity entity, AsyncHttpResponseHandler responseHandler) {
@@ -185,7 +201,7 @@ public class RestClient {
             entity = new StringEntity(json.toString(), HTTP.UTF_8);
             entity.setContentType("application/json");
 
-            post("ajouterUtilisateurGroupe", entity, httpResponseHandler);
+            post("creerPronostic", entity, httpResponseHandler);
         } catch(Exception e) {
             e.printStackTrace();
         }
