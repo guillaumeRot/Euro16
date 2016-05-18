@@ -155,9 +155,6 @@ public class CompetitionFragment extends Fragment {
                                 matchs.add(match);
                                 CurrentSession.groupeMatchs.put(groupe, matchs);
                             }
-
-                            initMatchsNonPronostiques();
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -342,15 +339,13 @@ public class CompetitionFragment extends Fragment {
                             Equipe equipe2 = new Equipe(arrayResponse.getJSONObject(i).getString("Equipe2"), 0, 0, 0, 0, 0, 0);
                             String resultat = arrayResponse.getJSONObject(i).getString("Resultat");
 
-                            DateFormat dateFormat = new SimpleDateFormat(EDateFormat.DATETIME_BASE.getFormatDate());
-                            Date dateMatch = dateFormat.parse(arrayResponse.getJSONObject(i).getString("DateMatch"));
+                            Timestamp timestamp = new Timestamp(Long.parseLong(arrayResponse.getJSONObject(i).getString("DateMatch") + "000"));
+                            Date dateMatch = new Date(timestamp.getTime());
 
                             Match match = CurrentSession.getMatch(equipe1.getNom(), equipe2.getNom(), dateMatch);
 
                             matchResultat.put(match, resultat);
                         } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (ParseException e) {
                             e.printStackTrace();
                         }
                     }
@@ -513,16 +508,5 @@ public class CompetitionFragment extends Fragment {
             });
             gridClassement.addView(rowLayout);
         }
-    }
-
-    public void initMatchsNonPronostiques() {
-        // Il faudra implémenter ici la méthode qui appelera les matchs non pronostiqués
-        for(Match match : CurrentSession.getMatchs(EGroupeEuro.GROUPE_A)) {
-            if(!CurrentSession.matchNonPronostiques.contains(match)) {
-                Log.i("Euro 16", "match : " + match);
-                CurrentSession.matchNonPronostiques.add(match);
-            }
-        }
-        //Log.i("Euro 16", "matchs non prono : " + CurrentSession.matchNonPronostiques);
     }
 }

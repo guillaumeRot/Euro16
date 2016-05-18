@@ -29,9 +29,11 @@ import com.euro16.Activity.Parametres.ParametresFragment;
 import com.euro16.Activity.Pronostic.PronosticFragment;
 import com.euro16.Model.Communaute;
 import com.euro16.Model.CurrentSession;
+import com.euro16.Model.Equipe;
 import com.euro16.Model.Match;
 import com.euro16.R;
 import com.euro16.Utils.AlertMsgBox;
+import com.euro16.Utils.Enums.EDateFormat;
 import com.euro16.Utils.Enums.EGroupeEuro;
 import com.euro16.Utils.Enums.EUtilisateurStatut;
 import com.euro16.Utils.ListsView.ListViewAdapterClassement;
@@ -47,7 +49,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -108,9 +114,8 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
         classementView = (NavigationView) findViewById(R.id.nav_view_right);
         classementView.setNavigationItemSelectedListener(this);
 
+        initMatchsNonPronostiques();
         initClassement();
-
-        // TODO  : Faire l'appel aux matchs non pronostiqués ici => initMatchsNonPronostiques();
 
         FragmentManager fragmentManager = getFragmentManager();
         Fragment frag = null;
@@ -188,7 +193,7 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
 
         } else if (id == R.id.nav_pronostics) {
 
-            if (CurrentSession.matchNonPronostiques.getFirst() != null) {
+            if (!CurrentSession.matchNonPronostiques.isEmpty()) {
                 PronosticFragment pronoFragment = new PronosticFragment();
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("match", CurrentSession.matchNonPronostiques.getFirst());
@@ -201,7 +206,7 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
                         .addToBackStack(null)
                         .commit();
             } else {
-                Toast.makeText(getApplicationContext(), "Impossible de récupérer les informations de ce match", Toast.LENGTH_LONG).show();
+                Toast.makeText(CompetitionActivity.this, "Vous avez déjà pronostiquer sur tous les matchs", Toast.LENGTH_SHORT).show();
             }
 
         } else if (id == R.id.nav_actualites) {
@@ -401,13 +406,43 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
         listClassement.setItemsCanFocus(false);
     }
 
-//    public void initMatchsNonPronostiques() {
-//        // Il faudra implémenter ici la méthode qui appelera les matchs non pronostiqués
-//        for(ArrayList<Match> matches : CurrentSession.groupeMatchs.values()) {
-//            for(Match match : matches) {
-//                CurrentSession.matchNonPronostiques.add(match);
-//            }
-//        }
-//        Log.i("Euro 16", "matchs non prono : " + CurrentSession.matchNonPronostiques);
-//    }
+    public void initMatchsNonPronostiques() {
+        Log.i("Euro 16", "dans initMatch non pronos");
+        if(FacebookConnexion.isOnline(CompetitionActivity.this)) {
+            RestClient.getMatchsNonPronostiques(CurrentSession.utilisateur.getId(), new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONArray arrayResponse) {
+                    Log.i("Euro 16", "response non pronos : " + statusCode + " : " + arrayResponse);
+                    for(int i = 0; i < arrayResponse.length(); i++) {
+                        try {
+                            Equipe equipe1 = CurrentSession.getEquipeByNom(arrayResponse.getJSONObject(i).getString("Equipe1"));
+                            Equipe equipe2 = CurrentSession.getEquipeByNom(arrayResponse.getJSONObject(i).getString("Equipe2"));
+
+                            Timestamp timestamp = new Timestamp(Long.parseLong(arrayResponse.getJSONObject(i).getString("DateMatch") + "000"));
+                            Date dateMatch = new Date(timestamp.getTime());
+
+                            EGroupeEuro groupe = EGroupeEuro.getGroupeEuro(arrayResponse.getJSONObject(i).getString("Groupe"));
+
+                            CurrentSession.matchNonPronostiques.add(new Match(equipe1, equipe2, -1, -1, dateMatch, groupe));
+
+                        } catch(Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    Toast.makeText(getApplicationContext(), "Impossible de récupérer les matchs non pronostiqués", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            new AlertMsgBox(CompetitionActivity.this, getResources().getString(R.string.title_msg_box), getResources().getString(R.string.body_msg_box), getResources().getString(R.string.button_msg_box), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+        }
+    }
 }
