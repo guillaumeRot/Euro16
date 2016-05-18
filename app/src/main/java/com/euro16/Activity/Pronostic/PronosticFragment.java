@@ -144,13 +144,7 @@ public class PronosticFragment extends Fragment {
     }
 
     public void creerPronosticListener(String resultat) {
-
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(match.getDateMatch());
-        cal.add(Calendar.MINUTE, -10);
-        final Date dateValid = cal.getTime();
-
-        //if(dateValid.after(new Date())) {
+        //if(match.getDateMatch().after(new Date())) {
             if(FacebookConnexion.isOnline(getActivity())) {
 
                 SimpleDateFormat dateFormat = new SimpleDateFormat(EDateFormat.DATETIME_GET_MATCH.getFormatDate());
@@ -163,7 +157,7 @@ public class PronosticFragment extends Fragment {
                             CurrentSession.matchNonPronostiques.removeFirst();
                         }
 
-                        Log.i("Euro 16", "callFromCompetition : " + callFromCompetition);
+                        Log.i("Euro 16", "callFromCompetition : " + callFromCompetition + " : " + CurrentSession.matchNonPronostiques);
                         if(callFromCompetition || CurrentSession.matchNonPronostiques.isEmpty()) {
                             CurrentSession.matchNonPronostiques.remove(match);
                             FragmentManager fragmentManager = getFragmentManager();

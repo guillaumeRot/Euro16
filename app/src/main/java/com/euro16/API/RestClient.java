@@ -91,8 +91,8 @@ public class RestClient {
         get(getAbsoluteUrl("getClassementGroupe") + "&groupe=" + groupe, responseHandler);
     }
 
-    public static void getCotesMatch(String date, AsyncHttpResponseHandler responseHandler) {
-        get("https://www.parionssport.fr/api/1n2/offre?sport=100&date=20160516", responseHandler);
+    public static void getMatchsNonPronostiques(String idFacebook, AsyncHttpResponseHandler responseHandler) {
+        get(getAbsoluteUrl("getNonPronosticsUtilisateur") + "&utilisateur=" + idFacebook, responseHandler);
     }
 
     /** POST METHOD **/

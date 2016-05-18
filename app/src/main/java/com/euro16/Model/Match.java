@@ -31,12 +31,6 @@ public class Match implements Parcelable{
         this.dateMatch = dateMatch;
     }
 
-    public Match(Equipe equipe1, Equipe equipe2, Date dateMatch) {
-        this.equipe1 = equipe1;
-        this.equipe2 = equipe2;
-        this.dateMatch = dateMatch;
-    }
-
     public Match(Parcel in) {
         in.readValue(Match.class.getClassLoader());
         in.readValue(Match.class.getClassLoader());
