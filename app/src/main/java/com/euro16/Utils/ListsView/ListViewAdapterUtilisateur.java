@@ -10,8 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.euro16.R;
-import com.euro16.Utils.ImageFromUrl;
 import com.euro16.Utils.RowsChoix.RowChoixUtilisateur;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by Guillaume on 16/04/2016.
@@ -48,7 +48,7 @@ public class ListViewAdapterUtilisateur extends ArrayAdapter<RowChoixUtilisateur
 
         holder.textViewNom.setText(rowItem.getNom());
         holder.textViewPrenom.setText(rowItem.getPrenom());
-        new ImageFromUrl(holder.ImageViewPhoto).execute(rowItem.getPhoto());
+        Picasso.with(context.getApplicationContext()).load("https://scontent.xx.fbcdn.net/v/t1.0-1/p200x200/10953929_10206199409086769_5590917736953600821_n.jpg?oh=aaea76c587fac5612e87b09f78ab66fe&oe=57A3256E").into(holder.ImageViewPhoto);
 
         return convertView;
     }

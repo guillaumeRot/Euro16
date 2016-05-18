@@ -32,4 +32,5 @@ dependencies {
     compile 'com.android.support:design:23.2.1'
     compile 'com.android.support:support-v4:23.2.1'
     compile 'com.viewpagerindicator:library:2.4.1@aar'
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }

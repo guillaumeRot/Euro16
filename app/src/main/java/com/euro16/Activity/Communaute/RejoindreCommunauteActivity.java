@@ -60,6 +60,7 @@ public class RejoindreCommunauteActivity extends AppCompatActivity {
         });
 
         if(FacebookConnexion.isOnline(this)) {
+            Log.i("Euro 16", "id : " + CurrentSession.utilisateur.getId());
             RestClient.getCommunautes(CurrentSession.utilisateur.getId(), new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(final int statusCode, Header[] headers, JSONArray arrayResponse) {

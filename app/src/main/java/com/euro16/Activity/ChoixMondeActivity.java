@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.euro16.Activity.Communaute.ChoixCommunauteActivity;
 import com.euro16.Activity.Competition.CompetitionActivity;
 import com.euro16.Activity.Groupe.ChoixGroupeActivity;
 import com.euro16.Model.CurrentSession;
 import com.euro16.R;
+import com.squareup.picasso.Picasso;
 
 public class ChoixMondeActivity extends AppCompatActivity {
 

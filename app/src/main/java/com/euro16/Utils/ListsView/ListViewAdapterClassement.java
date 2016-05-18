@@ -2,8 +2,6 @@ package com.euro16.Utils.ListsView;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,14 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.euro16.R;
-import com.euro16.Utils.ImageFromUrl;
-import com.euro16.Utils.RowsChoix.RowChoixUtilisateur;
 import com.euro16.Utils.RowsChoix.RowClassementUtilisateur;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by Guillaume on 12/05/2016.
@@ -62,8 +54,7 @@ public class ListViewAdapterClassement extends ArrayAdapter<RowClassementUtilisa
 
         Log.i("Euro 16", "photo : " + rowItem.getPhoto());
 
-
-        new ImageFromUrl(holder.ImageViewPhoto).execute(rowItem.getPhoto());
+        Picasso.with(context.getApplicationContext()).load("https://scontent.xx.fbcdn.net/v/t1.0-1/p200x200/10953929_10206199409086769_5590917736953600821_n.jpg?oh=aaea76c587fac5612e87b09f78ab66fe&oe=57A3256E").into(holder.ImageViewPhoto);
         holder.textViewPts.setText(rowItem.getPts() + "pts");
 
         return convertView;
