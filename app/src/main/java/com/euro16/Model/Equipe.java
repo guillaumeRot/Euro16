@@ -23,6 +23,10 @@ public class Equipe {
         this.goalAverage = goalAverage;
     }
 
+    public Equipe(String nom) {
+        this.nom = nom;
+    }
+
     public String getNom() {
         return nom;
     }

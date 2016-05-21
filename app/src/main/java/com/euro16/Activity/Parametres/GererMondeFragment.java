@@ -89,16 +89,6 @@ public class GererMondeFragment extends Fragment {
     private void getDemandes() {
         if(CurrentSession.communaute != null) {
             relLayout = (RelativeLayout) layout.findViewById(R.id.relLayout);
-            /*relLayout = new RelativeLayout(getActivity().getApplicationContext());
-
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 431);
-            params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-            params.addRule(RelativeLayout.ALIGN_PARENT_START);
-            params.addRule(RelativeLayout.ABOVE, R.id.btnInviter);
-            relLayout.setLayoutParams(params);
-            ((RelativeLayout) relLayout).setGravity(Gravity.CENTER);
-            layout.addView(relLayout);*/
-
 
             RestClient.getUtilisateursCommunaute(CurrentSession.communaute.getNom(), new JsonHttpResponseHandler() {
 

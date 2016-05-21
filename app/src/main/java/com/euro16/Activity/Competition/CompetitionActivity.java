@@ -64,6 +64,8 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
 
     private ListViewAdapterClassement adapter;
 
+    private boolean pronoMenuActivated;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,15 +74,7 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /*if(CurrentSession.communaute != null) {
-            Log.i("Euro 16", "Communaute : " + CurrentSession.communaute.toString());
-        }
-        if(CurrentSession.groupe != null) {
-            Log.i("Euro 16", "Groupe : " + CurrentSession.groupe.toString());
-        }
-        if(CurrentSession.communaute == null && CurrentSession.groupe == null) {
-            Log.i("Euro 16", "Mode GLOBAL");
-        }*/
+        pronoMenuActivated = false;
 
         if(CurrentSession.communaute != null) {
             if(CurrentSession.communaute.getNom().length() <= 16) {
@@ -193,6 +187,7 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
 
         } else if (id == R.id.nav_pronostics) {
 
+            Log.i("Euro 16", "CurrentSession.matchNonPronostiques : " + CurrentSession.matchNonPronostiques + " : " + !CurrentSession.matchNonPronostiques.isEmpty());
             if (!CurrentSession.matchNonPronostiques.isEmpty()) {
                 PronosticFragment pronoFragment = new PronosticFragment();
                 Bundle bundle = new Bundle();
@@ -201,7 +196,7 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
                 pronoFragment.setArguments(bundle);
 
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.layoutCompetition, pronoFragment)
+                        .replace(R.id.mainLayout, pronoFragment)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         .addToBackStack(null)
                         .commit();
@@ -210,6 +205,14 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
             }
 
         } else if (id == R.id.nav_actualites) {
+
+            try {
+                frag = ActualitesFragment.class.newInstance();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
 
         } else if (id == R.id.nav_gerer_monde) {
 
@@ -388,15 +391,11 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
                 String ptsUti = arrayResponse.getJSONObject(i).getString("Points");
                 String idFacebook = arrayResponse.getJSONObject(i).getString("ID_Facebook");
 
-                if(idFacebook.equalsIgnoreCase(CurrentSession.utilisateur.getId())) {
-                    // TODO  : Afficher l'user courant dans une autre couleur
-                }
-
                 if(i < 6 || idFacebook.equalsIgnoreCase(CurrentSession.utilisateur.getId()) || i == arrayResponse.length()-1) {
-                    RowClassementUtilisateur row = new RowClassementUtilisateur(nomUti, prenomUti, photoUti, ptsUti);
+                    RowClassementUtilisateur row = new RowClassementUtilisateur(idFacebook, nomUti, prenomUti, photoUti, ptsUti);
                     adapter.add(row);
                 } else if(i == 6 || i == arrayResponse.length()-2) {
-                    RowClassementUtilisateur row = new RowClassementUtilisateur("...", "", "", "");
+                    RowClassementUtilisateur row = new RowClassementUtilisateur("", "...", "", "", "");
                     adapter.add(row);
                 }
             } catch (JSONException e) {
@@ -407,16 +406,14 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
     }
 
     public void initMatchsNonPronostiques() {
-        Log.i("Euro 16", "dans initMatch non pronos");
         if(FacebookConnexion.isOnline(CompetitionActivity.this)) {
             RestClient.getMatchsNonPronostiques(CurrentSession.utilisateur.getId(), new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONArray arrayResponse) {
-                    Log.i("Euro 16", "response non pronos : " + statusCode + " : " + arrayResponse);
                     for(int i = 0; i < arrayResponse.length(); i++) {
                         try {
-                            Equipe equipe1 = CurrentSession.getEquipeByNom(arrayResponse.getJSONObject(i).getString("Equipe1"));
-                            Equipe equipe2 = CurrentSession.getEquipeByNom(arrayResponse.getJSONObject(i).getString("Equipe2"));
+                            Equipe equipe1 = new Equipe(arrayResponse.getJSONObject(i).getString("Equipe1"));
+                            Equipe equipe2 = new Equipe(arrayResponse.getJSONObject(i).getString("Equipe2"));
 
                             Timestamp timestamp = new Timestamp(Long.parseLong(arrayResponse.getJSONObject(i).getString("DateMatch") + "000"));
                             Date dateMatch = new Date(timestamp.getTime());
@@ -427,6 +424,9 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
 
                         } catch(Exception e) {
                             e.printStackTrace();
+                        }
+                        if(i == arrayResponse.length() - 1) {
+                            pronoMenuActivated = true;
                         }
                     }
                 }

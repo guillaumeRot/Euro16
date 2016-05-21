@@ -60,4 +60,14 @@ public class CurrentSession {
         }
         return null;
     }
+
+    public static Match getMatchNonProno(String equipe1, String equipe2, Date dateMatch) {
+        for(Match match : matchNonPronostiques) {
+            if(match.getEquipe1().getNom().equalsIgnoreCase(equipe1) && match.getEquipe2().getNom().equalsIgnoreCase(equipe2)
+                    && match.getDateMatch().compareTo(dateMatch) == 0) {
+                return match;
+            }
+        }
+        return null;
+    }
 }

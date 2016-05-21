@@ -181,7 +181,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="67%"
+
                         android:id="@+id/pronoEquipe1Joueurs"
                         android:layout_weight="0.3"
                         android:textColor="@color/black"

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     tools:context="com.euro16.Activity.Competition.CompetitionFragment"
     android:background="@color/grey"
-    android:id="@+id/layoutCompetition">
+    android:id="@+id/mainLayout">
 
 
     <ScrollView

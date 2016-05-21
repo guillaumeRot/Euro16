@@ -1,0 +1,21 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.euro16.Activity.Competition.ActualitesFragment"
+    android:id="@+id/mainLayout">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/scrollActus"
+        android:layout_gravity="center" >
+
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/relLayoutActus"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="right|top"></RelativeLayout>
+
+</FrameLayout>

@@ -367,16 +367,6 @@ public class CompetitionFragment extends Fragment {
         }
     }
 
-    public Match getMatchInMatchResultat(String equipe1, String equipe2, Date date) {
-        for(Match match : matchResultat.keySet()) {
-            if(match.getEquipe1().getNom().equalsIgnoreCase(equipe1) && match.getEquipe2().getNom().equalsIgnoreCase(equipe2)
-                    && match.getDateMatch().compareTo(date)==0) {
-                return match;
-            }
-        }
-        return null;
-    }
-
     public void initMatchs(EGroupeEuro groupe, HashMap<Match, String> matchResultat) {
         // Initialisation match
         for (Match match : CurrentSession.getMatchs(groupe)) {
@@ -391,6 +381,9 @@ public class CompetitionFragment extends Fragment {
 
             TextView nomEquipe1 = (TextView) rowLayout.findViewById(R.id.nomEquipe1);
             nomEquipe1.setText(match.getEquipe1().getNom());
+
+            TextView nomEquipe2 = (TextView) rowLayout.findViewById(R.id.nomEquipe2);
+            nomEquipe2.setText(match.getEquipe2().getNom());
 
             if(match.getScore1() != -1 && match.getScore2() != -1) {
                 TextView score1 = (TextView) rowLayout.findViewById(R.id.score1);
@@ -411,27 +404,25 @@ public class CompetitionFragment extends Fragment {
                     rowLayout.setBackgroundColor(getResources().getColor(R.color.rouge));
                 }
 
+                if(resultMatch > 0) {
+                    nomEquipe1.setTypeface(null, Typeface.BOLD);
+                } else if(resultMatch < 0) {
+                    nomEquipe2.setTypeface(null, Typeface.BOLD);
+                }
+
             } else {
                 if(matchResultat.get(match) != null) {
                     rowLayout.setBackgroundColor(getResources().getColor(R.color.orange));
                 }
             }
 
-            TextView nomEquipe2 = (TextView) rowLayout.findViewById(R.id.nomEquipe2);
-            nomEquipe2.setText(match.getEquipe2().getNom());
+            TextView prono = (TextView) rowLayout.findViewById(R.id.pronoUtil);
+            prono.setText(matchResultat.get(match));
 
             ImageView iconEquipe2 = (ImageView) rowLayout.findViewById(R.id.iconEquipe2);
             String icon2 = EEquipeIcon.getNomIcon(match.getEquipe2().getNom());
             if(icon2 != null) {
                 iconEquipe2.setImageResource(getResources().getIdentifier(icon2, "drawable", getActivity().getPackageName()));
-            }
-
-            if(matchResultat.get(match) != null) {
-                if(matchResultat.get(match).equalsIgnoreCase("1")) {
-                    nomEquipe1.setTypeface(null, Typeface.BOLD);
-                } else if(matchResultat.get(match).equalsIgnoreCase("2")) {
-                    nomEquipe2.setTypeface(null, Typeface.BOLD);
-                }
             }
 
             TableLayout.LayoutParams layoutParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT);
@@ -446,63 +437,67 @@ public class CompetitionFragment extends Fragment {
                     EGroupeEuro groupe = EGroupeEuro.getGroupeEuro(selectGroupes.getSelectedItem().toString());
                     Match match = CurrentSession.getMatch(equipe1, equipe2, groupe);
 
-                    if (FacebookConnexion.isOnline(getActivity())) {
+                    if (match.getDateMatch().after(new Date())) {
+                        if (FacebookConnexion.isOnline(getActivity())) {
 
-                        SimpleDateFormat dateFormat = new SimpleDateFormat(EDateFormat.DATETIME_GET_MATCH.getFormatDate());
-                        RestClient.getMatch(match.getEquipe1().getNom(), match.getEquipe2().getNom(), dateFormat.format(match.getDateMatch()), new JsonHttpResponseHandler() {
-                            @Override
-                            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
+                            SimpleDateFormat dateFormat = new SimpleDateFormat(EDateFormat.DATETIME_GET_MATCH.getFormatDate());
+                            RestClient.getMatch(match.getEquipe1().getNom(), match.getEquipe2().getNom(), dateFormat.format(match.getDateMatch()), new JsonHttpResponseHandler() {
+                                @Override
+                                public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
 
-                                Match match = null;
-                                try {
-                                    if (CurrentSession.getEquipeByNom(jsonObject.getString("Equipe1")) != null
-                                            && CurrentSession.getEquipeByNom(jsonObject.getString("Equipe2")) != null) {
+                                    Match match = null;
+                                    try {
+                                        if (CurrentSession.getEquipeByNom(jsonObject.getString("Equipe1")) != null
+                                                && CurrentSession.getEquipeByNom(jsonObject.getString("Equipe2")) != null) {
 
-                                        Equipe equipe1 = CurrentSession.getEquipeByNom(jsonObject.getString("Equipe1"));
-                                        Equipe equipe2 = CurrentSession.getEquipeByNom(jsonObject.getString("Equipe2"));
-                                        int score1 = !jsonObject.getString("Score1").equalsIgnoreCase("null") ? Integer.parseInt(jsonObject.getString("Score1")) : -1;
-                                        int score2 = !jsonObject.getString("Score2").equalsIgnoreCase("null") ? Integer.parseInt(jsonObject.getString("Score2")) : -1;
+                                            Equipe equipe1 = CurrentSession.getEquipeByNom(jsonObject.getString("Equipe1"));
+                                            Equipe equipe2 = CurrentSession.getEquipeByNom(jsonObject.getString("Equipe2"));
+                                            int score1 = !jsonObject.getString("Score1").equalsIgnoreCase("null") ? Integer.parseInt(jsonObject.getString("Score1")) : -1;
+                                            int score2 = !jsonObject.getString("Score2").equalsIgnoreCase("null") ? Integer.parseInt(jsonObject.getString("Score2")) : -1;
 
-                                        Timestamp timestamp = new Timestamp(Long.parseLong(jsonObject.getString("DateMatch") + "000"));
-                                        Date dateMatch = new Date(timestamp.getTime());
+                                            Timestamp timestamp = new Timestamp(Long.parseLong(jsonObject.getString("DateMatch") + "000"));
+                                            Date dateMatch = new Date(timestamp.getTime());
 
-                                        EGroupeEuro groupe = EGroupeEuro.getGroupeEuro(jsonObject.getString("Groupe"));
+                                            EGroupeEuro groupe = EGroupeEuro.getGroupeEuro(jsonObject.getString("Groupe"));
 
-                                        match = new Match(equipe1, equipe2, score1, score2, dateMatch, groupe);
+                                            match = new Match(equipe1, equipe2, score1, score2, dateMatch, groupe);
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
                                     }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
+
+                                    if (match != null) {
+                                        PronosticFragment pronoFragment = new PronosticFragment();
+                                        Bundle bundle = new Bundle();
+                                        bundle.putParcelable("match", match);
+                                        bundle.putBoolean("callFromCompetition", true);
+                                        pronoFragment.setArguments(bundle);
+
+                                        getFragmentManager().beginTransaction()
+                                                .replace(R.id.mainLayout, pronoFragment)
+                                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                                .addToBackStack(null)
+                                                .commit();
+                                    } else {
+                                        Toast.makeText(getActivity().getApplicationContext(), "Impossible de récupérer les informations de ce match", Toast.LENGTH_LONG).show();
+                                    }
                                 }
 
-                                if (match != null) {
-                                    PronosticFragment pronoFragment = new PronosticFragment();
-                                    Bundle bundle = new Bundle();
-                                    bundle.putParcelable("match", match);
-                                    bundle.putBoolean("callFromCompetition", true);
-                                    pronoFragment.setArguments(bundle);
-
-                                    getFragmentManager().beginTransaction()
-                                            .replace(R.id.layoutCompetition, pronoFragment)
-                                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                                            .addToBackStack(null)
-                                            .commit();
-                                } else {
-                                    Toast.makeText(getActivity().getApplicationContext(), "Impossible de récupérer les informations de ce match", Toast.LENGTH_LONG).show();
+                                @Override
+                                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                                    Toast.makeText(getActivity().getApplicationContext(), "Erreur : Impossible de récupèrer les informations de ce match", Toast.LENGTH_SHORT).show();
                                 }
-                            }
-
-                            @Override
-                            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                                Toast.makeText(getActivity().getApplicationContext(), "Erreur : Impossible de récupèrer les informations de ce match", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                            });
+                        } else {
+                            new AlertMsgBox(getActivity(), getResources().getString(R.string.title_msg_box), getResources().getString(R.string.body_msg_box), getResources().getString(R.string.button_msg_box), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    getActivity().finish();
+                                }
+                            });
+                        }
                     } else {
-                        new AlertMsgBox(getActivity(), getResources().getString(R.string.title_msg_box), getResources().getString(R.string.body_msg_box), getResources().getString(R.string.button_msg_box), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                getActivity().finish();
-                            }
-                        });
+                        Toast.makeText(getActivity().getApplicationContext(), "La date pour pronostiquer le match est dépassée", Toast.LENGTH_LONG).show();
                     }
                 }
             });

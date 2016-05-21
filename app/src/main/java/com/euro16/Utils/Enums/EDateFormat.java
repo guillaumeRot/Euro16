@@ -8,7 +8,8 @@ public enum EDateFormat {
     DATETIME_BASE("yyyy-MM-dd HH:mm:ss"),
     DATETIME_GET_MATCH("dd-MM-yyyy HH:mm:ss"),
     DATE_SIMPLE("dd/MM/yyyy"),
-    DATETIME_PRONOSTIC("EEEE dd MMMM - HH:mm");
+    DATETIME_PRONOSTIC("EEEE dd MMMM - HH:mm"),
+    DATETIME_PARSE_ACTU("EEE, dd MMM yyyy HH:mm:ss z");
 
     private final String formatDate;
 

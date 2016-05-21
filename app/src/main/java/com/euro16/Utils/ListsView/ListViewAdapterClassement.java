@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.euro16.Model.CurrentSession;
 import com.euro16.R;
 import com.euro16.Utils.RowsChoix.RowClassementUtilisateur;
 import com.squareup.picasso.Picasso;
@@ -52,10 +53,13 @@ public class ListViewAdapterClassement extends ArrayAdapter<RowClassementUtilisa
         holder.textViewNom.setText(rowItem.getNom());
         holder.textViewPrenom.setText(rowItem.getPrenom());
 
-        Log.i("Euro 16", "photo : " + rowItem.getPhoto());
-
-        Picasso.with(context.getApplicationContext()).load("https://scontent.xx.fbcdn.net/v/t1.0-1/p200x200/10953929_10206199409086769_5590917736953600821_n.jpg?oh=aaea76c587fac5612e87b09f78ab66fe&oe=57A3256E").into(holder.ImageViewPhoto);
+        String photoUrl = rowItem.getPhoto().replace("http", "https");
+        Picasso.with(context.getApplicationContext()).load(photoUrl).resize(150, 150).into(holder.ImageViewPhoto);
         holder.textViewPts.setText(rowItem.getPts() + "pts");
+
+        if(rowItem.getIdUtilisateur().equalsIgnoreCase(CurrentSession.utilisateur.getId())) {
+            convertView.setBackgroundColor(context.getApplicationContext().getResources().getColor(R.color.bleu));
+        }
 
         return convertView;
     }

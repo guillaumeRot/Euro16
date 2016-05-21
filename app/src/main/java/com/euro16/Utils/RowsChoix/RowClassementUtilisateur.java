@@ -5,16 +5,24 @@ package com.euro16.Utils.RowsChoix;
  */
 public class RowClassementUtilisateur {
 
+    private String idFacebook;
     private String photo;
     private String nom;
     private String prenom;
     private String pts;
 
-    public RowClassementUtilisateur(String nom, String prenom, String photo, String pts) {
+    public RowClassementUtilisateur(String idFacebook, String nom, String prenom, String photo, String pts) {
         this.photo = photo;
         this.nom = nom;
         this.prenom = prenom;
         this.pts = pts;
+        this.idFacebook = idFacebook;
+    }
+    public String getIdUtilisateur() {
+        return idFacebook;
+    }
+    public void setIdUtilisateur(String idFacebook) {
+        this.idFacebook = idFacebook;
     }
     public String getPhoto() {
         return photo;

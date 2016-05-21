@@ -95,6 +95,30 @@ public class RestClient {
         get(getAbsoluteUrl("getNonPronosticsUtilisateur") + "&utilisateur=" + idFacebook, responseHandler);
     }
 
+    public static void getPronosticsGroupe(String nomGroupe, String equipe1, String equipe2, String dateMatch, AsyncHttpResponseHandler responseHandler) {
+        get(getAbsoluteUrl("getPronosticsGroupe") + "&groupe=" + nomGroupe
+                + "&equipe1=" + equipe1
+                + "&equipe2=" + equipe2
+                + "&date_match=" + dateMatch
+                , responseHandler);
+    }
+
+    public static void getPronosticsCommunaute(String nomCommunaute, String equipe1, String equipe2, String dateMatch, AsyncHttpResponseHandler responseHandler) {
+        get(getAbsoluteUrl("getPronosticsCommunaute") + "&communaute=" + nomCommunaute
+                + "&equipe1=" + equipe1
+                + "&equipe2=" + equipe2
+                + "&date_match=" + dateMatch
+                , responseHandler);
+    }
+
+    public static void getPronosticsGlobal(String equipe1, String equipe2, String dateMatch, AsyncHttpResponseHandler responseHandler) {
+        get(getAbsoluteUrl("getPronosticsGlobal")
+                + "&equipe1=" + equipe1
+                + "&equipe2=" + equipe2
+                + "&date_match=" + dateMatch
+                , responseHandler);
+    }
+
     /** POST METHOD **/
 
     public static void post(String url, StringEntity entity, AsyncHttpResponseHandler responseHandler) {
@@ -242,6 +266,27 @@ public class RestClient {
             entity.setContentType("application/json");
 
             put("updateStatutUtilisateurCommunaute", entity, httpResponseHandler);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void updatePronostic(String idFacebook, String equipe1, String equipe2, String dateMatch, String score1, String score2, String resultat, AsyncHttpResponseHandler httpResponseHandler) {
+        JSONObject json = new JSONObject();
+        StringEntity entity;
+        try {
+            json.put("id_facebook", idFacebook);
+            json.put("equipe1", equipe1);
+            json.put("equipe2", equipe2);
+            json.put("date_match", dateMatch);
+            json.put("score1", score1);
+            json.put("score2", score2);
+            json.put("resultat", resultat);
+
+            entity = new StringEntity(json.toString(), HTTP.UTF_8);
+            entity.setContentType("application/json");
+
+            put("updatePronostic", entity, httpResponseHandler);
         } catch(Exception e) {
             e.printStackTrace();
         }

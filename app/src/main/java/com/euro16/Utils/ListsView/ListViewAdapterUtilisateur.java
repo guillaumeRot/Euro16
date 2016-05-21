@@ -48,7 +48,8 @@ public class ListViewAdapterUtilisateur extends ArrayAdapter<RowChoixUtilisateur
 
         holder.textViewNom.setText(rowItem.getNom());
         holder.textViewPrenom.setText(rowItem.getPrenom());
-        Picasso.with(context.getApplicationContext()).load("https://scontent.xx.fbcdn.net/v/t1.0-1/p200x200/10953929_10206199409086769_5590917736953600821_n.jpg?oh=aaea76c587fac5612e87b09f78ab66fe&oe=57A3256E").into(holder.ImageViewPhoto);
+        String photoUrl = rowItem.getPhoto().replace("http", "https");
+        Picasso.with(context.getApplicationContext()).load(photoUrl).resize(150, 150).into(holder.ImageViewPhoto);
 
         return convertView;
     }
