@@ -136,7 +136,7 @@ public class ChoixGroupeActivity extends AppCompatActivity {
             final JSONObject jsonObject = object;
             final String nomGroupe = jsonObject.getString("NomGrp");
 
-            new AlertMsgBox(ChoixGroupeActivity.this, "Invitation", "Vous avez été invité dans le groupe \"" + nomGroupe + "\", voulez-vous accepter ?", "Oui", "Non", new DialogInterface.OnClickListener() {
+            new AlertMsgBox(ChoixGroupeActivity.this, "Invitation", "Vous avez été invité(e) dans le groupe \"" + nomGroupe + "\", souhaitez-vous accepter ?", "Oui", "Non", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     if(FacebookConnexion.isOnline(ChoixGroupeActivity.this)) {

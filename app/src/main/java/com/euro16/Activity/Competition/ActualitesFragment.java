@@ -84,6 +84,4 @@ public class ActualitesFragment extends Fragment {
             adapter.notifyDataSetChanged();
         }
     }
-
-
 }

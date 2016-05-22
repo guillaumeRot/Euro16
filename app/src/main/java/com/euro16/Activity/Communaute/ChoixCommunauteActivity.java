@@ -164,7 +164,7 @@ public class ChoixCommunauteActivity extends AppCompatActivity {
             final JSONObject jsonObject = object;
             final String nomCommunaute = jsonObject.getString("NomCom");
 
-            new AlertMsgBox(ChoixCommunauteActivity.this, "Invitation", "Vous avez été invité dans la communauté \"" + nomCommunaute + "\", voulez-vous accepter ?", "Oui", "Non", new DialogInterface.OnClickListener() {
+            new AlertMsgBox(ChoixCommunauteActivity.this, "Invitation", "Vous avez été invité(e) dans la communauté \"" + nomCommunaute + "\", souhaitez-vous accepter ?", "Oui", "Non", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     if (FacebookConnexion.isOnline(ChoixCommunauteActivity.this)) {

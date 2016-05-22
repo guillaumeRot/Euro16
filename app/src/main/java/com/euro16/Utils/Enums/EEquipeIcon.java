@@ -30,7 +30,6 @@ public enum EEquipeIcon {
     PORTUGAL("Portugal", "portugal"),
     HONGRIE("Hongrie", "hongrie");
 
-
     private String nomEquipe;
     private String nomIcon;
 

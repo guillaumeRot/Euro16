@@ -73,15 +73,15 @@ public class PronosticFragment extends Fragment {
         callFromCompetition = getArguments().getBoolean("callFromCompetition");
         getArguments().remove("callFromCompetition");
 
-        Log.i("Euro 16", "match prono : " + match);
-        if(match != null) {
+        Log.i("Euro 16", "match prono : " + match + " : " + EEquipeIcon.getNomIcon(match.getEquipe1().getNom()) + " : " + EEquipeIcon.getNomIcon(match.getEquipe1().getNom()));
+        if(match != null && (EEquipeIcon.getNomIcon(match.getEquipe1().getNom()) != null && EEquipeIcon.getNomIcon(match.getEquipe2().getNom()) != null)) {
             initDate();
             initGroupe();
             initEquipes();
             initPronosticsJoueurs();
             initListeners();
         } else {
-            goBackCompetition();
+            goBackCompetition(match.getGroupe());
         }
 
         return layout;
@@ -262,7 +262,7 @@ public class PronosticFragment extends Fragment {
                         Log.i("Euro 16", "match non prono remove : " + CurrentSession.getMatchNonProno(match.getEquipe1().getNom(), match.getEquipe2().getNom(), match.getDateMatch()));
                         CurrentSession.matchNonPronostiques.remove(CurrentSession.getMatchNonProno(match.getEquipe1().getNom(), match.getEquipe2().getNom(), match.getDateMatch()));
 
-                        goBackCompetition();
+                        goBackCompetition(match.getGroupe());
                     } else {
                         if (CurrentSession.matchNonPronostiques.getFirst() != null) {
                             PronosticFragment pronoFragment = new PronosticFragment();
@@ -306,7 +306,7 @@ public class PronosticFragment extends Fragment {
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                     Toast.makeText(getActivity().getApplicationContext(), "Le pronostic a été modifié", Toast.LENGTH_SHORT).show();
 
-                    goBackCompetition();
+                    goBackCompetition(match.getGroupe());
                 }
 
                 @Override
@@ -324,19 +324,16 @@ public class PronosticFragment extends Fragment {
         }
     }
 
-    public void goBackCompetition() {
-        FragmentManager fragmentManager = getFragmentManager();
-        Fragment frag = null;
-        try {
-            frag = CompetitionFragment.class.newInstance();
-        } catch (java.lang.InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        fragmentManager.beginTransaction()
-                .replace(R.id.view_container, frag)
+    public void goBackCompetition(EGroupeEuro groupe) {
+        CompetitionFragment competFragment = new CompetitionFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("groupe", groupe.getNomGrp());
+        competFragment.setArguments(bundle);
+
+        getFragmentManager().beginTransaction()
+                .replace(R.id.mainLayout, competFragment)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .addToBackStack(null)
                 .commit();
     }
 

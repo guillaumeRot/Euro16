@@ -101,6 +101,14 @@ public class CompetitionFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         selectGroupes.setAdapter(adapter);
 
+        if(getArguments() != null) {
+            String groupeArg = getArguments().getString("groupe");
+            getArguments().remove("groupe");
+            int spinnerSelect = adapter.getPosition(groupeArg);
+            selectGroupes.setSelection(spinnerSelect);
+        }
+
+
         gridClassement = (TableLayout) layout.findViewById(R.id.gridClassement);
         gridMatchs = (TableLayout) layout.findViewById(R.id.gridMatchs);
 
@@ -497,7 +505,7 @@ public class CompetitionFragment extends Fragment {
                             });
                         }
                     } else {
-                        Toast.makeText(getActivity().getApplicationContext(), "La date pour pronostiquer le match est dépassée", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity().getApplicationContext(), "La date pour pronostiquer ce match est dépassée", Toast.LENGTH_LONG).show();
                     }
                 }
             });
