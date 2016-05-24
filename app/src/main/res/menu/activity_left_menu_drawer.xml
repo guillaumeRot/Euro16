@@ -26,10 +26,6 @@
             android:id="@+id/nav_change_monde"
             android:icon="@drawable/change_monde"
             android:title="Changer de monde" />
-        <item
-            android:id="@+id/nav_deconnexion"
-            android:icon="@drawable/deconnexion"
-            android:title="Déconnexion" />
     </group>
 
 </menu>

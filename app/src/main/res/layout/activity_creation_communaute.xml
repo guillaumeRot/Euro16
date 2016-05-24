@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Type de communauté"
+        android:text="Type"
         android:id="@+id/textViewTypeCommunaute"
         android:textColor="@color/bleu"
         android:layout_marginTop="45dp"
@@ -52,25 +52,6 @@
         android:id="@+id/spinner"
         android:layout_below="@+id/textViewTypeCommunaute"
         android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Image de communauté"
-        android:id="@+id/textViewImageCommunauté"
-        android:textColor="@color/bleu"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="15dp" />
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/textViewImageCommunauté"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/btnCreerCommunaute"
-        android:background="@color/bleu"></FrameLayout>
 
     <Button
         android:layout_width="wrap_content"

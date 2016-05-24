@@ -74,12 +74,12 @@ public class CreationCommunauteActivity extends AppCompatActivity {
                     if (editTextNom.getText().toString().length() < 5) {
                         Toast.makeText(getApplicationContext(), "Le nom de la communauté doit contenir au moins 5 caractères", Toast.LENGTH_LONG).show();
                     } else {
-                        RestClient.creerCommunaute(editTextNom.getText().toString(), CurrentSession.utilisateur.getId(), "Image1", selectedType, new AsyncHttpResponseHandler() {
+                        RestClient.creerCommunaute(editTextNom.getText().toString(), CurrentSession.utilisateur.getId(), "", selectedType, new AsyncHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                                 Log.i("Euro 16", editTextNom.getText().toString() + " : " + CurrentSession.utilisateur.getId() + " : " + selectedType);
                                 CurrentSession.groupe = null;
-                                CurrentSession.communaute = new Communaute(editTextNom.getText().toString(), CurrentSession.utilisateur.getId(), "Image 1", selectedType);
+                                CurrentSession.communaute = new Communaute(editTextNom.getText().toString(), CurrentSession.utilisateur.getId(), "", selectedType);
                                 startActivity(new Intent(CreationCommunauteActivity.this, CompetitionActivity.class));
                             }
 
