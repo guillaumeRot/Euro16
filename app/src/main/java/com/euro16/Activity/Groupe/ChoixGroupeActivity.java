@@ -67,7 +67,7 @@ public class ChoixGroupeActivity extends AppCompatActivity {
                     listGroupes.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
                     TextView textHeader = new TextView(getApplicationContext());
-                    textHeader.setText("Vos groupes :");
+                    textHeader.setText("Mes groupes :");
                     listGroupes.addHeaderView(textHeader);
                     relLayout.addView(listGroupes);
 

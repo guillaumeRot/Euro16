@@ -56,7 +56,7 @@ public class ListViewAdapterActualite extends ArrayAdapter<RowActualite> {
             holder = (ViewHolder) convertView.getTag();
 
         DateFormat dateFormatParse = new SimpleDateFormat(EDateFormat.DATETIME_PARSE_ACTU.getFormatDate(), Locale.ENGLISH);
-        DateFormat dateFormatDisplay = new SimpleDateFormat(EDateFormat.DATE_SIMPLE.getFormatDate());
+        DateFormat dateFormatDisplay = new SimpleDateFormat(EDateFormat.DATE_JOUR_MOIS.getFormatDate());
         Date datePub = new Date();
         try {
             datePub = dateFormatParse.parse(rowItem.getDate());

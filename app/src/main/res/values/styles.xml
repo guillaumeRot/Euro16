@@ -18,4 +18,9 @@
         <item name="vpiCirclePageIndicatorStyle">@style/CustomCirclePageIndicator</item>
     </style>
 
+    <style name="LightCustom" parent="Theme.AppCompat.Light" >
+        <item name="colorPrimary">@color/primary_material_light_1</item>
+        <item name="android:textColorPrimary">@color/primary_text_material_light</item>
+    </style>
+
 </resources>

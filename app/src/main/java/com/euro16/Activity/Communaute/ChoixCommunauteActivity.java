@@ -69,7 +69,7 @@ public class ChoixCommunauteActivity extends AppCompatActivity {
                     listCommunautesUtil.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
                     TextView textHeader = new TextView(getApplicationContext());
-                    textHeader.setText("Vos communautés :");
+                    textHeader.setText("Mes communautés :");
                     listCommunautesUtil.addHeaderView(textHeader);
                     relLayout.addView(listCommunautesUtil);
 

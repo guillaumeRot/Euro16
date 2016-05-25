@@ -7,4 +7,8 @@
     <color name="black">#000000</color>
     <color name="orange">#ff9334</color>
     <color name="rouge">#ef4848</color>
+    <color name="black_opacity">#40000000</color>
+    <color name="primary_material_light_1">#000000</color>
+    <color name="primary_text_material_dark">#ffffff</color>
+    <color name="primary_text_material_light">#ffffff</color>
 </resources>

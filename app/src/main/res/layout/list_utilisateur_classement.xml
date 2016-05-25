@@ -21,7 +21,7 @@
         android:layout_weight="0.25">
 
         <TextView
-            android:id="@+id/listNomUtilisateur"
+            android:id="@+id/listPrenomUtilisateur"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textColor="#040404"
@@ -31,7 +31,7 @@
             android:layout_weight="0.5"/>
 
         <TextView
-            android:id="@+id/listPrenomUtilisateur"
+            android:id="@+id/listNomUtilisateur"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textColor="#343434"

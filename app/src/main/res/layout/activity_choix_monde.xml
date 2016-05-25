@@ -3,23 +3,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".Activity.ChoixMondeActivity"
-    android:background="#ffffff">
+    tools:context=".Activity.ChoixMondeActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/background"
+        android:scaleType="centerCrop" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Global"
         android:id="@+id/btnGlobal"
-        android:background="#00ffffff"
-        android:textColor="@color/bleu"
+        android:textColor="@color/white"
         android:layout_above="@+id/btnChoixCommunaute"
-        android:layout_alignStart="@+id/btnChoixCommunaute"
-        android:layout_marginBottom="77dp" />
+        android:layout_marginBottom="77dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:background="@drawable/choix_monde_button"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -28,8 +32,10 @@
         android:id="@+id/btnChoixCommunaute"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:textColor="@color/bleu"
-        android:background="#00ffffff" />
+        android:textColor="@color/white"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:background="@drawable/choix_monde_button"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -37,8 +43,10 @@
         android:text="Groupe"
         android:id="@+id/btnGroupe"
         android:layout_marginTop="89dp"
-        android:textColor="@color/bleu"
-        android:background="#00ffffff"
+        android:textColor="@color/white"
         android:layout_below="@+id/btnChoixCommunaute"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:background="@drawable/choix_monde_button"/>
 </RelativeLayout>

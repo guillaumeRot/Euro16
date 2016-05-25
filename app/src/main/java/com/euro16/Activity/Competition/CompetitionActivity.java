@@ -403,9 +403,7 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
         }
 
         TextView nbJoueursClassement = (TextView) classementView.findViewById(R.id.nbJoueursClassement);
-        Log.i("Euro 16", "nbJoueursClassement : " + nbJoueursClassement);
         nbJoueursClassement.setText(nbJoueurs + " joueur(s)");
-        Log.i("Euro 16", "nbJoueurs : " + nbJoueurs);
 
         listClassement.setItemsCanFocus(false);
     }

@@ -47,7 +47,7 @@ public class XMLDataParser extends AsyncTask<Void, Void, ArrayList<RowActualite>
             doc.getDocumentElement().normalize();
 
             NodeList nodeList = doc.getElementsByTagName("item");
-            for (int i = 0; i < nodeList.getLength(); i++) {
+            for (int i = 0; i < 20; i++) {
 
                 Node node = nodeList.item(i);
 

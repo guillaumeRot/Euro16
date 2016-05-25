@@ -16,6 +16,8 @@
         android:id="@+id/relLayoutActus"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_gravity="right|top"></RelativeLayout>
+        android:layout_gravity="center">
+
+    </RelativeLayout>
 
 </FrameLayout>

@@ -93,65 +93,6 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="53dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:id="@+id/layoutCotesProno">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Côtes du match"
-                    android:id="@+id/titreCotesProno"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:textColor="@color/bleu" />
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_below="@+id/titreCotesProno"
-                    android:gravity="center_vertical"
-                    android:id="@+id/linearCotesProno">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="1.35"
-                        android:id="@+id/coteEquipe1Prono"
-                        android:layout_weight="0.3"
-                        android:textColor="@color/black"
-                        android:textAlignment="center"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="2.1"
-                        android:id="@+id/coteNulProno"
-                        android:layout_weight="0.3"
-                        android:textColor="@color/black"
-                        android:textAlignment="center"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="1.1"
-                        android:id="@+id/coteEquipe2Prono"
-                        android:layout_weight="0.3"
-                        android:textColor="@color/black"
-                        android:textAlignment="center"/>
-                </LinearLayout>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
                 android:layout_height="65dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
