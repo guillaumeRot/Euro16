@@ -46,7 +46,7 @@ public class ListViewAdapterActualite extends ArrayAdapter<RowActualite> {
 
         LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.list_actualite, null);
+            convertView = mInflater.inflate(R.layout.list_actualites, null);
             holder = new ViewHolder();
             holder.textViewDate = (TextView) convertView.findViewById(R.id.datePub);
             holder.textViewTitle = (TextView) convertView.findViewById(R.id.titleActu);

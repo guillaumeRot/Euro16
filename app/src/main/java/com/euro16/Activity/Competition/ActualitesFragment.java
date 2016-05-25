@@ -66,7 +66,7 @@ public class ActualitesFragment extends Fragment {
 
         relLayout.addView(listActus);
 
-        adapter = new ListViewAdapterActualite(getActivity(), R.layout.list_actualite);
+        adapter = new ListViewAdapterActualite(getActivity(), R.layout.list_actualites);
         listActus.setAdapter(adapter);
     }
 

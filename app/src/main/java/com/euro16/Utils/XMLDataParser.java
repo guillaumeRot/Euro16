@@ -43,9 +43,6 @@ public class XMLDataParser extends AsyncTask<Void, Void, ArrayList<RowActualite>
             URL url = new URL("http://fr.uefa.com/rssfeed/uefaeuro/rss.xml");
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
-            Log.i("Euro 16", "url : " + url);
-            Log.i("Euro 16", "open stream : " + url.openStream());
-            Log.i("Euro 16", "input source : " + new InputSource(url.openStream()));
             Document doc = db.parse(new InputSource(url.openStream()));
             doc.getDocumentElement().normalize();
 
