@@ -8,11 +8,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.euro16.Activity.ChoixMondeActivity;
 import com.euro16.R;
@@ -20,25 +20,16 @@ import com.viewpagerindicator.CirclePageIndicator;
 
 public class TutorielActivity extends AppCompatActivity {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
     private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutoriel);
+
+        getSupportActionBar().setSubtitle(R.string.title_activity_tutoriel);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -60,46 +51,13 @@ public class TutorielActivity extends AppCompatActivity {
         });
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_tutoriel, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
     public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
+
         private static final String ARG_SECTION_NUMBER = "section_number";
 
         public PlaceholderFragment() {
         }
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
@@ -116,10 +74,6 @@ public class TutorielActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -128,15 +82,25 @@ public class TutorielActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            if(position == 0) {
+                return SelectMondeFragment.newInstance();
+            } else if(position == 1){
+                return CompetitionFragment.newInstance();
+            } else if(position == 2){
+                return PronosticFragment.newInstance();
+            } else if(position == 3){
+                return ClassementFragment.newInstance();
+            } else if(position == 4){
+                return ActualitesFragment.newInstance();
+            } else if(position == 5){
+                return SuperVictorFragment.newInstance();
+            }
+            return null;
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            return 6;
         }
 
         @Override
@@ -148,8 +112,122 @@ public class TutorielActivity extends AppCompatActivity {
                     return "SECTION 2";
                 case 2:
                     return "SECTION 3";
+                case 3:
+                    return "SECTION 4";
+                case 4:
+                    return "SECTION 5";
+                case 5:
+                    return "SECTION 6";
             }
             return null;
+        }
+    }
+
+    public static class SelectMondeFragment extends Fragment {
+
+        public static SelectMondeFragment newInstance() {
+            SelectMondeFragment f = new SelectMondeFragment();
+            return f;
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.fragment_tutoriel, container, false);
+
+            TextView descTuto = (TextView) layout.findViewById(R.id.descTuto);
+            descTuto.setText("Jouez dans différents mondes : Avec tous les joueurs, dans une communauté, ou entre amis.");
+
+            return layout;
+        }
+    }
+
+    public static class CompetitionFragment extends Fragment {
+
+        public static CompetitionFragment newInstance() {
+            CompetitionFragment f = new CompetitionFragment();
+            return f;
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.fragment_tutoriel, container, false);
+
+            TextView descTuto = (TextView) layout.findViewById(R.id.descTuto);
+            descTuto.setText("Retrouvez le récapitulatif de la compétition.");
+
+            return layout;
+        }
+    }
+
+    public static class PronosticFragment extends Fragment {
+
+        public static PronosticFragment newInstance() {
+            PronosticFragment f = new PronosticFragment();
+            return f;
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.fragment_tutoriel, container, false);
+
+            TextView descTuto = (TextView) layout.findViewById(R.id.descTuto);
+            descTuto.setText("Pronostiquez sur les différents matchs et prouvez que vous êtes le meilleur !");
+
+            return layout;
+        }
+    }
+
+    public static class ClassementFragment extends Fragment {
+
+        public static ClassementFragment newInstance() {
+            ClassementFragment f = new ClassementFragment();
+            return f;
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.fragment_tutoriel, container, false);
+
+            TextView descTuto = (TextView) layout.findViewById(R.id.descTuto);
+            descTuto.setText("Suivez votre évolution à l’aide du classement.");
+
+            return layout;
+        }
+    }
+
+    public static class ActualitesFragment extends Fragment {
+
+        public static ActualitesFragment newInstance() {
+            ActualitesFragment f = new ActualitesFragment();
+            return f;
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.fragment_tutoriel, container, false);
+
+            TextView descTuto = (TextView) layout.findViewById(R.id.descTuto);
+            descTuto.setText("Affinez vos pronostics avec les actualités de l’UEFA Euro 2016.");
+
+            return layout;
+        }
+    }
+
+    public static class SuperVictorFragment extends Fragment {
+
+        public static SuperVictorFragment newInstance() {
+            SuperVictorFragment f = new SuperVictorFragment();
+            return f;
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.fragment_tutoriel, container, false);
+
+            TextView descTuto = (TextView) layout.findViewById(R.id.descTuto);
+            descTuto.setText("SUPER VICTOR !!!");
+
+            return layout;
         }
     }
 }

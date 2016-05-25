@@ -1,29 +1,28 @@
 package com.euro16.Activity.Parametres;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
 import android.app.Fragment;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.euro16.API.RestClient;
 import com.euro16.Activity.Facebook.FacebookConnexion;
 import com.euro16.Model.CurrentSession;
 import com.euro16.R;
-import com.facebook.FacebookActivity;
+import com.euro16.Utils.AlertMsgBox;
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
 import com.facebook.login.LoginManager;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 
-import cz.msebera.android.httpclient.Header;
+import org.json.JSONException;
 
 public class ParametresFragment extends Fragment {
 
@@ -73,44 +72,49 @@ public class ParametresFragment extends Fragment {
         btnDesinscrire.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(CurrentSession.communaute != null) {
-                    RestClient.deleteUtilisateurCommunaute(CurrentSession.communaute.getNom(), CurrentSession.utilisateur.getId(), new AsyncHttpResponseHandler() {
+                if(FacebookConnexion.isOnline(getActivity())) {
+                    new GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions", null, HttpMethod.DELETE, new GraphRequest.Callback() {
                         @Override
-                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                            // L'utilisateur a bien été supprimé de la communauté
-                            Toast.makeText(getActivity().getApplicationContext(), "Vous êtes désinscrit", Toast.LENGTH_SHORT).show();
-                            LoginManager.getInstance().logOut();
-                            CurrentSession.utilisateur = null;
-                            startActivity(new Intent(getActivity(), FacebookConnexion.class));
-                        }
+                        public void onCompleted(GraphResponse response) {
+                            boolean isSuccess = false;
+                            try {
+                                isSuccess = response.getJSONObject().getBoolean("success");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            if (isSuccess && response.getError()==null){
+                                deconnexion();
+                            }
 
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                            Log.i("Euro 16", "désinscrire : onFailure : " + statusCode);
                         }
-                    });
-                } else if(CurrentSession.groupe != null) {
-                    RestClient.deleteUtilisateurGroupe(CurrentSession.groupe.getNom(), CurrentSession.utilisateur.getId(), new AsyncHttpResponseHandler() {
+                    }).executeAsync();
+                } else {
+                    new AlertMsgBox(getActivity(), getResources().getString(R.string.title_msg_box), getResources().getString(R.string.body_msg_box), getResources().getString(R.string.button_msg_box), new DialogInterface.OnClickListener() {
                         @Override
-                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                            // L'utilisateur a bien été supprimé du groupe
-                            Toast.makeText(getActivity().getApplicationContext(), "Vous êtes désinscrit", Toast.LENGTH_SHORT).show();
-                            LoginManager.getInstance().logOut();
-                            CurrentSession.utilisateur = null;
-                            startActivity(new Intent(getActivity(), FacebookConnexion.class));
-                        }
-
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                            Log.i("Euro 16", "désinscrire : onFailure : " + statusCode);
+                        public void onClick(DialogInterface dialog, int which) {
+                            getActivity().finish();
                         }
                     });
                 }
+            }
+        });
 
+        Button btnDeconnexion = (Button) layout.findViewById(R.id.btnDeconnexion);
+
+        btnDeconnexion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deconnexion();
             }
         });
 
         return layout;
+    }
+
+    public void deconnexion() {
+        LoginManager.getInstance().logOut();
+        CurrentSession.utilisateur = null;
+        startActivity(new Intent(getActivity(), FacebookConnexion.class));
     }
 
 }

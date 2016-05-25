@@ -9,7 +9,7 @@
 
     <string name="title_activity_tutoriel">Tutoriel</string>
     <string name="title_choix_monde">Choix du monde</string>
-    <string name="title_activity_left_menu">Compétition</string>
+    <string name="title_activity_left_menu">Monde</string>
     <string name="title_activity_choix_groupe">Choix d\'un groupe</string>
     <string name="title_activity_creer_groupe">Créer un groupe</string>
     <string name="title_activity_choix_communaute">Choix d\'une communauté</string>
@@ -20,6 +20,4 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

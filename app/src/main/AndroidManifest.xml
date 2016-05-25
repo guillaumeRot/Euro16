@@ -41,7 +41,7 @@
             android:name=".Activity.Tutoriel.TutorielActivity"
             android:label="@string/app_name"
             android:screenOrientation="nosensor"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light" />
         <activity
             android:name=".Activity.ChoixMondeActivity"
             android:label="@string/app_name"

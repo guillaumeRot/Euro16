@@ -236,10 +236,6 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
 
         } else if (id == R.id.nav_change_monde) {
             startActivity(new Intent(CompetitionActivity.this, ChoixMondeActivity.class));
-        } else if(id == R.id.nav_deconnexion) {
-            LoginManager.getInstance().logOut();
-            CurrentSession.utilisateur = null;
-            startActivity(new Intent(CompetitionActivity.this, FacebookConnexion.class));
         }
 
         if(frag != null) {
@@ -383,6 +379,8 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
         adapter = new ListViewAdapterClassement(CompetitionActivity.this, R.layout.list_item_communaute);
         listClassement.setAdapter(adapter);
 
+        int nbJoueurs = 0;
+
         for (int i = 0; i < arrayResponse.length(); i++) {
             try {
                 String nomUti = arrayResponse.getJSONObject(i).getString("NomUti");
@@ -401,7 +399,14 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            nbJoueurs++;
         }
+
+        TextView nbJoueursClassement = (TextView) classementView.findViewById(R.id.nbJoueursClassement);
+        Log.i("Euro 16", "nbJoueursClassement : " + nbJoueursClassement);
+        nbJoueursClassement.setText(nbJoueurs + " joueur(s)");
+        Log.i("Euro 16", "nbJoueurs : " + nbJoueurs);
+
         listClassement.setItemsCanFocus(false);
     }
 
