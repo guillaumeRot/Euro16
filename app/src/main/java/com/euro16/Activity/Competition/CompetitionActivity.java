@@ -124,7 +124,6 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
             fragmentManager.beginTransaction()
                     .replace(R.id.view_container, frag)
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .addToBackStack(null)
                     .commit();
         }
     }
@@ -242,7 +241,6 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
             fragmentManager.beginTransaction()
                     .replace(R.id.view_container, frag)
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .addToBackStack(frag.getClass().getName())
                     .commit();
         }
 

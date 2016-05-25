@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.euro16.API.RestClient;
+import com.euro16.Activity.ChoixMondeActivity;
 import com.euro16.Activity.Facebook.FacebookConnexion;
 import com.euro16.Model.Communaute;
 import com.euro16.Model.CurrentSession;
@@ -144,5 +145,10 @@ public class RejoindreCommunauteActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(RejoindreCommunauteActivity.this, ChoixCommunauteActivity.class));
     }
 }

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.euro16.API.RestClient;
+import com.euro16.Activity.ChoixMondeActivity;
 import com.euro16.Activity.Competition.CompetitionActivity;
 import com.euro16.Activity.Facebook.FacebookConnexion;
 import com.euro16.Model.CurrentSession;
@@ -198,5 +199,10 @@ public class ChoixGroupeActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(ChoixGroupeActivity.this, ChoixMondeActivity.class));
     }
 }

@@ -9,12 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.euro16.API.RestClient;
+import com.euro16.Activity.ChoixMondeActivity;
 import com.euro16.Activity.Competition.CompetitionActivity;
 import com.euro16.Activity.Facebook.FacebookConnexion;
 import com.euro16.Model.Communaute;
@@ -26,6 +28,7 @@ import com.euro16.Utils.ListsView.ListViewAdapterCommunaute;
 import com.euro16.Utils.RowsChoix.RowChoixCommunaute;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -232,5 +235,10 @@ public class ChoixCommunauteActivity extends AppCompatActivity {
         } catch(Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(ChoixCommunauteActivity.this, ChoixMondeActivity.class));
     }
 }
