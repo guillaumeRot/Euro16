@@ -2,8 +2,10 @@ package com.euro16.Activity.Communaute;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +52,13 @@ public class ChoixCommunauteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choix_communaute);
 
-        getSupportActionBar().setSubtitle(R.string.title_activity_choix_communaute);
+        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/font_euro.ttf");
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_activity);
+
+        TextView title = (TextView) toolbar.findViewById(R.id.title_toolbar);
+        title.setText(R.string.title_activity_choix_communaute);
+        title.setTypeface(face);
 
         final RelativeLayout relLayout = (RelativeLayout) findViewById(R.id.relLayout);
 
@@ -60,7 +68,6 @@ public class ChoixCommunauteActivity extends AppCompatActivity {
                 public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
                     TextView textView = new TextView(getApplicationContext());
                     textView.setText("Vous n'êtes inscrit(e) dans aucune communauté");
-                    textView.setTextColor(getResources().getColor(R.color.bleu));
                     textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                     relLayout.addView(textView);
                 }
@@ -70,10 +77,6 @@ public class ChoixCommunauteActivity extends AppCompatActivity {
                     // Initialisation de la liste
                     ListView listCommunautesUtil = new ListView(getApplicationContext());
                     listCommunautesUtil.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-                    TextView textHeader = new TextView(getApplicationContext());
-                    textHeader.setText("Mes communautés :");
-                    listCommunautesUtil.addHeaderView(textHeader);
                     relLayout.addView(listCommunautesUtil);
 
                     adapter = new ListViewAdapterCommunaute(ChoixCommunauteActivity.this, R.layout.list_item_communaute);

@@ -2,12 +2,15 @@ package com.euro16.Activity.Groupe;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.euro16.API.RestClient;
@@ -29,7 +32,13 @@ public class CreationGroupeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creation_groupe);
 
-        getSupportActionBar().setSubtitle(R.string.title_activity_creer_groupe);
+        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/font_euro.ttf");
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_activity);
+
+        TextView title = (TextView) toolbar.findViewById(R.id.title_toolbar);
+        title.setText(R.string.title_activity_creer_groupe);
+        title.setTypeface(face);
 
         final EditText editTextNom = (EditText) findViewById(R.id.nomGroupe);
 

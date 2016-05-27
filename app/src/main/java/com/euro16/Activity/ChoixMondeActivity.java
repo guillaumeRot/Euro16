@@ -4,11 +4,10 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.TypefaceSpan;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.euro16.Activity.Communaute.ChoixCommunauteActivity;
 import com.euro16.Activity.Competition.CompetitionActivity;
@@ -25,7 +24,11 @@ public class ChoixMondeActivity extends AppCompatActivity {
 
         Typeface face = Typeface.createFromAsset(getAssets(), "fonts/font_euro.ttf");
 
-        getSupportActionBar().setSubtitle(R.string.title_choix_monde);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_activity);
+
+        TextView title = (TextView) toolbar.findViewById(R.id.title_toolbar);
+        title.setText(R.string.title_choix_monde);
+        title.setTypeface(face);
 
         Button btnGlobal = (Button) findViewById(R.id.btnGlobal);
         btnGlobal.setTypeface(face);

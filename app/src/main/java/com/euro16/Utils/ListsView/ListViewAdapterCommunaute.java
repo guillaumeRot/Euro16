@@ -2,6 +2,7 @@ package com.euro16.Utils.ListsView;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ public class ListViewAdapterCommunaute extends ArrayAdapter<RowChoixCommunaute> 
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         RowChoixCommunaute rowItem = getItem(position);
+        Typeface face = Typeface.createFromAsset(context.getAssets(), "fonts/font_euro.ttf");
 
         LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if (convertView == null) {
@@ -44,6 +46,8 @@ public class ListViewAdapterCommunaute extends ArrayAdapter<RowChoixCommunaute> 
             holder = (ViewHolder) convertView.getTag();
 
         holder.textViewNom.setText(rowItem.getNom());
+        holder.textViewNom.setTypeface(face);
+        holder.textViewNom.setTextColor(context.getResources().getColor(R.color.grey));
         holder.statutUtilImage.setImageResource(rowItem.getStatutUtilImage());
 
         return convertView;

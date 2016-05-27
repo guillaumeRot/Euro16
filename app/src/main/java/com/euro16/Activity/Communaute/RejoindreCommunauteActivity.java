@@ -2,8 +2,10 @@ package com.euro16.Activity.Communaute;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -12,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.euro16.API.RestClient;
@@ -40,7 +43,13 @@ public class RejoindreCommunauteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rejoindre_communaute);
 
-        getSupportActionBar().setSubtitle(R.string.title_activity_rejoindre_communaute);
+        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/font_euro.ttf");
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_activity);
+
+        TextView title = (TextView) toolbar.findViewById(R.id.title_toolbar);
+        title.setText(R.string.title_activity_rejoindre_communaute);
+        title.setTypeface(face);
 
         final ListView listCommunautes = (ListView) findViewById(R.id.listCommunautes);
         final ArrayAdapter adapter = new ArrayAdapter(RejoindreCommunauteActivity.this, android.R.layout.simple_list_item_1);

@@ -6,6 +6,10 @@
     tools:context="com.euro16.Activity.Groupe.ChoixGroupeActivity"
     android:background="@color/grey">
 
+    <include
+        android:id="@+id/toolbar_activity"
+        layout="@layout/toolbar_simple" />
+
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

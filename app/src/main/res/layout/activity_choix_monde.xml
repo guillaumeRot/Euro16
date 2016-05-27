@@ -3,7 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Activity.ChoixMondeActivity">
+
+    <include
+        android:id="@+id/toolbar_activity"
+        layout="@layout/toolbar_simple" />
 
     <ImageView
         android:layout_width="fill_parent"
@@ -23,7 +28,7 @@
         android:layout_centerHorizontal="true"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
-        android:background="@drawable/choix_monde_button"/>
+        android:background="@drawable/background_button"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -35,7 +40,7 @@
         android:textColor="@color/white"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
-        android:background="@drawable/choix_monde_button"/>
+        android:background="@drawable/background_button"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -48,5 +53,5 @@
         android:layout_centerHorizontal="true"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
-        android:background="@drawable/choix_monde_button"/>
+        android:background="@drawable/background_button"/>
 </RelativeLayout>

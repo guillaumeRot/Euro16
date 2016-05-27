@@ -45,8 +45,7 @@
         <activity
             android:name=".Activity.ChoixMondeActivity"
             android:label="@string/app_name"
-            android:screenOrientation="nosensor"
-            android:theme="@style/LightCustom" />
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".Activity.Competition.CompetitionActivity"
             android:label="@string/app_name"
@@ -54,28 +53,23 @@
         <activity
             android:name=".Activity.Communaute.ChoixCommunauteActivity"
             android:label="@string/app_name"
-            android:screenOrientation="nosensor"
-            android:theme="@style/LightCustom" />
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".Activity.Communaute.CreationCommunauteActivity"
             android:label="@string/app_name"
-            android:screenOrientation="nosensor"
-            android:theme="@style/LightCustom" />
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".Activity.Groupe.ChoixGroupeActivity"
             android:label="@string/app_name"
-            android:screenOrientation="nosensor"
-            android:theme="@style/LightCustom" />
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".Activity.Groupe.CreationGroupeActivity"
             android:label="@string/app_name"
-            android:screenOrientation="nosensor"
-            android:theme="@style/LightCustom" />
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".Activity.Communaute.RejoindreCommunauteActivity"
             android:label="@string/app_name"
-            android:screenOrientation="nosensor"
-            android:theme="@style/LightCustom" />
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".Activity.Parametres.InviteFriendsActivity"
             android:label="@string/app_name"
