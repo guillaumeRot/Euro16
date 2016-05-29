@@ -1,31 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_competition"
-            android:icon="@drawable/soccer"
-            android:title="Compétition" />
-        <item
-            android:id="@+id/nav_pronostics"
-            android:icon="@drawable/soccer"
-            android:title="Pronostics" />
-        <item
-            android:id="@+id/nav_actualites"
-            android:icon="@drawable/news"
-            android:title="Actualités" />
-        <item
-            android:id="@+id/nav_gerer_monde"
-            android:icon="@drawable/gerer_monde"
-            android:title="" />
-        <item
-            android:id="@+id/nav_parametres"
-            android:icon="@drawable/gerer_monde"
-            android:title="Paramètres" />
-        <item
-            android:id="@+id/nav_change_monde"
-            android:icon="@drawable/change_monde"
-            android:title="Changer de monde" />
-    </group>
+    <item
+        android:id="@+id/nav_competition"
+        android:title="Compétition" />
+    <item
+        android:id="@+id/nav_pronostics"
+        android:title="Pronostics" />
+    <item
+        android:id="@+id/nav_actualites"
+        android:title="Actualités" />
+    <item
+        android:id="@+id/nav_gerer_monde"
+        android:title="" />
+    <item
+        android:id="@+id/nav_parametres"
+        android:title="Paramètres" />
+    <item
+        android:id="@+id/nav_change_monde"
+        android:title="Changer de monde" />
 
 </menu>
