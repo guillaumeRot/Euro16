@@ -3,6 +3,7 @@ package com.euro16.Activity.Communaute;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -37,6 +38,12 @@ public class CreationCommunauteActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        if(Build.VERSION.SDK_INT < 21) {
+            setTheme(R.style.AppTheme);
+            getSupportActionBar().setSubtitle(R.string.title_activity_creer_communaute);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creation_communaute);
 
@@ -44,9 +51,11 @@ public class CreationCommunauteActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_activity);
 
-        TextView title = (TextView) toolbar.findViewById(R.id.title_toolbar);
-        title.setText(R.string.title_activity_creer_communaute);
-        title.setTypeface(face);
+        if(Build.VERSION.SDK_INT >= 21) {
+            TextView title = (TextView) toolbar.findViewById(R.id.title_toolbar);
+            title.setText(R.string.title_activity_creer_communaute);
+            title.setTypeface(face);
+        }
 
         final EditText editTextNom = (EditText) findViewById(R.id.nomCommunaute);
         Button btnCreerCommunaute = (Button) findViewById(R.id.btnCreerCommunaute);
@@ -56,7 +65,7 @@ public class CreationCommunauteActivity extends AppCompatActivity {
         listSpinner.add(ETypeCommunaute.PUBLIQUE.getNomType());
         listSpinner.add(ETypeCommunaute.PRIVEE.getNomType());
 
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listSpinner);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listSpinner);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 

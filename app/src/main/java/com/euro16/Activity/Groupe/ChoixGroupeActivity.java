@@ -3,6 +3,7 @@ package com.euro16.Activity.Groupe;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -45,6 +46,12 @@ public class ChoixGroupeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        if(Build.VERSION.SDK_INT < 21) {
+            setTheme(R.style.AppTheme);
+            getSupportActionBar().setSubtitle(R.string.title_activity_choix_groupe);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choix_groupe);
 
@@ -52,9 +59,11 @@ public class ChoixGroupeActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_activity);
 
-        TextView title = (TextView) toolbar.findViewById(R.id.title_toolbar);
-        title.setText(R.string.title_activity_choix_groupe);
-        title.setTypeface(face);
+        if(Build.VERSION.SDK_INT >= 21) {
+            TextView title = (TextView) toolbar.findViewById(R.id.title_toolbar);
+            title.setText(R.string.title_activity_choix_groupe);
+            title.setTypeface(face);
+        }
 
         final RelativeLayout relLayout = (RelativeLayout) findViewById(R.id.relLayout);
 

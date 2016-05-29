@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.euro16.Activity.Facebook.FacebookConnexion;
@@ -46,7 +47,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 }
                 finish();
             }
-        }, 3000);
+        }, 3500);
 
 
     }
@@ -102,7 +103,6 @@ public class SplashScreenActivity extends AppCompatActivity {
                                     } else {
                                         Toast.makeText(getApplicationContext(), "Impossible de récupérer les données", Toast.LENGTH_SHORT).show();
                                     }
-
                                 } catch(Exception e) {
                                     e.printStackTrace();
                                 }

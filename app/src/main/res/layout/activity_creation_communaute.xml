@@ -16,58 +16,70 @@
         android:src="@drawable/backgrnd_bitmap"
         android:scaleType="fitXY" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Nom de communauté"
-        android:id="@+id/textViewNomCommunaute"
-        android:textColor="@color/white"
-        android:layout_marginTop="36dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="15dp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar_activity">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/nomCommunaute"
-        android:textColor="@color/bleu"
-        android:singleLine="true"
-        android:backgroundTint="@color/white"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/textViewNomCommunaute"
-        android:layout_alignParentLeft="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Nom de communauté"
+            android:id="@+id/textViewNomCommunaute"
+            android:textColor="@color/white"
+            android:layout_marginTop="36dp"
+            android:layout_marginLeft="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="15dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Type"
-        android:id="@+id/textViewTypeCommunaute"
-        android:textColor="@color/white"
-        android:layout_marginTop="45dp"
-        android:layout_below="@+id/nomCommunaute"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="15dp" />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/nomCommunaute"
+            android:textColor="@color/white"
+            android:singleLine="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/textViewNomCommunaute"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"/>
 
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinner"
-        android:layout_below="@+id/textViewTypeCommunaute"
-        android:layout_alignParentStart="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Type"
+            android:id="@+id/textViewTypeCommunaute"
+            android:textColor="@color/white"
+            android:layout_marginTop="45dp"
+            android:layout_marginLeft="20dp"
+            android:layout_below="@+id/nomCommunaute"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="15dp" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Créer"
-        android:id="@+id/btnCreerCommunaute"
-        android:background="#00ffffff"
-        android:textColor="@color/bleu"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"/>
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner"
+            android:layout_marginLeft="15dp"
+            android:layout_alignTop="@+id/textViewTypeCommunaute"
+            android:layout_alignEnd="@+id/nomCommunaute"
+            android:layout_toEndOf="@+id/textViewTypeCommunaute" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Créer"
+            android:id="@+id/btnCreerCommunaute"
+            android:background="#00ffffff"
+            android:textColor="@color/bleu"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>

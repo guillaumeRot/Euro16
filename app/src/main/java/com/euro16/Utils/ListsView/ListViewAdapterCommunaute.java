@@ -47,7 +47,7 @@ public class ListViewAdapterCommunaute extends ArrayAdapter<RowChoixCommunaute> 
 
         holder.textViewNom.setText(rowItem.getNom());
         holder.textViewNom.setTypeface(face);
-        holder.textViewNom.setTextColor(context.getResources().getColor(R.color.grey));
+        holder.textViewNom.setTextColor(context.getResources().getColor(R.color.white));
         holder.statutUtilImage.setImageResource(rowItem.getStatutUtilImage());
 
         return convertView;

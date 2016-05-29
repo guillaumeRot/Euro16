@@ -2,6 +2,7 @@ package com.euro16.Activity;
 
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +20,12 @@ public class ChoixMondeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        if(Build.VERSION.SDK_INT < 21) {
+            setTheme(R.style.AppTheme);
+            getSupportActionBar().setSubtitle(R.string.title_choix_monde);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choix_monde);
 
@@ -26,9 +33,11 @@ public class ChoixMondeActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_activity);
 
-        TextView title = (TextView) toolbar.findViewById(R.id.title_toolbar);
-        title.setText(R.string.title_choix_monde);
-        title.setTypeface(face);
+        if(Build.VERSION.SDK_INT >= 21) {
+            TextView title = (TextView) toolbar.findViewById(R.id.title_toolbar);
+            title.setText(R.string.title_choix_monde);
+            title.setTypeface(face);
+        }
 
         Button btnGlobal = (Button) findViewById(R.id.btnGlobal);
         btnGlobal.setTypeface(face);

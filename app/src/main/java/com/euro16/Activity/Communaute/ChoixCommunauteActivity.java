@@ -3,6 +3,8 @@ package com.euro16.Activity.Communaute;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -49,6 +51,12 @@ public class ChoixCommunauteActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        if(Build.VERSION.SDK_INT < 21) {
+            setTheme(R.style.AppTheme);
+            getSupportActionBar().setSubtitle(R.string.title_activity_choix_communaute);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choix_communaute);
 
@@ -56,9 +64,11 @@ public class ChoixCommunauteActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_activity);
 
-        TextView title = (TextView) toolbar.findViewById(R.id.title_toolbar);
-        title.setText(R.string.title_activity_choix_communaute);
-        title.setTypeface(face);
+        if(Build.VERSION.SDK_INT >= 21) {
+            TextView title = (TextView) toolbar.findViewById(R.id.title_toolbar);
+            title.setText(R.string.title_activity_choix_communaute);
+            title.setTypeface(face);
+        }
 
         final RelativeLayout relLayout = (RelativeLayout) findViewById(R.id.relLayout);
 
@@ -114,20 +124,18 @@ public class ChoixCommunauteActivity extends AppCompatActivity {
                     listCommunautesUtil.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            if(position != 0) {
-                                String nomCommunaute = adapter.getItem(position - 1).getNom();
-                                if (hmCommunauteStatut.get(nomCommunaute) == EUtilisateurStatut.PARTICIPE.getStatut()) {
-                                    CurrentSession.groupe = null;
-                                    CurrentSession.communaute = new Communaute(nomCommunaute, CurrentSession.utilisateur.getId(), hmComUtil.get(nomCommunaute).getPhoto(), hmComUtil.get(nomCommunaute).getType());
-                                    startActivity(new Intent(ChoixCommunauteActivity.this, CompetitionActivity.class));
-                                } else if (hmCommunauteStatut.get(nomCommunaute) == EUtilisateurStatut.DEMANDE_PARTICIPE.getStatut()) {
-                                    new AlertMsgBox(ChoixCommunauteActivity.this, "En attente", "L'administrateur de la communauté \"" + nomCommunaute + "\" n'a pas encore validé votre demande, vous ne pouvez donc pas encore rejoindre ce groupe.", "ok", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            //finish();
-                                        }
-                                    });
-                                }
+                            String nomCommunaute = adapter.getItem(position).getNom();
+                            if (hmCommunauteStatut.get(nomCommunaute) == EUtilisateurStatut.PARTICIPE.getStatut()) {
+                                CurrentSession.groupe = null;
+                                CurrentSession.communaute = new Communaute(nomCommunaute, CurrentSession.utilisateur.getId(), hmComUtil.get(nomCommunaute).getPhoto(), hmComUtil.get(nomCommunaute).getType());
+                                startActivity(new Intent(ChoixCommunauteActivity.this, CompetitionActivity.class));
+                            } else if (hmCommunauteStatut.get(nomCommunaute) == EUtilisateurStatut.DEMANDE_PARTICIPE.getStatut()) {
+                                new AlertMsgBox(ChoixCommunauteActivity.this, "En attente", "L'administrateur de la communauté \"" + nomCommunaute + "\" n'a pas encore validé votre demande, vous ne pouvez donc pas encore rejoindre ce groupe.", "ok", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        //finish();
+                                    }
+                                });
                             }
                         }
                     });
