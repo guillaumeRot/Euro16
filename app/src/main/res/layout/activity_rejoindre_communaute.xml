@@ -3,18 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.euro16.Activity.Groupe.ChoixGroupeActivity"
-    android:background="@color/grey">
+    tools:context="com.euro16.Activity.Groupe.ChoixGroupeActivity">
 
     <include
         android:id="@+id/toolbar_activity"
         layout="@layout/toolbar_simple" />
-
-    <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:src="@drawable/backgrnd_bitmap"
-        android:scaleType="fitXY" />
 
     <RelativeLayout
         android:layout_width="match_parent"

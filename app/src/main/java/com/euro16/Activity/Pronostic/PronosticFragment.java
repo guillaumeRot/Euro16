@@ -73,7 +73,6 @@ public class PronosticFragment extends Fragment {
         callFromCompetition = getArguments().getBoolean("callFromCompetition");
         getArguments().remove("callFromCompetition");
 
-        Log.i("Euro 16", "match prono : " + match + " : " + EEquipeIcon.getNomIcon(match.getEquipe1().getNom()) + " : " + EEquipeIcon.getNomIcon(match.getEquipe1().getNom()));
         if(match != null && (EEquipeIcon.getNomIcon(match.getEquipe1().getNom()) != null && EEquipeIcon.getNomIcon(match.getEquipe2().getNom()) != null)) {
             initDate();
             initGroupe();

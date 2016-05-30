@@ -19,13 +19,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/logoeuro_white"
-            android:layout_gravity="center_vertical"/>
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.7"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_weight="0.3">
 
             <TextView
                 android:id="@+id/title_toolbar"
@@ -47,6 +49,13 @@
                 android:layout_alignParentStart="true" />
 
         </RelativeLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logoeuro_white"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.7"/>
 
     </LinearLayout>
 

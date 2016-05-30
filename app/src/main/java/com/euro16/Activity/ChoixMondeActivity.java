@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.euro16.Activity.Communaute.ChoixCommunauteActivity;
@@ -39,8 +41,16 @@ public class ChoixMondeActivity extends AppCompatActivity {
             title.setTypeface(face);
         }
 
-        Button btnGlobal = (Button) findViewById(R.id.btnGlobal);
-        btnGlobal.setTypeface(face);
+        TextView labelGlobal = (TextView) findViewById(R.id.btnGlobal);
+        labelGlobal.setTypeface(face);
+
+        TextView labelCommunaute = (TextView) findViewById(R.id.btnChoixCommunaute);
+        labelCommunaute.setTypeface(face);
+
+        TextView labelGroupe = (TextView) findViewById(R.id.btnGroupe);
+        labelGroupe.setTypeface(face);
+
+        LinearLayout btnGlobal = (LinearLayout) findViewById(R.id.layout_choix_global);
         btnGlobal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,8 +60,7 @@ public class ChoixMondeActivity extends AppCompatActivity {
             }
         });
 
-        Button btnCommunaute = (Button) findViewById(R.id.btnChoixCommunaute);
-        btnCommunaute.setTypeface(face);
+        LinearLayout btnCommunaute = (LinearLayout) findViewById(R.id.layout_choix_communaute);
         btnCommunaute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,8 +68,7 @@ public class ChoixMondeActivity extends AppCompatActivity {
             }
         });
 
-        Button btnGroupe = (Button) findViewById(R.id.btnGroupe);
-        btnGroupe.setTypeface(face);
+        LinearLayout btnGroupe = (LinearLayout) findViewById(R.id.layout_choix_groupe);
         btnGroupe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

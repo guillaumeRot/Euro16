@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,6 +19,7 @@ import android.text.SpannableString;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -36,6 +38,7 @@ import com.euro16.Model.Equipe;
 import com.euro16.Model.Match;
 import com.euro16.R;
 import com.euro16.Utils.AlertMsgBox;
+import com.euro16.Utils.CustomTypefaceSpan;
 import com.euro16.Utils.Enums.EDateFormat;
 import com.euro16.Utils.Enums.EGroupeEuro;
 import com.euro16.Utils.Enums.EUtilisateurStatut;
@@ -71,32 +74,44 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        if(Build.VERSION.SDK_INT < 21) {
+            setTheme(R.style.AppTheme);
+            getSupportActionBar().setSubtitle(R.string.title_choix_monde);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_competition);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         Typeface face = Typeface.createFromAsset(getAssets(), "fonts/font_euro.ttf");
 
-        pronoMenuActivated = false;
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_activity);
 
-        if(CurrentSession.communaute != null) {
-            if(CurrentSession.communaute.getNom().length() <= 16) {
-                toolbar.setSubtitle(getResources().getString(R.string.title_activity_left_menu) + " : " + CurrentSession.communaute.getNom());
+        if(Build.VERSION.SDK_INT >= 21) {
+            TextView title = (TextView) toolbar.findViewById(R.id.title_toolbar);
+            title.setText("Compétition");
+            title.setTypeface(face);
+
+            TextView subtitle = (TextView) toolbar.findViewById(R.id.subtitle_toolbar);
+            if(CurrentSession.communaute != null) {
+                if(CurrentSession.communaute.getNom().length() <= 8) {
+                    subtitle.setText(getResources().getString(R.string.title_activity_left_menu) + " : " + CurrentSession.communaute.getNom());
+                } else {
+                    subtitle.setText(getResources().getString(R.string.title_activity_left_menu) + " : " + CurrentSession.communaute.getNom().substring(0, 14) + "...");
+                }
+            } else if(CurrentSession.groupe != null) {
+                if(CurrentSession.groupe.getNom().length() <= 8) {
+                    subtitle.setText(getResources().getString(R.string.title_activity_left_menu) + " : " + CurrentSession.groupe.getNom());
+                } else {
+                    subtitle.setText(getResources().getString(R.string.title_activity_left_menu) + " : " + CurrentSession.groupe.getNom().substring(0, 14) + "...");
+                }
             } else {
-                toolbar.setSubtitle(getResources().getString(R.string.title_activity_left_menu) + " : " + CurrentSession.communaute.getNom().substring(0, 14) + "...");
+                subtitle.setText(getResources().getString(R.string.title_activity_left_menu) + " : Global");
             }
-        } else if(CurrentSession.groupe != null) {
-            if(CurrentSession.groupe.getNom().length() <= 16) {
-                toolbar.setSubtitle(getResources().getString(R.string.title_activity_left_menu) + " : " + CurrentSession.groupe.getNom());
-            } else {
-                toolbar.setSubtitle(getResources().getString(R.string.title_activity_left_menu) + " : " + CurrentSession.groupe.getNom().substring(0, 14) + "...");
-            }
-        } else {
-            toolbar.setSubtitle(getResources().getString(R.string.title_activity_left_menu) + " : Global");
+            subtitle.setTypeface(face);
         }
 
+        pronoMenuActivated = false;
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -107,6 +122,12 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
 
         navigationViewLeft = (NavigationView) findViewById(R.id.nav_view_left);
         navigationViewLeft.setNavigationItemSelectedListener(this);
+
+        Menu m = navigationViewLeft.getMenu();
+        for (int i = 0;i < m.size(); i++) {
+            MenuItem mi = m.getItem(i);
+            applyFontToMenuItem(mi);
+        }
 
         isAdmin();
 
@@ -263,6 +284,7 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
                         try {
                             if (CurrentSession.utilisateur.getId().equalsIgnoreCase(response.getString("AdminGrp"))) {
                                 navigationViewLeft.getMenu().findItem(R.id.nav_gerer_monde).setTitle("Gérer le groupe");
+                                applyFontToMenuItem(navigationViewLeft.getMenu().findItem(R.id.nav_gerer_monde));
                             } else {
                                 navigationViewLeft.getMenu().removeItem(R.id.nav_gerer_monde);
                             }
@@ -450,5 +472,12 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
                 }
             });
         }
+    }
+
+    private void applyFontToMenuItem(MenuItem mi) {
+        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/font_euro.ttf");
+        SpannableString mNewTitle = new SpannableString(mi.getTitle());
+        mNewTitle.setSpan(new CustomTypefaceSpan("" , face), 0 , mNewTitle.length(),  Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        mi.setTitle(mNewTitle);
     }
 }

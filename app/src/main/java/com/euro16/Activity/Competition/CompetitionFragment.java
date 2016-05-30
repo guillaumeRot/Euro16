@@ -68,6 +68,8 @@ public class CompetitionFragment extends Fragment {
 
     private Spinner selectGroupes;
 
+    private Typeface face;
+
     public static CompetitionFragment newInstance() {
         CompetitionFragment fragment = new CompetitionFragment();
         return fragment;
@@ -77,6 +79,8 @@ public class CompetitionFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        face = Typeface.createFromAsset(getActivity().getApplicationContext().getAssets(), "fonts/font_euro.ttf");
 
         nomPhases = new ArrayList<>();
         nomPhases.add(EGroupeEuro.GROUPE_A.getNomGrp());
@@ -93,7 +97,13 @@ public class CompetitionFragment extends Fragment {
         // Inflate the layout for this fragment
         layout = (FrameLayout) inflater.inflate(R.layout.fragment_competition, container, false);
 
-        selectGroupes = (Spinner) layout.findViewById(R.id.selectGroupes);
+        TextView tvClassement = (TextView) layout.findViewById(R.id.textViewClassement);
+        tvClassement.setTypeface(face);
+
+        TextView tvResultats = (TextView) layout.findViewById(R.id.textViewResultats);
+        tvResultats.setTypeface(face);
+
+                selectGroupes = (Spinner) layout.findViewById(R.id.selectGroupes);
         ArrayList<String> listSpinner = new ArrayList<String>();
         for(int i = 0; i < nomPhases.size(); i++) {
             listSpinner.add(nomPhases.get(i));
@@ -262,21 +272,33 @@ public class CompetitionFragment extends Fragment {
             View rowLayoutTitre = LayoutInflater.from(getActivity().getApplicationContext()).inflate(R.layout.table_item_equipe, null, false);
             TextView ptsTitre = (TextView) rowLayoutTitre.findViewById(R.id.pts);
             ptsTitre.setText("Pts");
+            ptsTitre.setTextColor(getResources().getColor(R.color.white));
+            ptsTitre.setTypeface(face);
 
             TextView jouesTitre = (TextView) rowLayoutTitre.findViewById(R.id.joues);
             jouesTitre.setText("J");
+            jouesTitre.setTextColor(getResources().getColor(R.color.white));
+            jouesTitre.setTypeface(face);
 
             TextView gagnesTitre = (TextView) rowLayoutTitre.findViewById(R.id.gagnes);
             gagnesTitre.setText("G");
+            gagnesTitre.setTextColor(getResources().getColor(R.color.white));
+            gagnesTitre.setTypeface(face);
 
             TextView nulsTitre = (TextView) rowLayoutTitre.findViewById(R.id.nuls);
             nulsTitre.setText("N");
+            nulsTitre.setTextColor(getResources().getColor(R.color.white));
+            nulsTitre.setTypeface(face);
 
             TextView perdusTitre = (TextView) rowLayoutTitre.findViewById(R.id.perdus);
             perdusTitre.setText("P");
+            perdusTitre.setTextColor(getResources().getColor(R.color.white));
+            perdusTitre.setTypeface(face);
 
             TextView goalAverageTitre = (TextView) rowLayoutTitre.findViewById(R.id.goalAverage);
             goalAverageTitre.setText("+/-");
+            goalAverageTitre.setTextColor(getResources().getColor(R.color.white));
+            goalAverageTitre.setTypeface(face);
 
             gridClassement.addView(rowLayoutTitre);
 
@@ -293,6 +315,8 @@ public class CompetitionFragment extends Fragment {
                 View rowLayout = LayoutInflater.from(getActivity().getApplicationContext()).inflate(R.layout.table_item_equipe, null, false);
                 TextView classement = (TextView) rowLayout.findViewById(R.id.classement);
                 classement.setText(String.valueOf(i));
+                classement.setTextColor(getResources().getColor(R.color.white));
+                classement.setTypeface(face);
 
                 ImageView iconEquipe = (ImageView) rowLayout.findViewById(R.id.iconEquipe);
                 String icon = EEquipeIcon.getNomIcon(equipes.get(i-1).getNom());
@@ -302,30 +326,38 @@ public class CompetitionFragment extends Fragment {
 
                 TextView nom = (TextView) rowLayout.findViewById(R.id.nomEquipe);
                 nom.setText(equipes.get(i-1).getNom());
+                nom.setTextColor(getResources().getColor(R.color.white));
+                nom.setTypeface(face);
 
                 TextView pts = (TextView) rowLayout.findViewById(R.id.pts);
                 pts.setText(String.valueOf(equipes.get(i-1).getPts()));
+                pts.setTextColor(getResources().getColor(R.color.white));
+                pts.setTypeface(face);
 
                 TextView joues = (TextView) rowLayout.findViewById(R.id.joues);
                 joues.setText(String.valueOf(equipes.get(i-1).getJoues()));
+                joues.setTextColor(getResources().getColor(R.color.white));
+                joues.setTypeface(face);
 
                 TextView gagnes = (TextView) rowLayout.findViewById(R.id.gagnes);
                 gagnes.setText(String.valueOf(equipes.get(i-1).getGagnes()));
+                gagnes.setTextColor(getResources().getColor(R.color.white));
+                gagnes.setTypeface(face);
 
                 TextView nuls = (TextView) rowLayout.findViewById(R.id.nuls);
                 nuls.setText(String.valueOf(equipes.get(i-1).getNuls()));
+                nuls.setTextColor(getResources().getColor(R.color.white));
+                gagnes.setTypeface(face);
 
                 TextView perdus = (TextView) rowLayout.findViewById(R.id.perdus);
                 perdus.setText(String.valueOf(equipes.get(i-1).getPerdus()));
+                perdus.setTextColor(getResources().getColor(R.color.white));
+                perdus.setTypeface(face);
 
                 TextView goalAverage = (TextView) rowLayout.findViewById(R.id.goalAverage);
-                goalAverage.setText(String.valueOf(equipes.get(i-1).getGoalAverage()));
-
-                if(i == equipes.size()) {
-                    TableLayout.LayoutParams layoutParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT);
-                    layoutParams.setMargins(0, 0, 0, 50);
-                    rowLayout.setLayoutParams(layoutParams);
-                }
+                goalAverage.setText(String.valueOf(equipes.get(i - 1).getGoalAverage()));
+                goalAverage.setTextColor(getResources().getColor(R.color.white));
+                goalAverage.setTypeface(face);
 
                 gridClassement.addView(rowLayout);
             }
@@ -391,16 +423,24 @@ public class CompetitionFragment extends Fragment {
 
             TextView nomEquipe1 = (TextView) rowLayout.findViewById(R.id.nomEquipe1);
             nomEquipe1.setText(match.getEquipe1().getNom());
+            nomEquipe1.setTextColor(getResources().getColor(R.color.white));
+            nomEquipe1.setTypeface(face);
 
             TextView nomEquipe2 = (TextView) rowLayout.findViewById(R.id.nomEquipe2);
             nomEquipe2.setText(match.getEquipe2().getNom());
+            nomEquipe2.setTextColor(getResources().getColor(R.color.white));
+            nomEquipe2.setTypeface(face);
 
             if(match.getScore1() != -1 && match.getScore2() != -1) {
                 TextView score1 = (TextView) rowLayout.findViewById(R.id.score1);
                 score1.setText(String.valueOf(match.getScore1()));
+                score1.setTextColor(getResources().getColor(R.color.white));
+                score1.setTypeface(face);
 
                 TextView score2 = (TextView) rowLayout.findViewById(R.id.score2);
                 score2.setText(String.valueOf(match.getScore2()));
+                score2.setTextColor(getResources().getColor(R.color.white));
+                score2.setTypeface(face);
 
                 int resultMatch = match.getScore1() - match.getScore2();
                 if(matchResultat.get(match) != null) {
@@ -415,19 +455,19 @@ public class CompetitionFragment extends Fragment {
                 }
 
                 if(resultMatch > 0) {
-                    nomEquipe1.setTypeface(null, Typeface.BOLD);
+                    nomEquipe1.setTypeface(face, Typeface.BOLD);
                 } else if(resultMatch < 0) {
-                    nomEquipe2.setTypeface(null, Typeface.BOLD);
+                    nomEquipe2.setTypeface(face, Typeface.BOLD);
                 }
 
-            } else {
-                if(matchResultat.get(match) != null) {
-                    rowLayout.setBackgroundColor(getResources().getColor(R.color.orange));
-                }
             }
 
             TextView prono = (TextView) rowLayout.findViewById(R.id.pronoUtil);
-            prono.setText(matchResultat.get(match));
+            if(matchResultat.get(match) != null) {
+                prono.setText("Pronostic : " + matchResultat.get(match));
+            }
+            prono.setTextColor(getResources().getColor(R.color.white));
+            prono.setTypeface(face);
 
             ImageView iconEquipe2 = (ImageView) rowLayout.findViewById(R.id.iconEquipe2);
             String icon2 = EEquipeIcon.getNomIcon(match.getEquipe2().getNom());
@@ -511,7 +551,7 @@ public class CompetitionFragment extends Fragment {
                     }
                 }
             });
-            gridClassement.addView(rowLayout);
+            gridMatchs.addView(rowLayout);
         }
     }
 }

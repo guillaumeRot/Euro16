@@ -2,75 +2,90 @@
 <TableRow xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp">
 
     <ImageView
         android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_height="45dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:id="@+id/iconEquipe1"
         android:layout_weight="0.06"
         android:gravity="center" />
 
     <TextView
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="45dp"
         android:id="@+id/nomEquipe1"
         android:layout_weight="0.35"
-        android:gravity="left"
+        android:gravity="left|center_vertical"
         android:textColor="@color/black" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/score1"
-        android:layout_weight="0.1"
-        android:gravity="center"
-        android:textColor="@color/black"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.1"
-            android:gravity="center"
-            android:textColor="@color/black"
-            android:text=" - "/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="0.5">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/score1"
+                android:gravity="left"
+                android:textColor="@color/black"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:text=" - "
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/score2"
+                android:gravity="right"
+                android:textColor="@color/black"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.1"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:text="Pronostic : -"
+            android:id="@+id/pronoUtil"
             android:gravity="center"
-            android:textColor="@color/black"
-            android:id="@+id/pronoUtil"/>
+            android:textSize="13dp"
+            android:layout_weight="0.5"/>
 
     </LinearLayout>
 
 
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/score2"
-        android:layout_weight="0.1"
-        android:gravity="center"
-        android:textColor="@color/black"/>
-
     <TextView
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="45dp"
         android:id="@+id/nomEquipe2"
         android:layout_weight="0.35"
-        android:gravity="right"
+        android:gravity="right|center_vertical"
         android:textColor="@color/black"/>
 
     <ImageView
         android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_height="45dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:id="@+id/iconEquipe2"
         android:layout_weight="0.06"
         android:gravity="center" />
