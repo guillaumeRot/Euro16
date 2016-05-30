@@ -67,26 +67,41 @@ public class ChoixGroupeActivity extends AppCompatActivity {
 
         final RelativeLayout relLayout = (RelativeLayout) findViewById(R.id.relLayout);
 
+
         if(FacebookConnexion.isOnline(this)) {
+
             RestClient.getGroupesUtilisateur(CurrentSession.utilisateur.getId(), new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
-                    TextView textView = new TextView(getApplicationContext());
-                    textView.setText("Vous n'êtes inscrit(e) dans aucun groupe");
-                    textView.setTextColor(getResources().getColor(R.color.bleu));
-                    textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                    relLayout.addView(textView);
+
+                    Log.i("Euro 16", "onSuccess(int statusCode, Header[] headers, JSONObject jsonObject)");
+
+                    ListView listGroupes = new ListView(getApplicationContext());
+                    listGroupes.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                    relLayout.addView(listGroupes);
+
+                    adapter = new ArrayAdapter(ChoixGroupeActivity.this, android.R.layout.simple_list_item_1);
+                    listGroupes.setAdapter(adapter);
+
+                    adapter.add("Vous n'êtes inscrit(e) dans aucun groupe");
+
+
+//                    TextView textView = new TextView(getApplicationContext());
+//                    textView.setText("Vous n'êtes inscrit(e) dans aucun groupe");
+//                    textView.setTextColor(getResources().getColor(R.color.bleu));
+//                    textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+//                    relLayout.addView(textView);
                 }
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONArray arrayResponse) {
+
+                    Log.i("Euro 16", "onSuccess(int statusCode, Header[] headers, JSONArray arrayResponse)");
+
+
                     //Initialisation de la liste
                     ListView listGroupes = new ListView(getApplicationContext());
                     listGroupes.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-                    TextView textHeader = new TextView(getApplicationContext());
-                    textHeader.setText("Mes groupes :");
-                    listGroupes.addHeaderView(textHeader);
                     relLayout.addView(listGroupes);
 
                     adapter = new ArrayAdapter(ChoixGroupeActivity.this, android.R.layout.simple_list_item_1);

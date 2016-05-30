@@ -43,12 +43,32 @@ public class ChoixMondeActivity extends AppCompatActivity {
 
         TextView labelGlobal = (TextView) findViewById(R.id.btnGlobal);
         labelGlobal.setTypeface(face);
+        labelGlobal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CurrentSession.communaute = null;
+                CurrentSession.groupe = null;
+                startActivity(new Intent(ChoixMondeActivity.this, CompetitionActivity.class));
+            }
+        });
 
         TextView labelCommunaute = (TextView) findViewById(R.id.btnChoixCommunaute);
         labelCommunaute.setTypeface(face);
+        labelCommunaute.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ChoixMondeActivity.this, ChoixCommunauteActivity.class));
+            }
+        });
 
         TextView labelGroupe = (TextView) findViewById(R.id.btnGroupe);
         labelGroupe.setTypeface(face);
+        labelGroupe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ChoixMondeActivity.this, ChoixGroupeActivity.class));
+            }
+        });
 
         LinearLayout btnGlobal = (LinearLayout) findViewById(R.id.layout_choix_global);
         btnGlobal.setOnClickListener(new View.OnClickListener() {

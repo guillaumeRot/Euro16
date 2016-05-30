@@ -14,15 +14,16 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:src="@drawable/backgrnd_bitmap"
-        android:scaleType="fitXY" />
+        android:scaleType="fitXY"
+        android:layout_below="@+id/toolbar_activity" />
 
     <RelativeLayout
         android:id="@+id/relLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/btnCreerGroupe">
+        android:layout_above="@+id/btnCreerGroupe"
+        android:layout_below="@+id/toolbar_activity">
     </RelativeLayout>
 
     <Button

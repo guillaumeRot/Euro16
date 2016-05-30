@@ -76,10 +76,12 @@ public class ChoixCommunauteActivity extends AppCompatActivity {
             RestClient.getCommunautesUtilisateur(CurrentSession.utilisateur.getId(), new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
-                    TextView textView = new TextView(getApplicationContext());
-                    textView.setText("Vous n'êtes inscrit(e) dans aucune communauté");
-                    textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                    relLayout.addView(textView);
+
+                    Toast.makeText(ChoixCommunauteActivity.this, "\"Vous n'êtes inscrit(e) dans aucune communauté\"", Toast.LENGTH_SHORT).show();
+//                    TextView textView = new TextView(getApplicationContext());
+//                    textView.setText("Vous n'êtes inscrit(e) dans aucune communauté");
+//                    textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+//                    relLayout.addView(textView);
                 }
 
                 @Override

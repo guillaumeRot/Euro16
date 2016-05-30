@@ -9,6 +9,12 @@
         android:id="@+id/toolbar_activity"
         layout="@layout/toolbar_simple" />
 
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:src="@drawable/backgrnd_bitmap"
+        android:scaleType="fitXY" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,7 +28,10 @@
             android:inputType="textVisiblePassword"
             android:textColorHint="@color/white"
             android:singleLine="true"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"/>
 
         <ListView android:id="@+id/listCommunautes"
             android:layout_width="wrap_content"
