@@ -45,7 +45,9 @@
             android:layout_below="@+id/textViewNomCommunaute"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginRight="20dp"
+            android:textCursorDrawable="@color/white"
+            android:backgroundTint="@color/white"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -74,11 +76,12 @@
             android:layout_height="wrap_content"
             android:text="Créer"
             android:id="@+id/btnCreerCommunaute"
-            android:background="#00ffffff"
-            android:textColor="@color/bleu"
+            android:background="@drawable/background_button"
+            android:textColor="@color/white"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"/>
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="20dp"/>
 
     </RelativeLayout>
 

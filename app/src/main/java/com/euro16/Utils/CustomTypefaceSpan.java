@@ -1,30 +1,35 @@
 package com.euro16.Utils;
 
+import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.text.TextPaint;
 import android.text.style.TypefaceSpan;
 
+import com.euro16.R;
+
 public class CustomTypefaceSpan extends TypefaceSpan {
 
     private final Typeface newType;
+    private Context context;
 
-    public CustomTypefaceSpan(String family, Typeface type) {
+    public CustomTypefaceSpan(Context context, String family, Typeface type) {
         super(family);
+        this.context = context;
         newType = type;
     }
 
     @Override
     public void updateDrawState(TextPaint ds) {
-        applyCustomTypeFace(ds, newType);
+        applyCustomTypeFace(context, ds, newType);
     }
 
     @Override
     public void updateMeasureState(TextPaint paint) {
-        applyCustomTypeFace(paint, newType);
+        applyCustomTypeFace(context, paint, newType);
     }
 
-    private static void applyCustomTypeFace(Paint paint, Typeface tf) {
+    private static void applyCustomTypeFace(Context context, Paint paint, Typeface tf) {
         int oldStyle;
         Typeface old = paint.getTypeface();
         if (old == null) {
@@ -43,5 +48,7 @@ public class CustomTypefaceSpan extends TypefaceSpan {
         }
 
         paint.setTypeface(tf);
+        paint.setTextSize(50);
+        paint.setColor(context.getResources().getColor(R.color.black));
     }
 }

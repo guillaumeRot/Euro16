@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -27,6 +28,7 @@ import com.euro16.Model.Groupe;
 import com.euro16.R;
 import com.euro16.Utils.AlertMsgBox;
 import com.euro16.Utils.Enums.EUtilisateurStatut;
+import com.euro16.Utils.ListsView.ArrayAdapterString;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -40,7 +42,7 @@ import cz.msebera.android.httpclient.Header;
 
 public class ChoixGroupeActivity extends AppCompatActivity {
 
-    private ArrayAdapter adapter;
+    private ArrayAdapterString adapter;
 
     private HashMap<String, Groupe> hmGrpUtil;
 
@@ -74,17 +76,10 @@ public class ChoixGroupeActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
 
-                    Log.i("Euro 16", "onSuccess(int statusCode, Header[] headers, JSONObject jsonObject)");
-
-                    ListView listGroupes = new ListView(getApplicationContext());
-                    listGroupes.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                    relLayout.addView(listGroupes);
-
-                    adapter = new ArrayAdapter(ChoixGroupeActivity.this, android.R.layout.simple_list_item_1);
-                    listGroupes.setAdapter(adapter);
-
-                    adapter.add("Vous n'êtes inscrit(e) dans aucun groupe");
-
+                    Toast toast = Toast.makeText(ChoixGroupeActivity.this, "Vous n'êtes inscrit(e) dans aucun groupe", Toast.LENGTH_LONG);
+                    TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
+                    if( v != null) v.setGravity(Gravity.CENTER);
+                    toast.show();
 
 //                    TextView textView = new TextView(getApplicationContext());
 //                    textView.setText("Vous n'êtes inscrit(e) dans aucun groupe");
@@ -104,7 +99,7 @@ public class ChoixGroupeActivity extends AppCompatActivity {
                     listGroupes.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                     relLayout.addView(listGroupes);
 
-                    adapter = new ArrayAdapter(ChoixGroupeActivity.this, android.R.layout.simple_list_item_1);
+                    adapter = new ArrayAdapterString(ChoixGroupeActivity.this, android.R.layout.simple_list_item_1);
                     listGroupes.setAdapter(adapter);
 
                     // Remplissage de la liste
@@ -156,6 +151,7 @@ public class ChoixGroupeActivity extends AppCompatActivity {
         }
 
         Button btnCreerGroupe = (Button) findViewById(R.id.btnCreerGroupe);
+        btnCreerGroupe.setTypeface(face);
         btnCreerGroupe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

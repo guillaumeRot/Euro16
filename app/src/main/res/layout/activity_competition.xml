@@ -19,13 +19,9 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_left_menu"
-        app:menu="@menu/activity_left_menu_drawer">
-
-        <!-- <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/background_gris"
-            android:scaleType="fitXY"/> -->
+        app:menu="@menu/activity_left_menu_drawer"
+        android:background="@drawable/background_menu"
+        app:itemIconTint="@color/black">
 
     </android.support.design.widget.NavigationView>
 

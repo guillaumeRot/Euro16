@@ -29,6 +29,7 @@ import com.euro16.Utils.Enums.ETypeCommunaute;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -57,8 +58,18 @@ public class CreationCommunauteActivity extends AppCompatActivity {
             title.setTypeface(face);
         }
 
+        TextView tvNomCommunaute = (TextView) findViewById(R.id.textViewNomCommunaute);
+        tvNomCommunaute.setTypeface(face);
+
+        TextView tvTypeCommunaute = (TextView) findViewById(R.id.textViewTypeCommunaute);
+        tvTypeCommunaute.setTypeface(face);
+
         final EditText editTextNom = (EditText) findViewById(R.id.nomCommunaute);
+        editTextNom.setTypeface(face);
+
         Button btnCreerCommunaute = (Button) findViewById(R.id.btnCreerCommunaute);
+        btnCreerCommunaute.setTypeface(face);
+
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
 
         ArrayList<String> listSpinner = new ArrayList<String>();
@@ -90,8 +101,11 @@ public class CreationCommunauteActivity extends AppCompatActivity {
             btnCreerCommunaute.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Pattern p = Pattern.compile("[^a-zA-Z0-9]");
                     if (editTextNom.getText().toString().length() < 5) {
                         Toast.makeText(getApplicationContext(), "Le nom de la communauté doit contenir au moins 5 caractères", Toast.LENGTH_LONG).show();
+                    } else if(p.matcher(editTextNom.getText()).find()) {
+                        Toast.makeText(getApplicationContext(), "Le nom de la communauté doit contenir que des caractéres alphanumériques", Toast.LENGTH_LONG).show();
                     } else {
                         RestClient.creerCommunaute(editTextNom.getText().toString(), CurrentSession.utilisateur.getId(), "", selectedType, new AsyncHttpResponseHandler() {
                             @Override

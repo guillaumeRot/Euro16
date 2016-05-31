@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -77,7 +78,10 @@ public class ChoixCommunauteActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
 
-                    Toast.makeText(ChoixCommunauteActivity.this, "\"Vous n'êtes inscrit(e) dans aucune communauté\"", Toast.LENGTH_SHORT).show();
+                    Toast toast = Toast.makeText(ChoixCommunauteActivity.this, "Vous n'êtes inscrit(e) dans aucune communauté", Toast.LENGTH_LONG);
+                    TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
+                    if( v != null) v.setGravity(Gravity.CENTER);
+                    toast.show();
 //                    TextView textView = new TextView(getApplicationContext());
 //                    textView.setText("Vous n'êtes inscrit(e) dans aucune communauté");
 //                    textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -158,6 +162,7 @@ public class ChoixCommunauteActivity extends AppCompatActivity {
         }
 
         Button btnRejoindreCommunaute = (Button) findViewById(R.id.btnRejoindreCommunaute);
+        btnRejoindreCommunaute.setTypeface(face);
         btnRejoindreCommunaute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,6 +171,7 @@ public class ChoixCommunauteActivity extends AppCompatActivity {
         });
 
         Button btnCreerCommunaute = (Button) findViewById(R.id.btnCreerCom);
+        btnCreerCommunaute.setTypeface(face);
         btnCreerCommunaute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

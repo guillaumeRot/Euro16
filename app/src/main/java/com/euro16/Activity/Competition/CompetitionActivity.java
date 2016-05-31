@@ -305,6 +305,7 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
                         try {
                             if(CurrentSession.utilisateur.getId().equalsIgnoreCase(response.getString("AdminCom"))) {
                                 navigationViewLeft.getMenu().findItem(R.id.nav_gerer_monde).setTitle("Gérer la communauté");
+                                applyFontToMenuItem(navigationViewLeft.getMenu().findItem(R.id.nav_gerer_monde));
                             } else {
                                 navigationViewLeft.getMenu().removeItem(R.id.nav_gerer_monde);
                             }
@@ -477,7 +478,7 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
     private void applyFontToMenuItem(MenuItem mi) {
         Typeface face = Typeface.createFromAsset(getAssets(), "fonts/font_euro.ttf");
         SpannableString mNewTitle = new SpannableString(mi.getTitle());
-        mNewTitle.setSpan(new CustomTypefaceSpan("" , face), 0 , mNewTitle.length(),  Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        mNewTitle.setSpan(new CustomTypefaceSpan(getApplicationContext(), "" , face), 0 , mNewTitle.length(),  Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         mi.setTitle(mNewTitle);
     }
 }

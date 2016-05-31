@@ -27,6 +27,7 @@ import com.euro16.R;
 import com.euro16.Utils.AlertMsgBox;
 import com.euro16.Utils.Enums.ETypeCommunaute;
 import com.euro16.Utils.Enums.EUtilisateurStatut;
+import com.euro16.Utils.ListsView.ArrayAdapterString;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -61,8 +62,10 @@ public class RejoindreCommunauteActivity extends AppCompatActivity {
         }
 
         final ListView listCommunautes = (ListView) findViewById(R.id.listCommunautes);
-        final ArrayAdapter adapter = new ArrayAdapter(RejoindreCommunauteActivity.this, android.R.layout.simple_list_item_1);
+        final ArrayAdapterString adapter = new ArrayAdapterString(RejoindreCommunauteActivity.this, android.R.layout.simple_list_item_1);
+
         EditText inputSearch = (EditText) findViewById(R.id.inputSearch);
+        inputSearch.setTypeface(face);
 
         inputSearch.addTextChangedListener(new TextWatcher() {
 
@@ -79,14 +82,12 @@ public class RejoindreCommunauteActivity extends AppCompatActivity {
         });
 
         if(FacebookConnexion.isOnline(this)) {
-            Log.i("Euro 16", "id : " + CurrentSession.utilisateur.getId());
             RestClient.getCommunautes(CurrentSession.utilisateur.getId(), new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(final int statusCode, Header[] headers, JSONArray arrayResponse) {
                     if (statusCode == 204) {
-                        Log.i("Euro 16", "Vous n'êtes inscrit dans aucune communauté");
+                        Toast.makeText(RejoindreCommunauteActivity.this, "Aucune communauté n'est disponible", Toast.LENGTH_LONG).show();
                     } else {
-                        Log.i("Euro 16", "status : " + statusCode + "\n" + "response : " + arrayResponse.toString());
                         final HashMap<String, Communaute> hmCommunautes = new HashMap<String, Communaute>();
                         listCommunautes.setAdapter(adapter);
                         for (int i = 0; i < arrayResponse.length(); i++) {

@@ -49,9 +49,14 @@ public class CreationGroupeActivity extends AppCompatActivity {
             title.setTypeface(face);
         }
 
+        TextView tvNomGroupe = (TextView) findViewById(R.id.textViewNomCommunaute);
+        tvNomGroupe.setTypeface(face);
+
         final EditText editTextNom = (EditText) findViewById(R.id.nomGroupe);
+        editTextNom.setTypeface(face);
 
         Button btnCreerGroupe = (Button) findViewById(R.id.btnCreerGroupe);
+        btnCreerGroupe.setTypeface(face);
         if(FacebookConnexion.isOnline(this)) {
             btnCreerGroupe.setOnClickListener(new View.OnClickListener() {
                 @Override
