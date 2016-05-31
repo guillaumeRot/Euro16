@@ -11,15 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.euro16.R;
-import com.euro16.Utils.Enums.EDateFormat;
-import com.euro16.Utils.RowsChoix.RowActualite;
-import com.euro16.Utils.RowsChoix.RowChoixCommunaute;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 /**
  * Created by Guillaume on 31/05/2016.

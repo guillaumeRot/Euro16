@@ -1,16 +1,8 @@
 package com.euro16.Utils;
 
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.ListView;
 
-import com.euro16.Activity.Competition.ActualitesFragment;
-import com.euro16.Model.Utilisateur;
-import com.euro16.Utils.Enums.EUtilisateurStatut;
-import com.euro16.Utils.ListsView.ListViewAdapterActualite;
 import com.euro16.Utils.RowsChoix.RowActualite;
-import com.euro16.Utils.RowsChoix.RowChoixUtilisateur;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

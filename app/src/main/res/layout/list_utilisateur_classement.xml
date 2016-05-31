@@ -7,6 +7,14 @@
     android:background="@color/grey"
     android:id="@+id/layout_item_classement">
 
+    <TextView
+        android:id="@+id/numClassementUser"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textColor="@color/black"
+        android:textSize="15dip"
+        android:layout_weight="0.55"
+        android:gravity="center"/>
 
     <ImageView
         android:id="@+id/statutUtilImage"
@@ -24,8 +32,7 @@
             android:id="@+id/listPrenomUtilisateur"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textColor="#040404"
-            android:typeface="sans"
+            android:textColor="@color/black"
             android:textSize="15dip"
             android:textStyle="bold"
             android:layout_weight="0.5"/>
@@ -34,8 +41,8 @@
             android:id="@+id/listNomUtilisateur"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textColor="#343434"
-            android:textSize="10dip"
+            android:textColor="@color/black"
+            android:textSize="13dip"
             android:layout_weight="0.5"/>
 
     </LinearLayout>
@@ -45,7 +52,7 @@
         android:id="@+id/listPtsUtilisateur"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#040404"
+        android:textColor="@color/black"
         android:typeface="sans"
         android:textSize="15dip"
         android:textStyle="bold"

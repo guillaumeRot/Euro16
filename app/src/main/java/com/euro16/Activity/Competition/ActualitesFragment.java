@@ -1,43 +1,22 @@
 package com.euro16.Activity.Competition;
 
 
-import android.os.Bundle;
 import android.app.Fragment;
-import android.util.Log;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.euro16.Model.Utilisateur;
 import com.euro16.R;
-import com.euro16.Utils.Enums.EUtilisateurStatut;
 import com.euro16.Utils.ListsView.ListViewAdapterActualite;
-import com.euro16.Utils.ListsView.ListViewAdapterUtilisateur;
 import com.euro16.Utils.RowsChoix.RowActualite;
-import com.euro16.Utils.RowsChoix.RowChoixUtilisateur;
 import com.euro16.Utils.XMLDataParser;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.concurrent.ExecutionException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class ActualitesFragment extends Fragment {
 
     private FrameLayout layout;

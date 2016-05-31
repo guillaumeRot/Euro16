@@ -1,13 +1,11 @@
 package com.euro16.Activity.Pronostic;
 
 
-import android.app.FragmentManager;
+import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +19,6 @@ import com.euro16.API.RestClient;
 import com.euro16.Activity.Competition.CompetitionFragment;
 import com.euro16.Activity.Facebook.FacebookConnexion;
 import com.euro16.Model.CurrentSession;
-import com.euro16.Model.Equipe;
 import com.euro16.Model.Match;
 import com.euro16.R;
 import com.euro16.Utils.AlertMsgBox;
@@ -32,16 +29,10 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 
 import cz.msebera.android.httpclient.Header;
 

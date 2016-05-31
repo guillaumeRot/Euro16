@@ -1,15 +1,10 @@
 package com.euro16.Activity.Competition;
 
-import android.app.Activity;
-import android.app.FragmentManager;
+import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +12,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.euro16.API.RestClient;
-import com.euro16.Activity.ChoixMondeActivity;
 import com.euro16.Activity.Facebook.FacebookConnexion;
 import com.euro16.Activity.Pronostic.PronosticFragment;
 import com.euro16.Model.CurrentSession;
@@ -41,8 +36,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -361,6 +354,10 @@ public class CompetitionFragment extends Fragment {
 
                 gridClassement.addView(rowLayout);
             }
+        } else {
+            LinearLayout layoutContent = (LinearLayout) layout.findViewById(R.id.layoutContent);
+            TextView tvClassement = (TextView) layoutContent.findViewById(R.id.textViewClassement);
+            layoutContent.removeView(tvClassement);
         }
 
         if(FacebookConnexion.isOnline(getActivity())) {
@@ -373,7 +370,6 @@ public class CompetitionFragment extends Fragment {
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONArray arrayResponse) {
-                    Log.i("Euro 16", "success : " + arrayResponse);
                     matchResultat = new HashMap<Match, String>();
                     for (int i = 0; i < arrayResponse.length(); i++) {
                         try {
@@ -419,6 +415,8 @@ public class CompetitionFragment extends Fragment {
             String icon1 = EEquipeIcon.getNomIcon(match.getEquipe1().getNom());
             if(icon1 != null) {
                 iconEquipe1.setImageResource(getResources().getIdentifier(icon1, "drawable", getActivity().getPackageName()));
+            } else {
+                iconEquipe1.setImageResource(getResources().getIdentifier("default_icon", "drawable", getActivity().getPackageName()));
             }
 
             TextView nomEquipe1 = (TextView) rowLayout.findViewById(R.id.nomEquipe1);
@@ -473,6 +471,8 @@ public class CompetitionFragment extends Fragment {
             String icon2 = EEquipeIcon.getNomIcon(match.getEquipe2().getNom());
             if(icon2 != null) {
                 iconEquipe2.setImageResource(getResources().getIdentifier(icon2, "drawable", getActivity().getPackageName()));
+            } else {
+                iconEquipe2.setImageResource(getResources().getIdentifier("default_icon", "drawable", getActivity().getPackageName()));
             }
 
             TableLayout.LayoutParams layoutParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT);

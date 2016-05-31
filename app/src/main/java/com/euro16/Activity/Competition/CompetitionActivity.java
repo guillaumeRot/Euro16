@@ -16,13 +16,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,33 +30,22 @@ import com.euro16.Activity.Facebook.FacebookConnexion;
 import com.euro16.Activity.Parametres.GererMondeFragment;
 import com.euro16.Activity.Parametres.ParametresFragment;
 import com.euro16.Activity.Pronostic.PronosticFragment;
-import com.euro16.Model.Communaute;
 import com.euro16.Model.CurrentSession;
 import com.euro16.Model.Equipe;
 import com.euro16.Model.Match;
 import com.euro16.R;
 import com.euro16.Utils.AlertMsgBox;
 import com.euro16.Utils.CustomTypefaceSpan;
-import com.euro16.Utils.Enums.EDateFormat;
 import com.euro16.Utils.Enums.EGroupeEuro;
-import com.euro16.Utils.Enums.EUtilisateurStatut;
 import com.euro16.Utils.ListsView.ListViewAdapterClassement;
-import com.euro16.Utils.ListsView.ListViewAdapterCommunaute;
-import com.euro16.Utils.RowsChoix.RowChoixCommunaute;
-import com.euro16.Utils.RowsChoix.RowChoixUtilisateur;
 import com.euro16.Utils.RowsChoix.RowClassementUtilisateur;
-import com.facebook.login.LoginManager;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 import cz.msebera.android.httpclient.Header;
@@ -111,6 +98,15 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
             subtitle.setTypeface(face);
         }
 
+        ImageView imageRightMenu = (ImageView) toolbar.findViewById(R.id.imageRightMenu);
+        imageRightMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.openDrawer(GravityCompat.END);
+            }
+        });
+
         pronoMenuActivated = false;
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -133,6 +129,12 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
 
         classementView = (NavigationView) findViewById(R.id.nav_view_right);
         classementView.setNavigationItemSelectedListener(this);
+
+        TextView tvClassement = (TextView) classementView.findViewById(R.id.textViewClassement);
+        tvClassement.setTypeface(face);
+
+        TextView tvNbJoueurs = (TextView) classementView.findViewById(R.id.nbJoueursClassement);
+        tvNbJoueurs.setTypeface(face);
 
         initMatchsNonPronostiques();
         initClassement();
@@ -212,7 +214,6 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
 
         } else if (id == R.id.nav_pronostics) {
 
-            Log.i("Euro 16", "CurrentSession.matchNonPronostiques : " + CurrentSession.matchNonPronostiques + " : " + !CurrentSession.matchNonPronostiques.isEmpty());
             if (!CurrentSession.matchNonPronostiques.isEmpty()) {
                 PronosticFragment pronoFragment = new PronosticFragment();
                 Bundle bundle = new Bundle();
@@ -416,10 +417,10 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
                 String idFacebook = arrayResponse.getJSONObject(i).getString("ID_Facebook");
 
                 if(i < 6 || idFacebook.equalsIgnoreCase(CurrentSession.utilisateur.getId()) || i == arrayResponse.length()-1) {
-                    RowClassementUtilisateur row = new RowClassementUtilisateur(idFacebook, nomUti, prenomUti, photoUti, ptsUti);
+                    RowClassementUtilisateur row = new RowClassementUtilisateur(String.valueOf(i+1), idFacebook, nomUti, prenomUti, photoUti, ptsUti);
                     adapter.add(row);
                 } else if(i == 6 || i == arrayResponse.length()-2) {
-                    RowClassementUtilisateur row = new RowClassementUtilisateur("", "...", "", "", "");
+                    RowClassementUtilisateur row = new RowClassementUtilisateur("", "", "...", "", "", "");
                     adapter.add(row);
                 }
             } catch (JSONException e) {

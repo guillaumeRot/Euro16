@@ -3,8 +3,11 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="5dip"
-    android:background="@color/grey"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:background="@color/black_opacity"
     android:id="@+id/layout_item_classement">
 
 
@@ -12,22 +15,21 @@
         android:id="@+id/datePub"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.45"
-        android:textColor="#040404"
+        android:layout_weight="0.8"
+        android:textColor="@color/white"
         android:gravity="center"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_weight="0.25">
+        android:layout_weight="0.2">
 
         <TextView
             android:id="@+id/titleActu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textColor="#040404"
-            android:typeface="sans"
+            android:textColor="@color/white"
             android:textSize="15dip"
             android:textStyle="bold"
             android:layout_weight="0.5"/>
@@ -36,8 +38,8 @@
             android:id="@+id/descActu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textColor="#343434"
-            android:textSize="10dip"
+            android:textColor="@color/white_grey"
+            android:textSize="13dip"
             android:layout_weight="0.5"/>
 
     </LinearLayout>

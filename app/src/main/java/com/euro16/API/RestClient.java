@@ -1,7 +1,5 @@
 package com.euro16.API;
 
-import android.util.Log;
-
 import com.euro16.Config;
 import com.euro16.Model.CurrentSession;
 import com.loopj.android.http.AsyncHttpClient;

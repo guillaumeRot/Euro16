@@ -4,6 +4,13 @@
     tools:context="com.euro16.Activity.Competition.ActualitesFragment"
     android:id="@+id/mainLayout">
 
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:src="@drawable/backgrnd_bitmap"
+        android:scaleType="fitXY"
+        android:layout_alignParentTop="true" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="fill_parent"

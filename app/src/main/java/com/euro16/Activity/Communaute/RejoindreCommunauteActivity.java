@@ -12,14 +12,12 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.euro16.API.RestClient;
-import com.euro16.Activity.ChoixMondeActivity;
 import com.euro16.Activity.Facebook.FacebookConnexion;
 import com.euro16.Model.Communaute;
 import com.euro16.Model.CurrentSession;

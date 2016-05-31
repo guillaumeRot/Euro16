@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
-import java.util.ArrayList;
-
 /**
  * Created by Guillaume on 12/03/2016.
  */

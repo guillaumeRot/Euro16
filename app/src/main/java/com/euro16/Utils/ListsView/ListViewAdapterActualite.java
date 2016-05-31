@@ -2,19 +2,16 @@ package com.euro16.Utils.ListsView;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.euro16.Model.CurrentSession;
 import com.euro16.R;
 import com.euro16.Utils.Enums.EDateFormat;
 import com.euro16.Utils.RowsChoix.RowActualite;
-import com.euro16.Utils.RowsChoix.RowClassementUtilisateur;
-import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -43,6 +40,7 @@ public class ListViewAdapterActualite extends ArrayAdapter<RowActualite> {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         RowActualite rowItem = getItem(position);
+        Typeface face = Typeface.createFromAsset(context.getAssets(), "fonts/font_euro.ttf");
 
         LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if (convertView == null) {
@@ -64,8 +62,13 @@ public class ListViewAdapterActualite extends ArrayAdapter<RowActualite> {
             e.printStackTrace();
         }
         holder.textViewDate.setText(dateFormatDisplay.format(datePub));
+        holder.textViewDate.setTypeface(face);
+
         holder.textViewTitle.setText(rowItem.getTitle());
+        holder.textViewTitle.setTypeface(face);
+
         holder.textViewDesc.setText(rowItem.getDescription());
+        holder.textViewDate.setTypeface(face);
 
         return convertView;
     }

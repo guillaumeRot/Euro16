@@ -1,7 +1,5 @@
 package com.euro16.Model;
 
-import android.util.Log;
-
 import com.euro16.Utils.Enums.EGroupeEuro;
 
 import java.util.ArrayList;
