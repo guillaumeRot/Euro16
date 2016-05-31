@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.euro16.R;
+import com.euro16.Utils.Enums.EUtilisateurStatut;
 import com.euro16.Utils.RowsChoix.RowChoixCommunaute;
 
 /**
@@ -47,7 +48,12 @@ public class ListViewAdapterCommunaute extends ArrayAdapter<RowChoixCommunaute> 
 
         holder.textViewNom.setText(rowItem.getNom());
         holder.textViewNom.setTypeface(face);
-        holder.textViewNom.setTextColor(context.getResources().getColor(R.color.white));
+        //if(rowItem.getStatutUtilImage() == EUtilisateurStatut.PARTICIPE.getStatut()) {
+            holder.textViewNom.setTextColor(context.getResources().getColor(R.color.white));
+//        } else {
+//            holder.textViewNom.setTextColor(context.getResources().getColor(R.color.grey));
+//        }
+
         holder.statutUtilImage.setImageResource(rowItem.getStatutUtilImage());
 
         return convertView;

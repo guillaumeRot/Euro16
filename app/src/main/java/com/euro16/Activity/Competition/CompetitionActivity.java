@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -59,6 +61,10 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
 
     private boolean pronoMenuActivated;
 
+    private Typeface face;
+
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -70,11 +76,13 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_competition);
 
-        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/font_euro.ttf");
+        face = Typeface.createFromAsset(getAssets(), "fonts/font_euro.ttf");
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_activity);
+        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
 
         if(Build.VERSION.SDK_INT >= 21) {
+            appBarLayout.removeView((Toolbar) findViewById(R.id.toolbar));
+            toolbar = (Toolbar) findViewById(R.id.toolbar_activity);
             TextView title = (TextView) toolbar.findViewById(R.id.title_toolbar);
             title.setText("Compétition");
             title.setTypeface(face);
@@ -96,6 +104,9 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
                 subtitle.setText(getResources().getString(R.string.title_activity_left_menu) + " : Global");
             }
             subtitle.setTypeface(face);
+        } else {
+            appBarLayout.removeView((Toolbar) findViewById(R.id.toolbar_activity));
+            toolbar = (Toolbar) findViewById(R.id.toolbar);
         }
 
         ImageView imageRightMenu = (ImageView) toolbar.findViewById(R.id.imageRightMenu);
@@ -195,17 +206,30 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
         return super.onOptionsItemSelected(item);
     }
 
+    public void setToolbarTitle(String title) {
+        TextView tvTitle = (TextView) toolbar.findViewById(R.id.title_toolbar);
+        tvTitle.setText(title);
+        tvTitle.setTypeface(face);
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         FragmentManager fragmentManager = getFragmentManager();
         int id = item.getItemId();
 
+        boolean addBackStack = true;
+
         Fragment frag = null;
         if (id == R.id.nav_competition) {
 
             try {
                 frag = CompetitionFragment.class.newInstance();
+
+                addBackStack = false;
+                if(Build.VERSION.SDK_INT >= 21) {
+                    setToolbarTitle("Compétition");
+                }
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
@@ -221,6 +245,10 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
                 bundle.putBoolean("callFromCompetition", false);
                 pronoFragment.setArguments(bundle);
 
+                if(Build.VERSION.SDK_INT >= 21) {
+                    setToolbarTitle("Pronostic");
+                }
+
                 getFragmentManager().beginTransaction()
                         .replace(R.id.mainLayout, pronoFragment)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
@@ -234,6 +262,10 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
 
             try {
                 frag = ActualitesFragment.class.newInstance();
+
+                if(Build.VERSION.SDK_INT >= 21) {
+                    setToolbarTitle("Actualités");
+                }
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
@@ -244,6 +276,14 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
 
             try {
                 frag = GererMondeFragment.class.newInstance();
+
+                if(Build.VERSION.SDK_INT >= 21) {
+                    if(CurrentSession.groupe != null) {
+                        setToolbarTitle("Gestion du groupe");
+                    } else if(CurrentSession.communaute != null) {
+                        setToolbarTitle("Gestion de comm...");
+                    }
+                }
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
@@ -254,6 +294,8 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
 
             try {
                 frag = ParametresFragment.class.newInstance();
+
+                setToolbarTitle("Paramètres");
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
@@ -265,10 +307,18 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
         }
 
         if(frag != null) {
-            fragmentManager.beginTransaction()
-                    .replace(R.id.view_container, frag)
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .commit();
+            if(addBackStack) {
+                fragmentManager.beginTransaction()
+                        .replace(R.id.view_container, frag)
+                        .addToBackStack(null)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .commit();
+            } else {
+                fragmentManager.beginTransaction()
+                        .replace(R.id.view_container, frag)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .commit();
+            }
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

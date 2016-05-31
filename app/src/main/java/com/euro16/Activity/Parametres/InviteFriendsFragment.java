@@ -1,14 +1,20 @@
 package com.euro16.Activity.Parametres;
 
+import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -43,40 +49,55 @@ import java.util.HashMap;
 
 import cz.msebera.android.httpclient.Header;
 
-public class InviteFriendsActivity extends AppCompatActivity {
+public class InviteFriendsFragment extends Fragment {
 
     private RelativeLayout relLayout;
+    private FrameLayout layout;
     private ArrayList<String> usersMonde;
 
     private CallbackManager callback;
 
+    public static InviteFriendsFragment newInstance() {
+        InviteFriendsFragment fragment = new InviteFriendsFragment();
+        return fragment;
+    }
+
+    public InviteFriendsFragment() {}
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_invite_friends);
+    }
 
-        getSupportActionBar().setSubtitle(R.string.title_activity_invite_amis);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        relLayout = (RelativeLayout) findViewById(R.id.relLayout);
+        layout = (FrameLayout) inflater.inflate(R.layout.fragment_invite_friends, container, false);
 
-        if(FacebookConnexion.isOnline(this)) {
+        Typeface face = Typeface.createFromAsset(getActivity().getApplicationContext().getAssets(), "fonts/font_euro.ttf");
+
+        relLayout = (RelativeLayout) layout.findViewById(R.id.relLayout);
+
+        if(FacebookConnexion.isOnline(getActivity())) {
             getFriends();
         } else {
-            new AlertMsgBox(InviteFriendsActivity.this, getResources().getString(R.string.title_msg_box), getResources().getString(R.string.body_msg_box), getResources().getString(R.string.button_msg_box), new DialogInterface.OnClickListener() {
+            new AlertMsgBox(getActivity(), getResources().getString(R.string.title_msg_box), getResources().getString(R.string.body_msg_box), getResources().getString(R.string.button_msg_box), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    finish();
+                    getActivity().finish();
                 }
             });
         }
 
-        Button btnInviteFb = (Button) findViewById(R.id.btnInviteFb);
+        Button btnInviteFb = (Button) layout.findViewById(R.id.btnInviteFb);
+        btnInviteFb.setTypeface(face);
         btnInviteFb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openDialogInvite();
             }
         });
+        return layout;
     }
 
     private void getFriends() {
@@ -154,15 +175,11 @@ public class InviteFriendsActivity extends AppCompatActivity {
 
     private void initList(ArrayList<Utilisateur> users) {
         // Initialisation de la liste
-        ListView listDemandes = new ListView(getApplicationContext());
+        ListView listDemandes = new ListView(getActivity().getApplicationContext());
         listDemandes.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-        TextView textHeader = new TextView(getApplicationContext());
-        textHeader.setText("Vos amis :");
-        listDemandes.addHeaderView(textHeader);
         relLayout.addView(listDemandes);
 
-        final ListViewAdapterUtilisateur adapter = new ListViewAdapterUtilisateur(InviteFriendsActivity.this, R.layout.list_item_utilisateur);
+        final ListViewAdapterUtilisateur adapter = new ListViewAdapterUtilisateur(getActivity(), R.layout.list_item_utilisateur);
         listDemandes.setAdapter(adapter);
 
         final HashMap<String, Utilisateur> hmNomUtil = new HashMap<String, Utilisateur>();
@@ -193,11 +210,11 @@ public class InviteFriendsActivity extends AppCompatActivity {
                 if(position != 0) {
                     final String nom = adapter.getItem(position - 1).getNom();
                     if (CurrentSession.communaute != null) {
-                        new AlertMsgBox(InviteFriendsActivity.this, "Invitation", "Voulez-vous inviter " + hmNomUtil.get(nom).getPrenom().toString() + " " + nom.toUpperCase() + " à rejoindre la communauté \"" + CurrentSession.communaute.getNom() + "\"?", "Oui", "Non",
+                        new AlertMsgBox(getActivity(), "Invitation", "Voulez-vous inviter " + hmNomUtil.get(nom).getPrenom().toString() + " " + nom.toUpperCase() + " à rejoindre la communauté \"" + CurrentSession.communaute.getNom() + "\"?", "Oui", "Non",
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        if (FacebookConnexion.isOnline(InviteFriendsActivity.this)) {
+                                        if (FacebookConnexion.isOnline(getActivity())) {
                                             RestClient.ajouterUtilisateurCommunaute(hmNomUtil.get(nom).getId(), CurrentSession.communaute.getNom(), EUtilisateurStatut.EST_INVITE.getStatut(), new AsyncHttpResponseHandler() {
                                                 @Override
                                                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -206,7 +223,7 @@ public class InviteFriendsActivity extends AppCompatActivity {
                                                     if (adapter.getCount() == 0) {
                                                         displayTextNoUser();
                                                     }
-                                                    Toast.makeText(getApplicationContext(), "Invitation envoyée", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(getActivity().getApplicationContext(), "Invitation envoyée", Toast.LENGTH_SHORT).show();
                                                 }
 
                                                 @Override
@@ -215,10 +232,10 @@ public class InviteFriendsActivity extends AppCompatActivity {
                                                 }
                                             });
                                         } else {
-                                            new AlertMsgBox(InviteFriendsActivity.this, getResources().getString(R.string.title_msg_box), getResources().getString(R.string.body_msg_box), getResources().getString(R.string.button_msg_box), new DialogInterface.OnClickListener() {
+                                            new AlertMsgBox(getActivity(), getResources().getString(R.string.title_msg_box), getResources().getString(R.string.body_msg_box), getResources().getString(R.string.button_msg_box), new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
-                                                    finish();
+                                                    getActivity().finish();
                                                 }
                                             });
                                         }
@@ -230,11 +247,11 @@ public class InviteFriendsActivity extends AppCompatActivity {
                                     }
                                 });
                     } else if (CurrentSession.groupe != null) {
-                        new AlertMsgBox(InviteFriendsActivity.this, "Invitation", "Voulez-vous inviter " + hmNomUtil.get(nom).getPrenom().toString() + " " + nom.toUpperCase() + " à rejoindre le groupe \"" + CurrentSession.groupe.getNom() + "\"?", "Oui", "Non",
+                        new AlertMsgBox(getActivity(), "Invitation", "Voulez-vous inviter " + hmNomUtil.get(nom).getPrenom().toString() + " " + nom.toUpperCase() + " à rejoindre le groupe \"" + CurrentSession.groupe.getNom() + "\"?", "Oui", "Non",
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        if (FacebookConnexion.isOnline(InviteFriendsActivity.this)) {
+                                        if (FacebookConnexion.isOnline(getActivity())) {
                                             Log.i("Euro 16", "test : " + CurrentSession.groupe.getNom() + " : " + hmNomUtil.get(nom).getId());
                                             RestClient.ajouterUtilisateurGroupe(hmNomUtil.get(nom).getId(), CurrentSession.groupe.getNom(), EUtilisateurStatut.EST_INVITE.getStatut(), new AsyncHttpResponseHandler() {
                                                 @Override
@@ -243,7 +260,7 @@ public class InviteFriendsActivity extends AppCompatActivity {
                                                     if (adapter.getCount() == 0) {
                                                         displayTextNoUser();
                                                     }
-                                                    Toast.makeText(getApplicationContext(), "Invitation acceptée", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(getActivity().getApplicationContext(), "Invitation acceptée", Toast.LENGTH_SHORT).show();
                                                     // L'utilisateur est autorisé à jouer dans cette communauté
                                                 }
 
@@ -254,10 +271,10 @@ public class InviteFriendsActivity extends AppCompatActivity {
                                                 }
                                             });
                                         } else {
-                                            new AlertMsgBox(InviteFriendsActivity.this, getResources().getString(R.string.title_msg_box), getResources().getString(R.string.body_msg_box), getResources().getString(R.string.button_msg_box), new DialogInterface.OnClickListener() {
+                                            new AlertMsgBox(getActivity(), getResources().getString(R.string.title_msg_box), getResources().getString(R.string.body_msg_box), getResources().getString(R.string.button_msg_box), new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
-                                                    finish();
+                                                    getActivity().finish();
                                                 }
                                             });
                                         }
@@ -276,15 +293,20 @@ public class InviteFriendsActivity extends AppCompatActivity {
 
     private void displayTextNoUser() {
         relLayout.removeAllViews();
-        TextView textView = new TextView(getApplicationContext());
+        String text = "";
+        //TextView textView = new TextView(getActivity().getApplicationContext());
         if(CurrentSession.communaute != null) {
-            textView.setText("Tous vos amis jouent déjà dans cette communauté");
+            text = "Tous vos amis jouent déjà dans cette communauté";
         } else if(CurrentSession.groupe != null) {
-            textView.setText("Tous vos amis jouent déjà dans ce groupe");
+            text = "Tous vos amis jouent déjà dans ce groupe";
         }
-        textView.setTextColor(getResources().getColor(R.color.bleu));
-        textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        relLayout.addView(textView);
+//        textView.setTextColor(getResources().getColor(R.color.bleu));
+//        textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+//        relLayout.addView(textView);
+        Toast toast = Toast.makeText(getActivity(), text, Toast.LENGTH_LONG);
+        TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
+        if( v != null) v.setGravity(Gravity.CENTER);
+        toast.show();
     }
 
     public void openDialogInvite() {
@@ -299,7 +321,7 @@ public class InviteFriendsActivity extends AppCompatActivity {
                     .setApplinkUrl(AppUri).setPreviewImageUrl(previewImageUrl)
                     .build();
 
-            AppInviteDialog appInviteDialog = new AppInviteDialog(InviteFriendsActivity.this);
+            AppInviteDialog appInviteDialog = new AppInviteDialog(InviteFriendsFragment.this);
             Log.i("Euro 16", "registration callback");
             appInviteDialog.registerCallback(callback, new FacebookCallback<AppInviteDialog.Result>() {
                 @Override

@@ -1,10 +1,14 @@
 package com.euro16.Activity.Parametres;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,12 +61,7 @@ public class GererMondeFragment extends Fragment {
         // Inflate the layout for this fragment
         layout = (FrameLayout) inflater.inflate(R.layout.fragment_gerer_monde, container, false);
 
-        TextView title = (TextView) layout.findViewById(R.id.titleGestionMonde);
-        if(CurrentSession.groupe != null) {
-            title.setText("Gestion du groupe");
-        } else if(CurrentSession.communaute != null) {
-            title.setText("Gestion de la communauté");
-        }
+        Typeface face = Typeface.createFromAsset(getActivity().getApplicationContext().getAssets(), "fonts/font_euro.ttf");
 
         if(FacebookConnexion.isOnline(getActivity())) {
             getDemandes();
@@ -76,10 +75,25 @@ public class GererMondeFragment extends Fragment {
         }
 
         Button btnInviter = (Button) layout.findViewById(R.id.btnInviter);
+        btnInviter.setTypeface(face);
         btnInviter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), InviteFriendsActivity.class));
+                FragmentManager fragmentManager = getFragmentManager();
+                Fragment frag = null;
+                try {
+                    frag = InviteFriendsFragment.class.newInstance();
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
+                fragmentManager.beginTransaction()
+                        .replace(R.id.view_container, frag)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .addToBackStack(null)
+                        .commit();
+
+
+               // startActivity(new Intent(getActivity(), InviteFriendsFragment.class));
             }
         });
 
@@ -98,10 +112,6 @@ public class GererMondeFragment extends Fragment {
 
                     ListView listDemandes = new ListView(getActivity().getApplicationContext());
                     listDemandes.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-                    TextView textHeader = new TextView(getActivity().getApplicationContext());
-                    textHeader.setText("Vos demandes :");
-                    listDemandes.addHeaderView(textHeader);
                     relLayout.addView(listDemandes);
 
                     final ListViewAdapterUtilisateur adapter = new ListViewAdapterUtilisateur(getActivity(), R.layout.list_item_utilisateur);
@@ -213,10 +223,14 @@ public class GererMondeFragment extends Fragment {
 
     private void displayTextNoUser() {
         relLayout.removeAllViews();
-        TextView textView = new TextView(getActivity().getApplicationContext());
-        textView.setText("Vous n'avez pas de demandes en attente");
-        textView.setTextColor(getResources().getColor(R.color.bleu));
-        textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        relLayout.addView(textView);
+        Toast toast = Toast.makeText(getActivity(), "Vous n'avez pas de demandes en attente", Toast.LENGTH_LONG);
+        TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
+        if( v != null) v.setGravity(Gravity.CENTER);
+        toast.show();
+//        TextView textView = new TextView(getActivity().getApplicationContext());
+//        textView.setText("Vous n'avez pas de demandes en attente");
+//        textView.setTextColor(getResources().getColor(R.color.bleu));
+//        textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+//        relLayout.addView(textView);
     }
 }

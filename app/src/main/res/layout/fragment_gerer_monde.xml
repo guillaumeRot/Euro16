@@ -3,29 +3,37 @@
     android:layout_height="match_parent" tools:context="com.euro16.Activity.Parametres.GererMondeFragment"
     android:background="@color/grey">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/titleGestionMonde"
-        android:layout_gravity="center_horizontal|top"
-        android:textColor="@color/bleu" />
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:src="@drawable/backgrnd_bitmap"
+        android:scaleType="fitXY"
+        android:layout_alignParentTop="true" />
 
     <RelativeLayout
         android:id="@+id/relLayout"
         android:layout_width="match_parent"
-        android:layout_height="431dp"
-        android:layout_gravity="center"/>
+        android:layout_height="400dp"
+        android:layout_gravity="top"
+        android:background="@drawable/background_button"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="40dp">
+
+    </RelativeLayout>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Inviter"
-        android:textColor="@color/bleu"
-        android:background="#00ffffff"
+        android:text="Inviter des joueurs"
+        android:textColor="@color/white"
+        android:background="@drawable/background_button"
         android:id="@+id/btnInviter"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_gravity="center_horizontal|bottom" />
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="20dp"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"/>
 
 </FrameLayout>
