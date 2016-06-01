@@ -46,11 +46,11 @@ public class SplashScreenActivity extends AppCompatActivity {
 
             @Override
             public void run() {
-                do {
-                    if(isConnected) {
-                        startActivity(new Intent(SplashScreenActivity.this, ChoixMondeActivity.class));
-                    }
-                } while(!isConnected);
+                if(isConnected) {
+                    startActivity(new Intent(SplashScreenActivity.this, ChoixMondeActivity.class));
+                } else {
+                    startActivity(new Intent(SplashScreenActivity.this, FacebookConnexion.class));
+                }
             }
         }, 3500);
 

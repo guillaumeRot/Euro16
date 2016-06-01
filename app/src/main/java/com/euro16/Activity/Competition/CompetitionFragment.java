@@ -524,7 +524,7 @@ public class CompetitionFragment extends Fragment {
                                         pronoFragment.setArguments(bundle);
 
                                         getFragmentManager().beginTransaction()
-                                                .replace(R.id.mainLayout, pronoFragment)
+                                                .replace(R.id.view_container, pronoFragment)
                                                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                                 .addToBackStack(null)
                                                 .commit();

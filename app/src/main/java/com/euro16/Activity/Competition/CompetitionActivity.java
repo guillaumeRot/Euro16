@@ -250,7 +250,7 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
                 }
 
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.mainLayout, pronoFragment)
+                        .replace(R.id.view_container, pronoFragment)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         .addToBackStack(null)
                         .commit();

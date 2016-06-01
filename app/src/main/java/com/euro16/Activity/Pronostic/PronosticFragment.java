@@ -4,6 +4,7 @@ package com.euro16.Activity.Pronostic;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -45,6 +46,8 @@ public class PronosticFragment extends Fragment {
 
     private Match match;
 
+    private Typeface face;
+
     private boolean callFromCompetition;
 
     public PronosticFragment() {
@@ -57,6 +60,8 @@ public class PronosticFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         layout = (FrameLayout) inflater.inflate(R.layout.fragment_pronostic, container, false);
+
+        face = Typeface.createFromAsset(getActivity().getApplicationContext().getAssets(), "fonts/font_euro.ttf");
 
         match = getArguments().getParcelable("match");
         getArguments().remove("match");
@@ -81,11 +86,13 @@ public class PronosticFragment extends Fragment {
         SimpleDateFormat dateFormat = new SimpleDateFormat(EDateFormat.DATETIME_PRONOSTIC.getFormatDate());
         TextView tvDate = (TextView) layout.findViewById(R.id.tvDateTimeProno);
         tvDate.setText(dateFormat.format(match.getDateMatch()));
+        tvDate.setTypeface(face);
     }
 
     public void initGroupe() {
-        TextView tvDate = (TextView) layout.findViewById(R.id.tvGroupeProno);
-        tvDate.setText(match.getGroupe().getNomGrp());
+        TextView tvGroupe = (TextView) layout.findViewById(R.id.tvGroupeProno);
+        tvGroupe.setText(match.getGroupe().getNomGrp());
+        tvGroupe.setTypeface(face);
     }
 
     public void initEquipes() {
@@ -103,9 +110,11 @@ public class PronosticFragment extends Fragment {
 
         TextView nomEquipe1 = (TextView) layout.findViewById(R.id.nom1Prono);
         nomEquipe1.setText(match.getEquipe1().getNom());
+        nomEquipe1.setTypeface(face);
 
         TextView nomEquipe2 = (TextView) layout.findViewById(R.id.nom2Prono);
         nomEquipe2.setText(match.getEquipe2().getNom());
+        nomEquipe2.setTypeface(face);
     }
 
     public void initCotes() {
