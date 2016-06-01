@@ -9,9 +9,8 @@
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:src="@drawable/backgrnd_bitmap"
-        android:scaleType="fitXY"
-        android:layout_alignParentTop="true" />
+        android:src="@drawable/background_menu"
+        android:scaleType="fitXY" />
 
     <RelativeLayout
         android:id="@+id/relLayout"

@@ -96,7 +96,7 @@ public class CompetitionFragment extends Fragment {
         TextView tvResultats = (TextView) layout.findViewById(R.id.textViewResultats);
         tvResultats.setTypeface(face);
 
-                selectGroupes = (Spinner) layout.findViewById(R.id.selectGroupes);
+        selectGroupes = (Spinner) layout.findViewById(R.id.selectGroupes);
         ArrayList<String> listSpinner = new ArrayList<String>();
         for(int i = 0; i < nomPhases.size(); i++) {
             listSpinner.add(nomPhases.get(i));

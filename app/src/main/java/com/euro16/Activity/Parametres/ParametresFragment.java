@@ -3,6 +3,7 @@ package com.euro16.Activity.Parametres;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +45,8 @@ public class ParametresFragment extends Fragment {
         // Inflate the layout for this fragment
         layout = (FrameLayout) inflater.inflate(R.layout.fragment_parametres, container, false);
 
+        Typeface face = Typeface.createFromAsset(getActivity().getApplicationContext().getAssets(), "fonts/font_euro.ttf");
+
         TextView mentionsLegales = (TextView) layout.findViewById(R.id.mentionsLegales);
 
         mentionsLegales.setText("Novitates autem si spem adferunt, ut tamquam in herbis non fallacibus fructus appareat, non sunt illae quidem repudiandae, vetustas tamen suo loco conservanda; maxima est enim vis vetustatis et consuetudinis. Quin in ipso equo, cuius modo feci mentionem, si nulla res impediat, nemo est, quin eo, quo consuevit, libentius utatur quam intractato et novo. Nec vero in hoc quod est animal, sed in iis etiam quae sunt inanima, consuetudo valet, cum locis ipsis delectemur, montuosis etiam et silvestribus, in quibus diutius commorati sumus.\n" +
@@ -67,7 +70,7 @@ public class ParametresFragment extends Fragment {
                 "Hacque adfabilitate confisus cum eadem postridie feceris, ut incognitus haerebis et repentinus, hortatore illo hesterno clientes numerando, qui sis vel unde venias diutius ambigente agnitus vero tandem et adscitus in amicitiam si te salutandi adsiduitati dederis triennio indiscretus et per tot dierum defueris tempus, reverteris ad paria perferenda, nec ubi esses interrogatus et quo tandem miser discesseris, aetatem omnem frustra in stipite conteres summittendo.");
 
         Button btnDesinscrire = (Button) layout.findViewById(R.id.btnDesinscrire);
-
+        btnDesinscrire.setTypeface(face);
         btnDesinscrire.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,7 +102,7 @@ public class ParametresFragment extends Fragment {
         });
 
         Button btnDeconnexion = (Button) layout.findViewById(R.id.btnDeconnexion);
-
+        btnDeconnexion.setTypeface(face);
         btnDeconnexion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -2,6 +2,7 @@ package com.euro16.Utils.ListsView;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ public class ListViewAdapterUtilisateur extends ArrayAdapter<RowChoixUtilisateur
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         RowChoixUtilisateur rowItem = getItem(position);
+        Typeface face = Typeface.createFromAsset(context.getAssets(), "fonts/font_euro.ttf");
 
         LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if (convertView == null) {
@@ -47,9 +49,15 @@ public class ListViewAdapterUtilisateur extends ArrayAdapter<RowChoixUtilisateur
             holder = (ViewHolder) convertView.getTag();
 
         holder.textViewNom.setText(rowItem.getNom());
+        holder.textViewNom.setTypeface(face);
+
         holder.textViewPrenom.setText(rowItem.getPrenom());
+        holder.textViewPrenom.setTypeface(face);
+
         String photoUrl = rowItem.getPhoto().replace("http", "https");
         Picasso.with(context.getApplicationContext()).load(photoUrl).resize(150, 150).into(holder.ImageViewPhoto);
+
+        convertView.setBackgroundColor(context.getApplicationContext().getResources().getColor(R.color.white_opacity));
 
         return convertView;
     }

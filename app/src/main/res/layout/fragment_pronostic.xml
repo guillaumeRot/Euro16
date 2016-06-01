@@ -5,40 +5,52 @@
     tools:context="com.euro16.Activity.Pronostic.PronosticFragment"
     android:background="@color/grey">
 
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:src="@drawable/backgrnd_bitmap"
+        android:scaleType="fitXY"
+        android:layout_alignParentTop="true" />
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:id="@+id/scrollProno"
+        android:id="@+id/layoutProno"
         android:layout_gravity="center" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/tvDateTimeProno"
+            android:gravity="center_horizontal"
+            android:textColor="@color/bleu"
+            android:layout_above="@+id/tvGroupeProno"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/tvGroupeProno"
+            android:gravity="center_horizontal"
+            android:textColor="@color/bleu"
+            android:layout_above="@+id/layoutContent"/>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:id="@+id/tvDateTimeProno"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@color/bleu"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:id="@+id/tvGroupeProno"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@color/bleu"/>
+            android:layout_height="match_parent"
+            android:id="@+id/layoutContent"
+            android:layout_marginTop="50dp"
+            android:weightSum="1">
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
                 android:layout_gravity="center_horizontal"
-                android:id="@+id/linearEquipesProno">
+                android:id="@+id/linearEquipesProno"
+                android:layout_weight="0.5">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -93,10 +105,11 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
+                android:layout_height="0dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
-                android:id="@+id/layoutPronoJoueurs">
+                android:id="@+id/layoutPronoJoueurs"
+                android:layout_weight="0.25">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -106,7 +119,12 @@
                     android:id="@+id/titlePronoJoueurs"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:textColor="@color/bleu" />
+                    android:textColor="@color/white"
+                    android:background="@drawable/background_button"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:paddingRight="20dp"
+                    android:paddingLeft="20dp"/>
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -132,7 +150,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="10%"
                         android:id="@+id/pronoNulJoueurs"
                         android:layout_weight="0.3"
                         android:textColor="@color/black"
@@ -142,7 +159,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="23%"
                         android:id="@+id/pronoEquipe2Joueurs"
                         android:layout_weight="0.3"
                         android:textColor="@color/black"
@@ -153,15 +169,18 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="0dp"
                 android:layout_gravity="center_horizontal"
-                android:id="@+id/linearChoixProno">
+                android:id="@+id/linearChoixProno"
+                android:layout_weight="0.25"
+                android:layout_alignParentBottom="true">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.3"
-                    android:id="@+id/layoutChoix1Prono">
+                    android:id="@+id/layoutChoix1Prono"
+                    android:paddingBottom="15dp">
 
                     <Button
                         android:layout_width="wrap_content"
@@ -169,16 +188,17 @@
                         android:text="1"
                         android:id="@+id/choix1Prono"
                         android:layout_centerHorizontal="true"
-                        android:textColor="@color/bleu"
-                        android:background="@drawable/prono_button"
-                        />
+                        android:textColor="@color/white"
+                        android:background="@drawable/background_button"
+                        android:layout_alignParentBottom="true"/>
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.3"
-                    android:id="@+id/layoutChoixNProno">
+                    android:id="@+id/layoutChoixNProno"
+                    android:paddingBottom="15dp">
 
                     <Button
                         android:layout_width="wrap_content"
@@ -186,17 +206,18 @@
                         android:text="N"
                         android:id="@+id/choixNProno"
                         android:layout_gravity="center_horizontal"
-                        android:layout_alignParentBottom="true"
                         android:layout_centerHorizontal="true"
-                        android:textColor="@color/bleu"
-                        android:background="@drawable/prono_button"/>
+                        android:textColor="@color/white"
+                        android:background="@drawable/background_button"
+                        android:layout_alignParentBottom="true"/>
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.3"
-                    android:id="@+id/layoutChoix2Prono">
+                    android:id="@+id/layoutChoix2Prono"
+                    android:paddingBottom="15dp">
 
                     <Button
                         android:layout_width="wrap_content"
@@ -204,11 +225,12 @@
                         android:text="2"
                         android:id="@+id/choix2Prono"
                         android:layout_centerHorizontal="true"
-                        android:textColor="@color/bleu"
-                        android:background="@drawable/prono_button"/>
+                        android:textColor="@color/white"
+                        android:background="@drawable/background_button"
+                        android:layout_alignParentBottom="true"                                                                                                                                                                                     />
                 </RelativeLayout>
             </LinearLayout>
 
         </LinearLayout>
-    </ScrollView>
+    </RelativeLayout>
 </FrameLayout>

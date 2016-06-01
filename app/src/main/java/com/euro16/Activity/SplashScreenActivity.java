@@ -1,10 +1,12 @@
 package com.euro16.Activity;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.euro16.Activity.Facebook.FacebookConnexion;
@@ -30,6 +32,11 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
+        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/font_euro.ttf");
+
+        TextView tvPresentation = (TextView) findViewById(R.id.tvPresentation);
+        tvPresentation.setTypeface(face);
+
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
 
@@ -39,12 +46,11 @@ public class SplashScreenActivity extends AppCompatActivity {
 
             @Override
             public void run() {
-                if(isConnected) {
-                    startActivity(new Intent(SplashScreenActivity.this, ChoixMondeActivity.class));
-                } else {
-                    startActivity(new Intent(SplashScreenActivity.this, FacebookConnexion.class));
-                }
-                finish();
+                do {
+                    if(isConnected) {
+                        startActivity(new Intent(SplashScreenActivity.this, ChoixMondeActivity.class));
+                    }
+                } while(!isConnected);
             }
         }, 3500);
 

@@ -207,85 +207,83 @@ public class InviteFriendsFragment extends Fragment {
         listDemandes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, final int position, long id) {
-                if(position != 0) {
-                    final String nom = adapter.getItem(position - 1).getNom();
-                    if (CurrentSession.communaute != null) {
-                        new AlertMsgBox(getActivity(), "Invitation", "Voulez-vous inviter " + hmNomUtil.get(nom).getPrenom().toString() + " " + nom.toUpperCase() + " à rejoindre la communauté \"" + CurrentSession.communaute.getNom() + "\"?", "Oui", "Non",
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        if (FacebookConnexion.isOnline(getActivity())) {
-                                            RestClient.ajouterUtilisateurCommunaute(hmNomUtil.get(nom).getId(), CurrentSession.communaute.getNom(), EUtilisateurStatut.EST_INVITE.getStatut(), new AsyncHttpResponseHandler() {
-                                                @Override
-                                                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                                                    Log.i("Euro 16", "oui : success : " + statusCode);
-                                                    adapter.remove(adapter.getItem(position - 1));
-                                                    if (adapter.getCount() == 0) {
-                                                        displayTextNoUser();
-                                                    }
-                                                    Toast.makeText(getActivity().getApplicationContext(), "Invitation envoyée", Toast.LENGTH_SHORT).show();
+                final String nom = adapter.getItem(position).getNom();
+                if (CurrentSession.communaute != null) {
+                    new AlertMsgBox(getActivity(), "Invitation", "Voulez-vous inviter " + hmNomUtil.get(nom).getPrenom().toString() + " " + nom.toUpperCase() + " à rejoindre la communauté \"" + CurrentSession.communaute.getNom() + "\"?", "Oui", "Non",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if (FacebookConnexion.isOnline(getActivity())) {
+                                        RestClient.ajouterUtilisateurCommunaute(hmNomUtil.get(nom).getId(), CurrentSession.communaute.getNom(), EUtilisateurStatut.EST_INVITE.getStatut(), new AsyncHttpResponseHandler() {
+                                            @Override
+                                            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                                                Log.i("Euro 16", "oui : success : " + statusCode);
+                                                adapter.remove(adapter.getItem(position - 1));
+                                                if (adapter.getCount() == 0) {
+                                                    displayTextNoUser();
                                                 }
+                                                Toast.makeText(getActivity().getApplicationContext(), "Invitation envoyée", Toast.LENGTH_SHORT).show();
+                                            }
 
-                                                @Override
-                                                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                                                    Log.i("Euro 16", "oui : failure : " + statusCode + " : " + error.getStackTrace());
-                                                }
-                                            });
-                                        } else {
-                                            new AlertMsgBox(getActivity(), getResources().getString(R.string.title_msg_box), getResources().getString(R.string.body_msg_box), getResources().getString(R.string.button_msg_box), new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    getActivity().finish();
-                                                }
-                                            });
-                                        }
+                                            @Override
+                                            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                                                Log.i("Euro 16", "oui : failure : " + statusCode + " : " + error.getStackTrace());
+                                            }
+                                        });
+                                    } else {
+                                        new AlertMsgBox(getActivity(), getResources().getString(R.string.title_msg_box), getResources().getString(R.string.body_msg_box), getResources().getString(R.string.button_msg_box), new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                getActivity().finish();
+                                            }
+                                        });
                                     }
-                                },
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                    }
-                                });
-                    } else if (CurrentSession.groupe != null) {
-                        new AlertMsgBox(getActivity(), "Invitation", "Voulez-vous inviter " + hmNomUtil.get(nom).getPrenom().toString() + " " + nom.toUpperCase() + " à rejoindre le groupe \"" + CurrentSession.groupe.getNom() + "\"?", "Oui", "Non",
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        if (FacebookConnexion.isOnline(getActivity())) {
-                                            Log.i("Euro 16", "test : " + CurrentSession.groupe.getNom() + " : " + hmNomUtil.get(nom).getId());
-                                            RestClient.ajouterUtilisateurGroupe(hmNomUtil.get(nom).getId(), CurrentSession.groupe.getNom(), EUtilisateurStatut.EST_INVITE.getStatut(), new AsyncHttpResponseHandler() {
-                                                @Override
-                                                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                                                    adapter.remove(adapter.getItem(position - 1));
-                                                    if (adapter.getCount() == 0) {
-                                                        displayTextNoUser();
-                                                    }
-                                                    Toast.makeText(getActivity().getApplicationContext(), "Invitation acceptée", Toast.LENGTH_SHORT).show();
-                                                    // L'utilisateur est autorisé à jouer dans cette communauté
+                                }
+                            },
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            });
+                } else if (CurrentSession.groupe != null) {
+                    new AlertMsgBox(getActivity(), "Invitation", "Voulez-vous inviter " + hmNomUtil.get(nom).getPrenom().toString() + " " + nom.toUpperCase() + " à rejoindre le groupe \"" + CurrentSession.groupe.getNom() + "\"?", "Oui", "Non",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if (FacebookConnexion.isOnline(getActivity())) {
+                                        Log.i("Euro 16", "test : " + CurrentSession.groupe.getNom() + " : " + hmNomUtil.get(nom).getId());
+                                        RestClient.ajouterUtilisateurGroupe(hmNomUtil.get(nom).getId(), CurrentSession.groupe.getNom(), EUtilisateurStatut.EST_INVITE.getStatut(), new AsyncHttpResponseHandler() {
+                                            @Override
+                                            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                                                adapter.remove(adapter.getItem(position - 1));
+                                                if (adapter.getCount() == 0) {
+                                                    displayTextNoUser();
                                                 }
+                                                Toast.makeText(getActivity().getApplicationContext(), "Invitation acceptée", Toast.LENGTH_SHORT).show();
+                                                // L'utilisateur est autorisé à jouer dans cette communauté
+                                            }
 
-                                                @Override
-                                                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                                                    Log.i("Euro 16", "oui : failure : " + statusCode + " : " + error.getStackTrace());
-                                                    // Il y a eu un problème lors de la confirmation d'invitation
-                                                }
-                                            });
-                                        } else {
-                                            new AlertMsgBox(getActivity(), getResources().getString(R.string.title_msg_box), getResources().getString(R.string.body_msg_box), getResources().getString(R.string.button_msg_box), new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    getActivity().finish();
-                                                }
-                                            });
-                                        }
+                                            @Override
+                                            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                                                Log.i("Euro 16", "oui : failure : " + statusCode + " : " + error.getStackTrace());
+                                                // Il y a eu un problème lors de la confirmation d'invitation
+                                            }
+                                        });
+                                    } else {
+                                        new AlertMsgBox(getActivity(), getResources().getString(R.string.title_msg_box), getResources().getString(R.string.body_msg_box), getResources().getString(R.string.button_msg_box), new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                getActivity().finish();
+                                            }
+                                        });
                                     }
-                                },
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                    }
-                                });
-                    }
+                                }
+                            },
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            });
                 }
             }
         });

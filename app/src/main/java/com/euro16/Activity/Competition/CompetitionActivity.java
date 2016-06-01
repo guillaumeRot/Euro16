@@ -89,16 +89,16 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
 
             TextView subtitle = (TextView) toolbar.findViewById(R.id.subtitle_toolbar);
             if(CurrentSession.communaute != null) {
-                if(CurrentSession.communaute.getNom().length() <= 8) {
+                if(CurrentSession.communaute.getNom().length() <= 12) {
                     subtitle.setText(getResources().getString(R.string.title_activity_left_menu) + " : " + CurrentSession.communaute.getNom());
                 } else {
-                    subtitle.setText(getResources().getString(R.string.title_activity_left_menu) + " : " + CurrentSession.communaute.getNom().substring(0, 14) + "...");
+                    subtitle.setText(getResources().getString(R.string.title_activity_left_menu) + " : " + CurrentSession.communaute.getNom().substring(0, 9) + "...");
                 }
             } else if(CurrentSession.groupe != null) {
-                if(CurrentSession.groupe.getNom().length() <= 8) {
+                if(CurrentSession.groupe.getNom().length() <= 12) {
                     subtitle.setText(getResources().getString(R.string.title_activity_left_menu) + " : " + CurrentSession.groupe.getNom());
                 } else {
-                    subtitle.setText(getResources().getString(R.string.title_activity_left_menu) + " : " + CurrentSession.groupe.getNom().substring(0, 14) + "...");
+                    subtitle.setText(getResources().getString(R.string.title_activity_left_menu) + " : " + CurrentSession.groupe.getNom().substring(0, 9) + "...");
                 }
             } else {
                 subtitle.setText(getResources().getString(R.string.title_activity_left_menu) + " : Global");

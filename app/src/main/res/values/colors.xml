@@ -10,6 +10,7 @@
     <color name="rouge">#96ef4848</color>
     <color name="black_opacity">#40000000</color>
     <color name="white_opacity">#40ffffff</color>
+    <color name="white_background">#64ffffff</color>
     <color name="primary_material_light_1">#000000</color>
     <color name="primary_text_material_dark">#ffffff</color>
     <color name="primary_text_material_light">#ffffff</color>
