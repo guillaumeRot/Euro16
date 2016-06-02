@@ -91,9 +91,6 @@ public class GererMondeFragment extends Fragment {
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         .addToBackStack(null)
                         .commit();
-
-
-               // startActivity(new Intent(getActivity(), InviteFriendsFragment.class));
             }
         });
 
@@ -143,8 +140,7 @@ public class GererMondeFragment extends Fragment {
                     listDemandes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, final View view, final int position, long id) {
-                            if(position != 0) {
-                                final String nom = adapter.getItem(position - 1).getNom();
+                                final String nom = adapter.getItem(position).getNom();
                                 new AlertMsgBox(getActivity(), "Demande", "Voulez-vous accepter la demande de " + hmNomUtil.get(nom).getPrenom().toString() + " " + nom.toUpperCase() + " pour rejoindre la communauté \"" + CurrentSession.communaute.getNom() + "\"?", "Oui", "Non",
                                         new DialogInterface.OnClickListener() {
                                             @Override
@@ -153,7 +149,7 @@ public class GererMondeFragment extends Fragment {
                                                     RestClient.updateStatutUtilisateurCommunaute(CurrentSession.communaute.getNom(), hmNomUtil.get(nom).getId(), EUtilisateurStatut.PARTICIPE.getStatut(), new AsyncHttpResponseHandler() {
                                                         @Override
                                                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                                                            adapter.remove(adapter.getItem(position - 1));
+                                                            adapter.remove(adapter.getItem(position));
                                                             if (adapter.getCount() == 0) {
                                                                 displayTextNoUser();
                                                             }
@@ -184,7 +180,7 @@ public class GererMondeFragment extends Fragment {
                                                     RestClient.deleteUtilisateurCommunaute(CurrentSession.communaute.getNom(), hmNomUtil.get(nom).getId(), new AsyncHttpResponseHandler() {
                                                         @Override
                                                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                                                            adapter.remove(adapter.getItem(position - 1));
+                                                            adapter.remove(adapter.getItem(position));
                                                             if (adapter.getCount() == 0) {
                                                                 displayTextNoUser();
                                                             }
@@ -208,7 +204,6 @@ public class GererMondeFragment extends Fragment {
                                                 }
                                             }
                                         });
-                            }
                         }
                     });
                 }

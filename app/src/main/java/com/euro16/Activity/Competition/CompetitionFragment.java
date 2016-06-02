@@ -5,6 +5,7 @@ import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -405,7 +406,7 @@ public class CompetitionFragment extends Fragment {
         }
     }
 
-    public void initMatchs(EGroupeEuro groupe, HashMap<Match, String> matchResultat) {
+    public void initMatchs(EGroupeEuro groupe, final HashMap<Match, String> matchResultat) {
         // Initialisation match
         for (Match match : CurrentSession.getMatchs(groupe)) {
 
@@ -519,6 +520,7 @@ public class CompetitionFragment extends Fragment {
                                     if (match != null) {
                                         PronosticFragment pronoFragment = new PronosticFragment();
                                         Bundle bundle = new Bundle();
+                                        bundle.putString("pronostic", getResultat(match.getEquipe1().getNom(), match.getEquipe2().getNom(), match.getDateMatch()));
                                         bundle.putParcelable("match", match);
                                         bundle.putBoolean("callFromCompetition", true);
                                         pronoFragment.setArguments(bundle);
@@ -553,5 +555,15 @@ public class CompetitionFragment extends Fragment {
             });
             gridMatchs.addView(rowLayout);
         }
+    }
+
+    private String getResultat(String equipe1, String equipe2, Date date){
+        for(Match match : matchResultat.keySet()){
+            if(match.getEquipe1().getNom().equalsIgnoreCase(equipe1) && match.getEquipe2().getNom().equalsIgnoreCase(equipe2)
+                    && match.getDateMatch().compareTo(date) == 0) {
+                return matchResultat.get(match);
+            }
+        }
+        return null;
     }
 }

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -100,11 +101,17 @@ public class CreationCommunauteActivity extends AppCompatActivity {
             btnCreerCommunaute.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Pattern p = Pattern.compile("[^a-zA-Z0-9]");
+                    Pattern p = Pattern.compile("[^a-zA-Z0-9\\s]");
                     if (editTextNom.getText().toString().length() < 5) {
-                        Toast.makeText(getApplicationContext(), "Le nom de la communauté doit contenir au moins 5 caractères", Toast.LENGTH_LONG).show();
-                    } else if(p.matcher(editTextNom.getText()).find()) {
-                        Toast.makeText(getApplicationContext(), "Le nom de la communauté doit contenir que des caractéres alphanumériques", Toast.LENGTH_LONG).show();
+                        Toast toast = Toast.makeText(CreationCommunauteActivity.this, getResources().getString(R.string.error_creation_communaute_message), Toast.LENGTH_LONG);
+                        TextView view = (TextView) toast.getView().findViewById(android.R.id.message);
+                        if( view != null) view.setGravity(Gravity.CENTER);
+                        toast.show();
+                    } else if(p.matcher(editTextNom.getText()).find() && !editTextNom.getText().toString().contains("é") && !editTextNom.getText().toString().contains("è")) {
+                        Toast toast = Toast.makeText(CreationCommunauteActivity.this, getResources().getString(R.string.error_creation_communaute_message), Toast.LENGTH_LONG);
+                        TextView view = (TextView) toast.getView().findViewById(android.R.id.message);
+                        if( view != null) view.setGravity(Gravity.CENTER);
+                        toast.show();
                     } else {
                         RestClient.creerCommunaute(editTextNom.getText().toString(), CurrentSession.utilisateur.getId(), "", selectedType, new AsyncHttpResponseHandler() {
                             @Override

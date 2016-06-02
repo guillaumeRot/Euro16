@@ -218,11 +218,11 @@ public class InviteFriendsFragment extends Fragment {
                                             @Override
                                             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                                                 Log.i("Euro 16", "oui : success : " + statusCode);
-                                                adapter.remove(adapter.getItem(position - 1));
+                                                adapter.remove(adapter.getItem(position));
+                                                Toast.makeText(getActivity().getApplicationContext(), "Invitation envoyée", Toast.LENGTH_SHORT).show();
                                                 if (adapter.getCount() == 0) {
                                                     displayTextNoUser();
                                                 }
-                                                Toast.makeText(getActivity().getApplicationContext(), "Invitation envoyée", Toast.LENGTH_SHORT).show();
                                             }
 
                                             @Override
@@ -255,7 +255,7 @@ public class InviteFriendsFragment extends Fragment {
                                         RestClient.ajouterUtilisateurGroupe(hmNomUtil.get(nom).getId(), CurrentSession.groupe.getNom(), EUtilisateurStatut.EST_INVITE.getStatut(), new AsyncHttpResponseHandler() {
                                             @Override
                                             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                                                adapter.remove(adapter.getItem(position - 1));
+                                                adapter.remove(adapter.getItem(position));
                                                 if (adapter.getCount() == 0) {
                                                     displayTextNoUser();
                                                 }

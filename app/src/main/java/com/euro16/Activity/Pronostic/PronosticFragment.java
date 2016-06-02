@@ -48,6 +48,12 @@ public class PronosticFragment extends Fragment {
 
     private Typeface face;
 
+    private String pronoUser;
+
+    private Button btnProno1;
+    private Button btnPronoN;
+    private Button btnProno2;
+
     private boolean callFromCompetition;
 
     public PronosticFragment() {
@@ -79,13 +85,49 @@ public class PronosticFragment extends Fragment {
             goBackCompetition(match.getGroupe());
         }
 
+        TextView tvPronoJoueurs = (TextView) layout.findViewById(R.id.titlePronoJoueurs);
+        tvPronoJoueurs.setTypeface(face);
+
+        TextView tvPronoEquipe1 = (TextView) layout.findViewById(R.id.pronoEquipe1Joueurs);
+        tvPronoEquipe1.setTypeface(face);
+
+        TextView tvPronoNul = (TextView) layout.findViewById(R.id.pronoNulJoueurs);
+        tvPronoNul.setTypeface(face);
+
+        TextView tvPronoEquipe2 = (TextView) layout.findViewById(R.id.pronoEquipe2Joueurs);
+        tvPronoEquipe2.setTypeface(face);
+
+        if(getArguments().getString("pronostic") != null){
+            pronoUser = getArguments().getString("pronostic");
+            getArguments().remove("pronostic");
+        }
+
+        btnProno1 = (Button) layout.findViewById(R.id.choix1Prono);
+        btnPronoN = (Button) layout.findViewById(R.id.choixNProno);
+        btnProno2 = (Button) layout.findViewById(R.id.choix2Prono);
+
+        if(pronoUser != null){
+            switch (pronoUser){
+                case "1":
+                    btnProno1.setBackground(getResources().getDrawable(R.drawable.background_prono));
+                    break;
+                case "N":
+                    btnPronoN.setBackground(getResources().getDrawable(R.drawable.background_prono));
+                    break;
+                case "2":
+                    btnProno2.setBackground(getResources().getDrawable(R.drawable.background_prono));
+                    break;
+            }
+        }
+
         return layout;
     }
 
     public void initDate() {
         SimpleDateFormat dateFormat = new SimpleDateFormat(EDateFormat.DATETIME_PRONOSTIC.getFormatDate());
         TextView tvDate = (TextView) layout.findViewById(R.id.tvDateTimeProno);
-        tvDate.setText(dateFormat.format(match.getDateMatch()));
+        String date = dateFormat.format(match.getDateMatch()).substring(0,1).toUpperCase() + dateFormat.format(match.getDateMatch()).substring(1);
+        tvDate.setText(date);
         tvDate.setTypeface(face);
     }
 
@@ -115,10 +157,6 @@ public class PronosticFragment extends Fragment {
         TextView nomEquipe2 = (TextView) layout.findViewById(R.id.nom2Prono);
         nomEquipe2.setText(match.getEquipe2().getNom());
         nomEquipe2.setTypeface(face);
-    }
-
-    public void initCotes() {
-        // A remplir avec API Parions Sport
     }
 
     public void initPronosticsJoueurs() {
@@ -179,7 +217,7 @@ public class PronosticFragment extends Fragment {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
                     if(jsonObject.length() == 0) {
-                        Button btnProno1 = (Button) layout.findViewById(R.id.choix1Prono);
+
                         btnProno1.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -187,7 +225,6 @@ public class PronosticFragment extends Fragment {
                             }
                         });
 
-                        Button btnProno2 = (Button) layout.findViewById(R.id.choix2Prono);
                         btnProno2.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -195,7 +232,6 @@ public class PronosticFragment extends Fragment {
                             }
                         });
 
-                        Button btnPronoN = (Button) layout.findViewById(R.id.choixNProno);
                         btnPronoN.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -203,7 +239,6 @@ public class PronosticFragment extends Fragment {
                             }
                         });
                     } else {
-                        Button btnProno1 = (Button) layout.findViewById(R.id.choix1Prono);
                         btnProno1.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -211,7 +246,6 @@ public class PronosticFragment extends Fragment {
                             }
                         });
 
-                        Button btnProno2 = (Button) layout.findViewById(R.id.choix2Prono);
                         btnProno2.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -219,7 +253,6 @@ public class PronosticFragment extends Fragment {
                             }
                         });
 
-                        Button btnPronoN = (Button) layout.findViewById(R.id.choixNProno);
                         btnPronoN.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -272,7 +305,6 @@ public class PronosticFragment extends Fragment {
                             getFragmentManager().beginTransaction()
                                     .replace(R.id.mainLayout, pronoFragment)
                                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                                    .addToBackStack(null)
                                     .commit();
                         } else {
                             Toast.makeText(getActivity().getApplicationContext(), "Impossible de récupérer les informations de ce match", Toast.LENGTH_LONG).show();

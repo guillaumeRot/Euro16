@@ -35,6 +35,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 
@@ -59,6 +60,9 @@ public class ChoixCommunauteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_choix_communaute);
 
         Typeface face = Typeface.createFromAsset(getAssets(), "fonts/font_euro.ttf");
+
+        TextView tvDejaInscrit = (TextView) findViewById(R.id.tvDejaInscrit);
+        tvDejaInscrit.setTypeface(face);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_activity);
 

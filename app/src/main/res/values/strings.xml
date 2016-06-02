@@ -16,6 +16,8 @@
     <string name="title_activity_rejoindre_communaute">Rejoindre une communauté</string>
     <string name="title_activity_creer_communaute">Créer une communauté</string>
     <string name="title_activity_invite_amis">Invitez des amis</string>
+    <string name="error_creation_communaute_message">Nom de communauté incorrect !\nIl faut saisir entre 5 et 40 caractères et éviter les caractères spéciaux.</string>
+    <string name="error_creation_groupe_message">Nom de groupe incorrect !\nIl faut saisir entre 5 et 40 caractères et éviter les caractères spéciaux.</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

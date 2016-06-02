@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +23,8 @@ import com.euro16.Model.Groupe;
 import com.euro16.R;
 import com.euro16.Utils.AlertMsgBox;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import java.util.regex.Pattern;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -60,8 +63,17 @@ public class CreationGroupeActivity extends AppCompatActivity {
             btnCreerGroupe.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Pattern p = Pattern.compile("[^a-zA-Z0-9\\s]");
                     if (editTextNom.getText().toString().length() < 5) {
-                        Toast.makeText(getApplicationContext(), "Le nom du groupe doit contenir au moins 5 caractères", Toast.LENGTH_LONG).show();
+                        Toast toast = Toast.makeText(CreationGroupeActivity.this, getResources().getString(R.string.error_creation_groupe_message), Toast.LENGTH_LONG);
+                        TextView view = (TextView) toast.getView().findViewById(android.R.id.message);
+                        if( view != null) view.setGravity(Gravity.CENTER);
+                        toast.show();
+                    } else if(p.matcher(editTextNom.getText()).find() && !editTextNom.getText().toString().contains("é") && !editTextNom.getText().toString().contains("è")) {
+                        Toast toast = Toast.makeText(CreationGroupeActivity.this, getResources().getString(R.string.error_creation_groupe_message), Toast.LENGTH_LONG);
+                        TextView view = (TextView) toast.getView().findViewById(android.R.id.message);
+                        if( view != null) view.setGravity(Gravity.CENTER);
+                        toast.show();
                     } else {
                         RestClient.creerGroupe(editTextNom.getText().toString(), CurrentSession.utilisateur.getId(), "Image1", new AsyncHttpResponseHandler() {
                             @Override

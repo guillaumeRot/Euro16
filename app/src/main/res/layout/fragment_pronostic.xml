@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.euro16.Activity.Pronostic.PronosticFragment"
-    android:background="@color/grey">
+    android:background="@color/grey"
+    android:id="@+id/mainLayout">
 
     <ImageView
         android:layout_width="fill_parent"
@@ -18,32 +19,33 @@
         android:id="@+id/layoutProno"
         android:layout_gravity="center" >
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:id="@+id/tvDateTimeProno"
-            android:gravity="center_horizontal"
-            android:textColor="@color/white"
-            android:layout_above="@+id/tvGroupeProno"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/tvGroupeProno"
-            android:gravity="center_horizontal"
-            android:textColor="@color/white"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true" />
-
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/layoutContent"
-            android:layout_marginTop="80dp"
             android:weightSum="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/tvDateTimeProno"
+                android:gravity="center_horizontal"
+                android:textColor="@color/white"
+                android:layout_above="@+id/tvGroupeProno"
+                android:layout_marginTop="15dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/tvGroupeProno"
+                android:gravity="center_horizontal"
+                android:textColor="@color/white"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp"/>
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -111,8 +113,8 @@
                 android:id="@+id/layoutPronoJoueurs"
                 android:layout_weight="0.25"
                 android:background="@drawable/background_button"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp">
 
@@ -141,10 +143,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-
                         android:id="@+id/pronoEquipe1Joueurs"
                         android:layout_weight="0.3"
-                        android:textColor="@color/black"
+                        android:textColor="@color/grey"
                         android:textAlignment="center"/>
 
                     <TextView
@@ -153,7 +154,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:id="@+id/pronoNulJoueurs"
                         android:layout_weight="0.3"
-                        android:textColor="@color/black"
+                        android:textColor="@color/grey"
                         android:textAlignment="center"/>
 
                     <TextView
@@ -162,7 +163,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:id="@+id/pronoEquipe2Joueurs"
                         android:layout_weight="0.3"
-                        android:textColor="@color/black"
+                        android:textColor="@color/grey"
                         android:textAlignment="center"/>
                 </LinearLayout>
             </RelativeLayout>
@@ -174,7 +175,9 @@
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/linearChoixProno"
                 android:layout_weight="0.25"
-                android:layout_alignParentBottom="true">
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"

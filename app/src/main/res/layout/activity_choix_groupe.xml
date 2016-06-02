@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.euro16.Activity.Groupe.ChoixGroupeActivity"
-    android:background="@color/grey">
+    tools:context="com.euro16.Activity.Groupe.ChoixGroupeActivity">
 
     <include
         android:id="@+id/toolbar_activity"
@@ -17,6 +16,17 @@
         android:scaleType="fitXY"
         android:layout_below="@+id/toolbar_activity" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Déjà inscrit :"
+        android:textColor="@color/white"
+        android:id="@+id/tvDejaInscrit"
+        android:textSize="15dp"
+        android:layout_below="@+id/toolbar_activity"
+        android:layout_alignStart="@+id/relLayout"
+        android:layout_marginTop="20dp"/>
+
     <RelativeLayout
         android:id="@+id/relLayout"
         android:layout_width="match_parent"
@@ -28,7 +38,7 @@
         android:layout_marginRight="50dp"
         android:layout_marginLeft="50dp"
         android:layout_marginBottom="70dp"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="50dp">
     </RelativeLayout>
 
     <Button

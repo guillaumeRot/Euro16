@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -93,5 +94,11 @@ public class ChoixMondeActivity extends AppCompatActivity {
                 startActivity(new Intent(ChoixMondeActivity.this, ChoixGroupeActivity.class));
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.i("Euro 16", "test finish");
+        finish();
     }
 }

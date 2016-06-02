@@ -58,6 +58,9 @@ public class ChoixGroupeActivity extends AppCompatActivity {
 
         Typeface face = Typeface.createFromAsset(getAssets(), "fonts/font_euro.ttf");
 
+        TextView tvDejaInscrit = (TextView) findViewById(R.id.tvDejaInscrit);
+        tvDejaInscrit.setTypeface(face);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_activity);
 
         if(Build.VERSION.SDK_INT >= 21) {
