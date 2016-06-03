@@ -31,6 +31,7 @@ import com.euro16.Utils.AlertMsgBox;
 import com.euro16.Utils.Enums.EUtilisateurStatut;
 import com.euro16.Utils.ListsView.ListViewAdapterUtilisateur;
 import com.euro16.Utils.RowsChoix.RowChoixUtilisateur;
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -101,7 +102,7 @@ public class InviteFriendsFragment extends Fragment {
     }
 
     private void getFriends() {
-        GraphRequest friendsRequest = GraphRequest.newMyFriendsRequest(SplashScreenActivity.accessToken, new GraphRequest.GraphJSONArrayCallback() {
+        GraphRequest friendsRequest = GraphRequest.newMyFriendsRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONArrayCallback() {
             @Override
             public void onCompleted(JSONArray jsonArray, GraphResponse response) {
                 ArrayList<Utilisateur> friends = new ArrayList<Utilisateur>();

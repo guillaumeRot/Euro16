@@ -3,15 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.FacebookConnexion"
-    android:background="@color/grey">
+    tools:context=".Activity.FacebookConnexion">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/connexion_fb_background"
-        android:adjustViewBounds="true"
-        android:scaleType="matrix"/>
+        android:src="@drawable/background_gris"
+        android:scaleType="fitXY"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,28 +19,35 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="5">
+            android:layout_weight="10">
+
+            <com.euro16.Utils.TopCropImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/top_background"/>
 
             <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/top_background"
-                android:scaleType="fitXY"
-                android:adjustViewBounds="true"/>
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/super_victor"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"/>
 
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:id="@+id/layoutFacebookButton">
 
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/login_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"/>
+                android:layout_centerHorizontal="true"/>
 
         </RelativeLayout>
 
