@@ -18,6 +18,7 @@ public class AlertMsgBox {
                 .setMessage(message)
                 .setPositiveButton(textButton, listener).create();
         LDialog.show();
+        LDialog.setCanceledOnTouchOutside(false);
     }
 
     public AlertMsgBox(Activity activity, String title, String message, String textBtnPos, String textBtnNeg, DialogInterface.OnClickListener listenerBtnPos, DialogInterface.OnClickListener listenerBtnNeg) {
@@ -29,5 +30,6 @@ public class AlertMsgBox {
                 .setNegativeButton(textBtnNeg, listenerBtnNeg)
                 .create();
         LDialog.show();
+        LDialog.setCanceledOnTouchOutside(false);
     }
 }

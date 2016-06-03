@@ -128,12 +128,10 @@ public class ChoixGroupeActivity extends AppCompatActivity {
                     listGroupes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            if(position != 0) {
-                                String nomGroupe = parent.getItemAtPosition(position).toString();
-                                CurrentSession.communaute = null;
-                                CurrentSession.groupe = new Groupe(nomGroupe, CurrentSession.utilisateur.getId(), hmGrpUtil.get(nomGroupe).getPhoto());
-                                startActivity(new Intent(ChoixGroupeActivity.this, CompetitionActivity.class));
-                            }
+                        String nomGroupe = parent.getItemAtPosition(position).toString();
+                        CurrentSession.communaute = null;
+                        CurrentSession.groupe = new Groupe(nomGroupe, CurrentSession.utilisateur.getId(), hmGrpUtil.get(nomGroupe).getPhoto());
+                        startActivity(new Intent(ChoixGroupeActivity.this, CompetitionActivity.class));
                         }
                     });
                 }

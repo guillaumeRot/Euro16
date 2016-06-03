@@ -99,6 +99,6 @@ public class ChoixMondeActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Log.i("Euro 16", "test finish");
-        finish();
+        System.exit(0);
     }
 }

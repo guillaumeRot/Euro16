@@ -102,7 +102,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Groupe"
+            android:text="Entre amis"
             android:id="@+id/btnGroupe"
             android:textColor="@color/white"
             android:paddingLeft="30dp"

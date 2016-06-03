@@ -8,6 +8,7 @@
     <color name="black">#000000</color>
     <color name="jaune">#40fff200</color>
     <color name="rouge">#96ef4848</color>
+    <color name="red_no_opacity">#ec2020</color>
     <color name="black_opacity">#40000000</color>
     <color name="white_opacity">#40ffffff</color>
     <color name="white_background">#64ffffff</color>

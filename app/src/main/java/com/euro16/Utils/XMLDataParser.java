@@ -59,7 +59,7 @@ public class XMLDataParser extends AsyncTask<Void, Void, ArrayList<RowActualite>
 
                 String datePub = dateList.item(0).getNodeValue();
                 String title = titleList.item(0).getNodeValue();
-                String desc = descList.item(0).getNodeValue();
+                String desc = android.text.Html.fromHtml(descList.item(0).getNodeValue()).toString();
 
                 alActus.add(new RowActualite(datePub, title, desc));
             }

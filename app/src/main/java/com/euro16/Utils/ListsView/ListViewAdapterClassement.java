@@ -63,7 +63,7 @@ public class ListViewAdapterClassement extends ArrayAdapter<RowClassementUtilisa
         holder.textViewPrenom.setTypeface(face);
 
         String photoUrl = rowItem.getPhoto().replace("http", "https");
-        Picasso.with(context.getApplicationContext()).load(photoUrl).resize(150, 150).into(holder.ImageViewPhoto);
+        Picasso.with(context.getApplicationContext()).load(photoUrl).into(holder.ImageViewPhoto);
 
         holder.textViewPts.setText(rowItem.getPts() + "pts");
         holder.textViewPts.setTypeface(face);

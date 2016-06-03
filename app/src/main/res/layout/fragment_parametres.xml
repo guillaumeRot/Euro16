@@ -54,7 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="61dp"
                 android:text="Se désinscrire"
-                android:textColor="@color/rouge"
+                android:textColor="@color/red_no_opacity"
                 android:background="@drawable/background_button"
                 android:id="@+id/btnDesinscrire"
                 android:layout_alignParentBottom="true"

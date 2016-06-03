@@ -5,28 +5,31 @@
     android:orientation="horizontal"
     android:padding="5dip"
     android:background="@color/grey"
-    android:id="@+id/layout_item_classement">
+    android:id="@+id/layout_item_classement"
+    android:weightSum="1">
 
     <TextView
         android:id="@+id/numClassementUser"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:textColor="@color/black"
         android:textSize="15dip"
-        android:layout_weight="0.55"
+        android:layout_weight="0.1"
         android:gravity="center"/>
 
     <ImageView
         android:id="@+id/statutUtilImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.45"/>
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.15"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"/>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_weight="0.25">
+        android:layout_weight="0.55">
 
         <TextView
             android:id="@+id/listPrenomUtilisateur"
@@ -50,12 +53,12 @@
 
     <TextView
         android:id="@+id/listPtsUtilisateur"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:typeface="sans"
         android:textSize="15dip"
         android:textStyle="bold"
-        android:layout_weight="0.5"/>
+        android:layout_weight="0.2"/>
 
 </LinearLayout>

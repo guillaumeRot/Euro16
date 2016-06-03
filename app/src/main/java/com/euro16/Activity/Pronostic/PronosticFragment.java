@@ -103,8 +103,13 @@ public class PronosticFragment extends Fragment {
         }
 
         btnProno1 = (Button) layout.findViewById(R.id.choix1Prono);
+        btnProno1.setTypeface(face);
+
         btnPronoN = (Button) layout.findViewById(R.id.choixNProno);
+        btnPronoN.setTypeface(face);
+
         btnProno2 = (Button) layout.findViewById(R.id.choix2Prono);
+        btnProno2.setTypeface(face);
 
         if(pronoUser != null){
             switch (pronoUser){
@@ -291,7 +296,6 @@ public class PronosticFragment extends Fragment {
                     }
 
                     if (callFromCompetition || CurrentSession.matchNonPronostiques.isEmpty()) {
-                        Log.i("Euro 16", "match non prono remove : " + CurrentSession.getMatchNonProno(match.getEquipe1().getNom(), match.getEquipe2().getNom(), match.getDateMatch()));
                         CurrentSession.matchNonPronostiques.remove(CurrentSession.getMatchNonProno(match.getEquipe1().getNom(), match.getEquipe2().getNom(), match.getDateMatch()));
 
                         goBackCompetition(match.getGroupe());
