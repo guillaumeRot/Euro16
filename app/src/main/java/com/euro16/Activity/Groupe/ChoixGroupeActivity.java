@@ -48,11 +48,6 @@ public class ChoixGroupeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        if(Build.VERSION.SDK_INT < 21) {
-            setTheme(R.style.AppTheme);
-            getSupportActionBar().setSubtitle(R.string.title_activity_choix_groupe);
-        }
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choix_groupe);
 
@@ -63,11 +58,9 @@ public class ChoixGroupeActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_activity);
 
-        if(Build.VERSION.SDK_INT >= 21) {
-            TextView title = (TextView) toolbar.findViewById(R.id.title_toolbar);
-            title.setText(R.string.title_activity_choix_groupe);
-            title.setTypeface(face);
-        }
+        TextView title = (TextView) toolbar.findViewById(R.id.title_toolbar);
+        title.setText(R.string.title_activity_choix_groupe);
+        title.setTypeface(face);
 
         final RelativeLayout relLayout = (RelativeLayout) findViewById(R.id.relLayout);
 
@@ -92,10 +85,6 @@ public class ChoixGroupeActivity extends AppCompatActivity {
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONArray arrayResponse) {
-
-                    Log.i("Euro 16", "onSuccess(int statusCode, Header[] headers, JSONArray arrayResponse)");
-
-
                     //Initialisation de la liste
                     ListView listGroupes = new ListView(getApplicationContext());
                     listGroupes.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));

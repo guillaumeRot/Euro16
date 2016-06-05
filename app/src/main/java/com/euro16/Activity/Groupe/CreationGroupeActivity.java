@@ -33,11 +33,6 @@ public class CreationGroupeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        if(Build.VERSION.SDK_INT < 21) {
-            setTheme(R.style.AppTheme);
-            getSupportActionBar().setSubtitle(R.string.title_activity_creer_groupe);
-        }
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creation_groupe);
 
@@ -45,11 +40,9 @@ public class CreationGroupeActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_activity);
 
-        if(Build.VERSION.SDK_INT >= 21) {
-            TextView title = (TextView) toolbar.findViewById(R.id.title_toolbar);
-            title.setText(R.string.title_activity_creer_groupe);
-            title.setTypeface(face);
-        }
+        TextView title = (TextView) toolbar.findViewById(R.id.title_toolbar);
+        title.setText(R.string.title_activity_creer_groupe);
+        title.setTypeface(face);
 
         TextView tvNomGroupe = (TextView) findViewById(R.id.textViewNomCommunaute);
         tvNomGroupe.setTypeface(face);

@@ -68,11 +68,6 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        if(Build.VERSION.SDK_INT < 21) {
-            setTheme(R.style.AppTheme);
-            getSupportActionBar().setSubtitle(R.string.title_choix_monde);
-        }
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_competition);
 
@@ -80,7 +75,6 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
 
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
 
-        if(Build.VERSION.SDK_INT >= 21) {
             appBarLayout.removeView((Toolbar) findViewById(R.id.toolbar));
             toolbar = (Toolbar) findViewById(R.id.toolbar_activity);
             TextView title = (TextView) toolbar.findViewById(R.id.title_toolbar);
@@ -104,10 +98,10 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
                 subtitle.setText(getResources().getString(R.string.title_activity_left_menu) + " : Global");
             }
             subtitle.setTypeface(face);
-        } else {
-            appBarLayout.removeView((Toolbar) findViewById(R.id.toolbar_activity));
-            toolbar = (Toolbar) findViewById(R.id.toolbar);
-        }
+//        } else {
+//            appBarLayout.removeView((Toolbar) findViewById(R.id.toolbar_activity));
+//            toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        }
 
         ImageView imageRightMenu = (ImageView) toolbar.findViewById(R.id.imageRightMenu);
         imageRightMenu.setOnClickListener(new View.OnClickListener() {
@@ -175,8 +169,16 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
         }
 
         FragmentManager fm = getFragmentManager();
+
         if (fm.getBackStackEntryCount() > 0) {
-            fm.popBackStack();
+            String tag = fm.getBackStackEntryAt(fm.getBackStackEntryCount() - 1).getName();
+            Fragment frag = fm.findFragmentByTag(tag);
+
+            if(frag instanceof CompetitionFragment){
+                startActivity(new Intent(CompetitionActivity.this, ChoixMondeActivity.class));
+            } else {
+                fm.popBackStack();
+            }
         } else {
             super.onBackPressed();
         }

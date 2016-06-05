@@ -49,7 +49,7 @@ public class ParametresFragment extends Fragment {
 
         TextView mentionsLegales = (TextView) layout.findViewById(R.id.mentionsLegales);
 
-        mentionsLegales.setText("Les images et le flux RSS utilisées dans cette application sont la propriété de l'UEFA (http://fr.uefa.com). \n" +
+        mentionsLegales.setText("Les images et le flux RSS utilisés dans cette application sont la propriété de l'UEFA (http://fr.uefa.com). \n" +
                 "\n" +
                 "Application développée par :\n" +
                 "Pierre-Hugues LAUNE \n" +
@@ -58,7 +58,7 @@ public class ParametresFragment extends Fragment {
                 "2016 - Centrale Lille - IG2I\n" +
                 "\n" +
                 "\n" +
-                "Vous pouvez vous désinscrire à tout moment en cliquant sur le bouton \"Désinscription\" ci-dessous.");
+                "Vous pouvez vous désinscrire à tout moment en cliquant sur le bouton \"Se désinscrire\" ci-dessous.");
         mentionsLegales.setTypeface(face);
 
         Button btnDesinscrire = (Button) layout.findViewById(R.id.btnDesinscrire);

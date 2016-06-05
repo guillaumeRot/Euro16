@@ -29,7 +29,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_weight="0.55">
+        android:layout_weight="0.55"
+        android:paddingLeft="5dp">
 
         <TextView
             android:id="@+id/listPrenomUtilisateur"

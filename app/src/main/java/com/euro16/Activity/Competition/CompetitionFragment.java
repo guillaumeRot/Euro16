@@ -341,7 +341,7 @@ public class CompetitionFragment extends Fragment {
                 TextView nuls = (TextView) rowLayout.findViewById(R.id.nuls);
                 nuls.setText(String.valueOf(equipes.get(i-1).getNuls()));
                 nuls.setTextColor(getResources().getColor(R.color.white));
-                gagnes.setTypeface(face);
+                nuls.setTypeface(face);
 
                 TextView perdus = (TextView) rowLayout.findViewById(R.id.perdus);
                 perdus.setText(String.valueOf(equipes.get(i-1).getPerdus()));

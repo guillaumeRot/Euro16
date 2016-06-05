@@ -1,12 +1,14 @@
 package com.euro16.Activity.Tutoriel;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +32,13 @@ public class TutorielActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutoriel);
 
-        getSupportActionBar().setSubtitle(R.string.title_activity_tutoriel);
+        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/font_euro.ttf");
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_activity);
+
+        TextView title = (TextView) toolbar.findViewById(R.id.title_toolbar);
+        title.setText(R.string.title_activity_tutoriel);
+        title.setTypeface(face);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -44,6 +52,7 @@ public class TutorielActivity extends AppCompatActivity {
         circleIndicator.setViewPager(mViewPager);
 
         Button btnPasser = (Button) findViewById(R.id.btnPasserTuto);
+        btnPasser.setTypeface(face);
         btnPasser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,15 +102,13 @@ public class TutorielActivity extends AppCompatActivity {
                 return ClassementFragment.newInstance();
             } else if(position == 4){
                 return ActualitesFragment.newInstance();
-            } else if(position == 5){
-                return SuperVictorFragment.newInstance();
             }
             return null;
         }
 
         @Override
         public int getCount() {
-            return 6;
+            return 5;
         }
 
         @Override
@@ -117,8 +124,6 @@ public class TutorielActivity extends AppCompatActivity {
                     return "SECTION 4";
                 case 4:
                     return "SECTION 5";
-                case 5:
-                    return "SECTION 6";
             }
             return null;
         }
@@ -135,8 +140,14 @@ public class TutorielActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.fragment_tutoriel, container, false);
 
+            Typeface face = Typeface.createFromAsset(getActivity().getApplicationContext().getAssets(), "fonts/font_euro.ttf");
+
+            ImageView screenTuto = (ImageView) layout.findViewById(R.id.screenTuto);
+            screenTuto.setImageResource(R.drawable.screen_choix_monde);
+
             TextView descTuto = (TextView) layout.findViewById(R.id.descTuto);
-            descTuto.setText("Jouez dans différents mondes : Avec tous les joueurs, dans une communauté, ou entre amis.");
+            descTuto.setText("Jouez dans différents mondes :\nAvec tous les joueurs,\ndans une communauté, ou entre amis.");
+            descTuto.setTypeface(face);
 
             return layout;
         }
@@ -153,8 +164,14 @@ public class TutorielActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.fragment_tutoriel, container, false);
 
+            Typeface face = Typeface.createFromAsset(getActivity().getApplicationContext().getAssets(), "fonts/font_euro.ttf");
+
+            ImageView screenTuto = (ImageView) layout.findViewById(R.id.screenTuto);
+            screenTuto.setImageResource(R.drawable.screen_competition);
+
             TextView descTuto = (TextView) layout.findViewById(R.id.descTuto);
             descTuto.setText("Retrouvez le récapitulatif de la compétition.");
+            descTuto.setTypeface(face);
 
             return layout;
         }
@@ -171,8 +188,14 @@ public class TutorielActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.fragment_tutoriel, container, false);
 
+            Typeface face = Typeface.createFromAsset(getActivity().getApplicationContext().getAssets(), "fonts/font_euro.ttf");
+
+            ImageView screenTuto = (ImageView) layout.findViewById(R.id.screenTuto);
+            screenTuto.setImageResource(R.drawable.screen_pronostic);
+
             TextView descTuto = (TextView) layout.findViewById(R.id.descTuto);
-            descTuto.setText("Pronostiquez sur les différents matchs et prouvez que vous êtes le meilleur !");
+            descTuto.setText("Pronostiquez sur les différents matchs\net prouvez que vous êtes le meilleur !");
+            descTuto.setTypeface(face);
 
             return layout;
         }
@@ -189,8 +212,14 @@ public class TutorielActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.fragment_tutoriel, container, false);
 
+            Typeface face = Typeface.createFromAsset(getActivity().getApplicationContext().getAssets(), "fonts/font_euro.ttf");
+
+            ImageView screenTuto = (ImageView) layout.findViewById(R.id.screenTuto);
+            screenTuto.setImageResource(R.drawable.screen_classement);
+
             TextView descTuto = (TextView) layout.findViewById(R.id.descTuto);
             descTuto.setText("Suivez votre évolution à l’aide du classement.");
+            descTuto.setTypeface(face);
 
             return layout;
         }
@@ -207,26 +236,14 @@ public class TutorielActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.fragment_tutoriel, container, false);
 
-            TextView descTuto = (TextView) layout.findViewById(R.id.descTuto);
-            descTuto.setText("Affinez vos pronostics avec les actualités de l’UEFA Euro 2016.");
+            Typeface face = Typeface.createFromAsset(getActivity().getApplicationContext().getAssets(), "fonts/font_euro.ttf");
 
-            return layout;
-        }
-    }
-
-    public static class SuperVictorFragment extends Fragment {
-
-        public static SuperVictorFragment newInstance() {
-            SuperVictorFragment f = new SuperVictorFragment();
-            return f;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.fragment_tutoriel, container, false);
+            ImageView screenTuto = (ImageView) layout.findViewById(R.id.screenTuto);
+            screenTuto.setImageResource(R.drawable.screen_actu);
 
             TextView descTuto = (TextView) layout.findViewById(R.id.descTuto);
-            descTuto.setText("SUPER VICTOR !!!");
+            descTuto.setText("Affinez vos pronostics avec\nles actualités de l’UEFA Euro 2016.");
+            descTuto.setTypeface(face);
 
             return layout;
         }

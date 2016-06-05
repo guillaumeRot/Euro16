@@ -105,8 +105,6 @@ public class GererMondeFragment extends Fragment {
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONArray arrayResponse) {
-                    Log.i("Euro 16", "statusCode : " + statusCode + " : " + arrayResponse);
-
                     ListView listDemandes = new ListView(getActivity().getApplicationContext());
                     listDemandes.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                     relLayout.addView(listDemandes);

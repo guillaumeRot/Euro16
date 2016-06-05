@@ -24,20 +24,4 @@
         android:layout_marginTop="40dp"
         android:layout_marginBottom="120dp"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Inviter des amis via Facebook"
-        android:id="@+id/btnInviteFb"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:textColor="@color/white"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/background_button"
-        android:layout_gravity="center_horizontal|bottom"
-        android:layout_marginBottom="20dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"/>
-
 </FrameLayout>

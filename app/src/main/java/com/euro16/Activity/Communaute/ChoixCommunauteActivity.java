@@ -51,11 +51,6 @@ public class ChoixCommunauteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        if(Build.VERSION.SDK_INT < 21) {
-            setTheme(R.style.AppTheme);
-            getSupportActionBar().setSubtitle(R.string.title_activity_choix_communaute);
-        }
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choix_communaute);
 
@@ -66,11 +61,9 @@ public class ChoixCommunauteActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_activity);
 
-        if(Build.VERSION.SDK_INT >= 21) {
-            TextView title = (TextView) toolbar.findViewById(R.id.title_toolbar);
-            title.setText(R.string.title_activity_choix_communaute);
-            title.setTypeface(face);
-        }
+        TextView title = (TextView) toolbar.findViewById(R.id.title_toolbar);
+        title.setText(R.string.title_activity_choix_communaute);
+        title.setTypeface(face);
 
         final RelativeLayout relLayout = (RelativeLayout) findViewById(R.id.relLayout);
 

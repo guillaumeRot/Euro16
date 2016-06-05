@@ -2,6 +2,7 @@ package com.euro16.Activity.Pronostic;
 
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
@@ -360,6 +361,12 @@ public class PronosticFragment extends Fragment {
     }
 
     public void goBackCompetition(EGroupeEuro groupe) {
+        FragmentManager manager = getActivity().getFragmentManager();
+        FragmentTransaction trans = manager.beginTransaction();
+        trans.remove(this);
+        trans.commit();
+        manager.popBackStack();
+
         CompetitionFragment competFragment = new CompetitionFragment();
         Bundle bundle = new Bundle();
         bundle.putString("groupe", groupe.getNomGrp());

@@ -55,7 +55,7 @@ public class ListViewAdapterUtilisateur extends ArrayAdapter<RowChoixUtilisateur
         holder.textViewPrenom.setTypeface(face);
 
         String photoUrl = rowItem.getPhoto().replace("http", "https");
-        Picasso.with(context.getApplicationContext()).load(photoUrl).resize(150, 150).into(holder.ImageViewPhoto);
+        Picasso.with(context.getApplicationContext()).load(photoUrl).into(holder.ImageViewPhoto);
 
         convertView.setBackgroundColor(context.getApplicationContext().getResources().getColor(R.color.white_opacity));
 

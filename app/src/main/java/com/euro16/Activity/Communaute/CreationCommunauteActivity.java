@@ -40,11 +40,6 @@ public class CreationCommunauteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        if(Build.VERSION.SDK_INT < 21) {
-            setTheme(R.style.AppTheme);
-            getSupportActionBar().setSubtitle(R.string.title_activity_creer_communaute);
-        }
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creation_communaute);
 
@@ -52,11 +47,9 @@ public class CreationCommunauteActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_activity);
 
-        if(Build.VERSION.SDK_INT >= 21) {
-            TextView title = (TextView) toolbar.findViewById(R.id.title_toolbar);
-            title.setText(R.string.title_activity_creer_communaute);
-            title.setTypeface(face);
-        }
+        TextView title = (TextView) toolbar.findViewById(R.id.title_toolbar);
+        title.setText(R.string.title_activity_creer_communaute);
+        title.setTypeface(face);
 
         TextView tvNomCommunaute = (TextView) findViewById(R.id.textViewNomCommunaute);
         tvNomCommunaute.setTypeface(face);
@@ -116,7 +109,6 @@ public class CreationCommunauteActivity extends AppCompatActivity {
                         RestClient.creerCommunaute(editTextNom.getText().toString(), CurrentSession.utilisateur.getId(), "", selectedType, new AsyncHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                                Log.i("Euro 16", editTextNom.getText().toString() + " : " + CurrentSession.utilisateur.getId() + " : " + selectedType);
                                 CurrentSession.groupe = null;
                                 CurrentSession.communaute = new Communaute(editTextNom.getText().toString(), CurrentSession.utilisateur.getId(), "", selectedType);
                                 startActivity(new Intent(CreationCommunauteActivity.this, CompetitionActivity.class));

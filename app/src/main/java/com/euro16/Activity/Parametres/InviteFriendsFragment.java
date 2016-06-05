@@ -89,15 +89,6 @@ public class InviteFriendsFragment extends Fragment {
                 }
             });
         }
-
-        Button btnInviteFb = (Button) layout.findViewById(R.id.btnInviteFb);
-        btnInviteFb.setTypeface(face);
-        btnInviteFb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openDialogInvite();
-            }
-        });
         return layout;
     }
 

@@ -111,7 +111,6 @@ public class Match implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        Log.i("Euro 16", equipe1.toString());
         dest.writeValue(equipe1);
         dest.writeValue(equipe2);
         dest.writeValue(groupe);

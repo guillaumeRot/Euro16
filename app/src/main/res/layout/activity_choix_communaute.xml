@@ -14,7 +14,7 @@
         android:layout_height="fill_parent"
         android:src="@drawable/backgrnd_bitmap"
         android:scaleType="fitXY"
-        android:layout_alignParentTop="true" />
+        android:layout_below="@+id/toolbar_activity" />
 
     <TextView
         android:layout_width="wrap_content"

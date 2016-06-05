@@ -24,7 +24,7 @@
             android:id="@+id/layoutContent">
 
             <RelativeLayout
-                android:layout_width="180dp"
+                android:layout_width="210dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_button"
                 android:layout_gravity="center"
@@ -32,7 +32,7 @@
                 android:layout_marginBottom="20dp">
 
                 <Spinner
-                    android:layout_width="180dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/selectGroupes"
                     android:layout_gravity="center_horizontal"/>

@@ -8,18 +8,20 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/background_gris"
+        android:src="@drawable/background_menu"
         android:scaleType="fitXY"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:weightSum="1">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="10">
+            android:layout_weight="0.9"
+            android:maxWidth="10dp">
 
             <com.euro16.Utils.TopCropImageView
                 android:layout_width="wrap_content"
@@ -27,21 +29,22 @@
                 android:src="@drawable/top_background"/>
 
             <ImageView
+                android:id="@+id/super_victor"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/super_victor"
-                android:layout_marginRight="30dp"
-                android:layout_marginLeft="30dp"
                 android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"/>
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:src="@drawable/super_victor_transparent1"/>
 
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:id="@+id/layoutFacebookButton">
+            android:layout_weight="0.1"
+            android:id="@+id/layoutFacebookButton"
+            android:layout_alignParentBottom="true">
 
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/login_button"
@@ -51,6 +54,30 @@
 
         </RelativeLayout>
 
+
     </LinearLayout>
+
+    <!-- <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"> -->
+
+        <!-- com.euro16.Utils.TopCropImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/top_background"/> -->
+
+        <!-- <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"> -->
+
+
+
+        <!-- </RelativeLayout> -->
+
+
+
+    <!-- </LinearLayout> -->
 
 </RelativeLayout>

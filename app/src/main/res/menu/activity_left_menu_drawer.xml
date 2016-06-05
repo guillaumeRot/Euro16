@@ -4,26 +4,32 @@
     <item
         android:id="@+id/nav_competition"
         android:icon="@drawable/competition_icon"
-        android:title="Compétition" />
+        android:title="Compétition"
+        android:textSize="13dp"/>
     <item
         android:id="@+id/nav_pronostics"
         android:icon="@drawable/pronostic_icon"
-        android:title="Pronostics" />
+        android:title="Pronostics"
+        android:textSize="13dp"/>
     <item
         android:id="@+id/nav_actualites"
         android:icon="@drawable/actualites_icon"
-        android:title="Actualités" />
+        android:title="Actualités"
+        android:textSize="13dp"/>
     <item
         android:id="@+id/nav_gerer_monde"
         android:icon="@drawable/gestion_monde_icon"
-        android:title="" />
+        android:title=""
+        android:textSize="13dp"/>
     <item
         android:id="@+id/nav_parametres"
         android:icon="@drawable/parametre_icon"
-        android:title="Paramètres" />
+        android:title="Paramètres"
+        android:textSize="13dp"/>
     <item
         android:id="@+id/nav_change_monde"
         android:icon="@drawable/changer_monde_icon"
-        android:title="Changer de monde" />
+        android:title="Changer de monde"
+        android:textSize="13dp"/>
 
 </menu>

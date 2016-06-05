@@ -41,11 +41,6 @@ public class RejoindreCommunauteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        if(Build.VERSION.SDK_INT < 21) {
-            setTheme(R.style.AppTheme);
-            getSupportActionBar().setSubtitle(R.string.title_activity_rejoindre_communaute);
-        }
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rejoindre_communaute);
 
@@ -53,11 +48,9 @@ public class RejoindreCommunauteActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_activity);
 
-        if(Build.VERSION.SDK_INT >= 21) {
-            TextView title = (TextView) toolbar.findViewById(R.id.title_toolbar);
-            title.setText(R.string.title_activity_rejoindre_communaute);
-            title.setTypeface(face);
-        }
+        TextView title = (TextView) toolbar.findViewById(R.id.title_toolbar);
+        title.setText(R.string.title_activity_rejoindre_communaute);
+        title.setTypeface(face);
 
         final ListView listCommunautes = (ListView) findViewById(R.id.listCommunautes);
         final ArrayAdapterString adapter = new ArrayAdapterString(RejoindreCommunauteActivity.this, android.R.layout.simple_list_item_1);
@@ -147,12 +140,10 @@ public class RejoindreCommunauteActivity extends AppCompatActivity {
         } else if(typeCom.equalsIgnoreCase(ETypeCommunaute.PRIVEE.getTypeBase())) {
             statut = EUtilisateurStatut.DEMANDE_PARTICIPE.getStatut();
         }
-        Log.i("Euro 16", "statut utilisateur dans la comm : " + statut);
         if(statut != 0) {
             RestClient.ajouterUtilisateurCommunaute(CurrentSession.utilisateur.getId(), nomCommunaute, statut, new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                    Log.i("Euro 16", "statut : " + statusCode);
                     startActivity(new Intent(RejoindreCommunauteActivity.this, ChoixCommunauteActivity.class));
                 }
 

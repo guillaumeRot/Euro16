@@ -72,7 +72,6 @@ public class FacebookConnexion extends FragmentActivity {
         final RelativeLayout layoutFacebookButton = (RelativeLayout) findViewById(R.id.layoutFacebookButton);
 
         ImageView superVictor = (ImageView) findViewById(R.id.super_victor);
-        Log.i("Euro 16", "super victor : " + superVictor);
 
         if(AccessToken.getCurrentAccessToken() != null){
             layoutFacebookButton.removeView(loginButton);
