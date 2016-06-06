@@ -448,6 +448,8 @@ public class CompetitionFragment extends Fragment {
                             || (resultMatch == 0 && matchResultat.get(match).equalsIgnoreCase("N"))
                             || (resultMatch == 0 && matchResultat.get(match).equalsIgnoreCase("n"))) {
                         rowLayout.setBackgroundColor(getResources().getColor(R.color.green));
+                    } else {
+                        rowLayout.setBackgroundColor(getResources().getColor(R.color.rouge));
                     }
                 } else {
                     rowLayout.setBackgroundColor(getResources().getColor(R.color.rouge));

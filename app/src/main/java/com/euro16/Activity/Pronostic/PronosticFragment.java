@@ -380,28 +380,40 @@ public class PronosticFragment extends Fragment {
     }
 
     public void calcPronosJoueurs(JSONArray arrayResponse) {
-        int nbChoix1 =0 , nbChoixN = 0, nbChoix2 = 0;
-        for(int i = 0; i < arrayResponse.length(); i++) {
-            try {
-                String resultatJoueurs = arrayResponse.getJSONObject(i).getString("Resultat");
 
-                if(resultatJoueurs.equalsIgnoreCase("1")){
-                    nbChoix1++;
-                } else if(resultatJoueurs.equalsIgnoreCase("N")) {
-                    nbChoixN++;
-                } else if(resultatJoueurs.equalsIgnoreCase("2")) {
-                    nbChoix2++;
+        double pourcChoix1;
+        double pourcChoixN;
+        double pourcChoix2;
+
+        if(arrayResponse.length() > 0){
+            int nbChoix1 =0 , nbChoixN = 0, nbChoix2 = 0;
+            for(int i = 0; i < arrayResponse.length(); i++) {
+                try {
+                    String resultatJoueurs = arrayResponse.getJSONObject(i).getString("Resultat");
+
+                    if(resultatJoueurs.equalsIgnoreCase("1")){
+                        nbChoix1++;
+                    } else if(resultatJoueurs.equalsIgnoreCase("N")) {
+                        nbChoixN++;
+                    } else if(resultatJoueurs.equalsIgnoreCase("2")) {
+                        nbChoix2++;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+
+            int nbChoixTotal = nbChoix1 + nbChoixN + nbChoix2;
+
+            pourcChoix1 = (double) nbChoix1 / nbChoixTotal * 100;
+            pourcChoixN = (double) nbChoixN / nbChoixTotal * 100;
+            pourcChoix2 = (double) nbChoix2 / nbChoixTotal * 100;
+        } else {
+            pourcChoix1 = (double) 0;
+            pourcChoixN = (double) 0;
+            pourcChoix2 = (double) 0;
         }
 
-        int nbChoixTotal = nbChoix1 + nbChoixN + nbChoix2;
-
-        double pourcChoix1 = (double) nbChoix1 / nbChoixTotal * 100;
-        double pourcChoixN = (double) nbChoixN / nbChoixTotal * 100;
-        double pourcChoix2 = (double) nbChoix2 / nbChoixTotal * 100;
 
         TextView pronoChoix1Joueurs = (TextView) layout.findViewById(R.id.pronoEquipe1Joueurs);
         pronoChoix1Joueurs.setText((int) Math.round(pourcChoix1) + "%");
