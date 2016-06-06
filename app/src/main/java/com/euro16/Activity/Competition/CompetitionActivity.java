@@ -48,6 +48,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 
 import cz.msebera.android.httpclient.Header;
@@ -75,33 +76,29 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
 
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
 
-            appBarLayout.removeView((Toolbar) findViewById(R.id.toolbar));
-            toolbar = (Toolbar) findViewById(R.id.toolbar_activity);
-            TextView title = (TextView) toolbar.findViewById(R.id.title_toolbar);
-            title.setText("Compétition");
-            title.setTypeface(face);
+        appBarLayout.removeView((Toolbar) findViewById(R.id.toolbar));
+        toolbar = (Toolbar) findViewById(R.id.toolbar_activity);
+        TextView title = (TextView) toolbar.findViewById(R.id.title_toolbar);
+        title.setText("Compétition");
+        title.setTypeface(face);
 
-            TextView subtitle = (TextView) toolbar.findViewById(R.id.subtitle_toolbar);
-            if(CurrentSession.communaute != null) {
-                if(CurrentSession.communaute.getNom().length() <= 12) {
-                    subtitle.setText(getResources().getString(R.string.title_activity_left_menu) + " : " + CurrentSession.communaute.getNom());
-                } else {
-                    subtitle.setText(getResources().getString(R.string.title_activity_left_menu) + " : " + CurrentSession.communaute.getNom().substring(0, 9) + "...");
-                }
-            } else if(CurrentSession.groupe != null) {
-                if(CurrentSession.groupe.getNom().length() <= 12) {
-                    subtitle.setText(getResources().getString(R.string.title_activity_left_menu) + " : " + CurrentSession.groupe.getNom());
-                } else {
-                    subtitle.setText(getResources().getString(R.string.title_activity_left_menu) + " : " + CurrentSession.groupe.getNom().substring(0, 9) + "...");
-                }
+        TextView subtitle = (TextView) toolbar.findViewById(R.id.subtitle_toolbar);
+        if(CurrentSession.communaute != null) {
+            if(CurrentSession.communaute.getNom().length() <= 12) {
+                subtitle.setText(getResources().getString(R.string.title_activity_left_menu) + " : " + CurrentSession.communaute.getNom());
             } else {
-                subtitle.setText(getResources().getString(R.string.title_activity_left_menu) + " : Global");
+                subtitle.setText(getResources().getString(R.string.title_activity_left_menu) + " : " + CurrentSession.communaute.getNom().substring(0, 9) + "...");
             }
-            subtitle.setTypeface(face);
-//        } else {
-//            appBarLayout.removeView((Toolbar) findViewById(R.id.toolbar_activity));
-//            toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        }
+        } else if(CurrentSession.groupe != null) {
+            if(CurrentSession.groupe.getNom().length() <= 12) {
+                subtitle.setText(getResources().getString(R.string.title_activity_left_menu) + " : " + CurrentSession.groupe.getNom());
+            } else {
+                subtitle.setText(getResources().getString(R.string.title_activity_left_menu) + " : " + CurrentSession.groupe.getNom().substring(0, 9) + "...");
+            }
+        } else {
+            subtitle.setText(getResources().getString(R.string.title_activity_left_menu) + " : Global");
+        }
+        subtitle.setTypeface(face);
 
         ImageView imageRightMenu = (ImageView) toolbar.findViewById(R.id.imageRightMenu);
         imageRightMenu.setOnClickListener(new View.OnClickListener() {
@@ -109,6 +106,7 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
             public void onClick(View v) {
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.openDrawer(GravityCompat.END);
+                initClassement();
             }
         });
 
@@ -229,9 +227,7 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
                 frag = CompetitionFragment.class.newInstance();
 
                 addBackStack = false;
-                if(Build.VERSION.SDK_INT >= 21) {
-                    setToolbarTitle("Compétition");
-                }
+                setToolbarTitle("Compétition");
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
@@ -247,9 +243,7 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
                 bundle.putBoolean("callFromCompetition", false);
                 pronoFragment.setArguments(bundle);
 
-                if(Build.VERSION.SDK_INT >= 21) {
-                    setToolbarTitle("Pronostic");
-                }
+                setToolbarTitle("Pronostic");
 
                 getFragmentManager().beginTransaction()
                         .replace(R.id.view_container, pronoFragment)
@@ -257,7 +251,7 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
                         .addToBackStack(null)
                         .commit();
             } else {
-                Toast.makeText(CompetitionActivity.this, "Vous avez déjà pronostiquer sur tous les matchs", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CompetitionActivity.this, "Vous avez déjà pronostiqué sur tous les matchs", Toast.LENGTH_LONG).show();
             }
 
         } else if (id == R.id.nav_actualites) {
@@ -265,9 +259,7 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
             try {
                 frag = ActualitesFragment.class.newInstance();
 
-                if(Build.VERSION.SDK_INT >= 21) {
-                    setToolbarTitle("Actualités");
-                }
+                setToolbarTitle("Actualités");
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
@@ -279,12 +271,10 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
             try {
                 frag = GererMondeFragment.class.newInstance();
 
-                if(Build.VERSION.SDK_INT >= 21) {
-                    if(CurrentSession.groupe != null) {
-                        setToolbarTitle("Gestion du groupe");
-                    } else if(CurrentSession.communaute != null) {
-                        setToolbarTitle("Gestion de comm...");
-                    }
+                if(CurrentSession.groupe != null) {
+                    setToolbarTitle("Gestion du groupe");
+                } else if(CurrentSession.communaute != null) {
+                    setToolbarTitle("Gestion de comm...");
                 }
             } catch (InstantiationException e) {
                 e.printStackTrace();
@@ -468,13 +458,8 @@ public class CompetitionActivity extends AppCompatActivity implements Navigation
                 String ptsUti = arrayResponse.getJSONObject(i).getString("Points");
                 String idFacebook = arrayResponse.getJSONObject(i).getString("ID_Facebook");
 
-                if(i < 6 || idFacebook.equalsIgnoreCase(CurrentSession.utilisateur.getId()) || i == arrayResponse.length()-1) {
-                    RowClassementUtilisateur row = new RowClassementUtilisateur(String.valueOf(i+1), idFacebook, nomUti, prenomUti, photoUti, ptsUti);
-                    adapter.add(row);
-                } else if(i == 6 || i == arrayResponse.length()-2) {
-                    RowClassementUtilisateur row = new RowClassementUtilisateur("", "", "...", "", "", "");
-                    adapter.add(row);
-                }
+                RowClassementUtilisateur row = new RowClassementUtilisateur(String.valueOf(i+1), idFacebook, nomUti, prenomUti, photoUti, ptsUti);
+                adapter.add(row);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
