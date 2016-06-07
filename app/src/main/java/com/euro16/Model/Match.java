@@ -2,7 +2,6 @@ package com.euro16.Model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import com.euro16.Utils.Enums.EDateFormat;
 import com.euro16.Utils.Enums.EGroupeEuro;

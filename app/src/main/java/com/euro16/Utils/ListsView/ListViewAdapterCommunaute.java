@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.euro16.R;
-import com.euro16.Utils.Enums.EUtilisateurStatut;
 import com.euro16.Utils.RowsChoix.RowChoixCommunaute;
 
 /**

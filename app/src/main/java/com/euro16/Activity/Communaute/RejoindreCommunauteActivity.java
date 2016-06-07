@@ -3,7 +3,6 @@ package com.euro16.Activity.Communaute;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;

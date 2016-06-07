@@ -6,7 +6,6 @@ import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
@@ -17,7 +16,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,7 +46,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
 
 import cz.msebera.android.httpclient.Header;

@@ -3,7 +3,6 @@ package com.euro16.Activity.Communaute;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -35,7 +34,6 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.HashMap;
 
