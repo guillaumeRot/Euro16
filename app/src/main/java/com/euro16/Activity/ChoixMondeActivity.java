@@ -1,5 +1,6 @@
 package com.euro16.Activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -9,12 +10,22 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.euro16.API.RestClient;
 import com.euro16.Activity.Communaute.ChoixCommunauteActivity;
 import com.euro16.Activity.Competition.CompetitionActivity;
+import com.euro16.Activity.Facebook.FacebookConnexion;
 import com.euro16.Activity.Groupe.ChoixGroupeActivity;
+import com.euro16.Model.Communaute;
 import com.euro16.Model.CurrentSession;
 import com.euro16.R;
+import com.euro16.Utils.AlertMsgBox;
+import com.euro16.Utils.Enums.EUtilisateurStatut;
+import com.euro16.Utils.RowsChoix.RowChoixCommunaute;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import cz.msebera.android.httpclient.Header;
 
 public class ChoixMondeActivity extends AppCompatActivity {
 
@@ -37,9 +48,7 @@ public class ChoixMondeActivity extends AppCompatActivity {
         labelGlobal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CurrentSession.communaute = null;
-                CurrentSession.groupe = null;
-                startActivity(new Intent(ChoixMondeActivity.this, CompetitionActivity.class));
+                choixGlobal();
             }
         });
 
@@ -65,9 +74,7 @@ public class ChoixMondeActivity extends AppCompatActivity {
         btnGlobal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CurrentSession.communaute = null;
-                CurrentSession.groupe = null;
-                startActivity(new Intent(ChoixMondeActivity.this, CompetitionActivity.class));
+                choixGlobal();
             }
         });
 
@@ -92,5 +99,42 @@ public class ChoixMondeActivity extends AppCompatActivity {
     public void onBackPressed() {
         Log.i("Euro 16", "test finish");
         System.exit(0);
+    }
+
+    private void choixGlobal(){
+        new AlertMsgBox(ChoixMondeActivity.this, "Confirmation", "En validant, vous intégrerez le monde \"Global\" de l'application, et tous les membres pourront voir votre classement. Êtes-vous sûr de continuer ?", "Oui", "Non", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (FacebookConnexion.isOnline(ChoixMondeActivity.this)) {
+                    RestClient.ajouterUtilisateurGlobal(CurrentSession.utilisateur.getId(), new AsyncHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                            // Ajouté à Global
+                            CurrentSession.communaute = null;
+                            CurrentSession.groupe = null;
+                            startActivity(new Intent(ChoixMondeActivity.this, CompetitionActivity.class));
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                            Log.i("Euro 16", "failure : " + statusCode + " : " + error.getStackTrace());
+                            // Il y a eu un problème lors de l'ajout au global
+                        }
+                    });
+                } else {
+                    new AlertMsgBox(ChoixMondeActivity.this, getResources().getString(R.string.title_msg_box), getResources().getString(R.string.body_msg_box), getResources().getString(R.string.button_msg_box), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    });
+                }
+            }
+        },
+            new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {}
+            }
+        );
     }
 }

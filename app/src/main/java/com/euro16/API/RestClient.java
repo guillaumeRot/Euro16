@@ -210,6 +210,21 @@ public class RestClient {
         }
     }
 
+    public static void ajouterUtilisateurGlobal(String idFacebook, AsyncHttpResponseHandler httpResponseHandler) {
+        JSONObject json = new JSONObject();
+        StringEntity entity;
+        try {
+            json.put("id_facebook", idFacebook);
+
+            entity = new StringEntity(json.toString(), HTTP.UTF_8);
+            entity.setContentType("application/json");
+
+            post("ajouterUtilisateurGlobal", entity, httpResponseHandler);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void creerPronostic(String idFacebook, String equipe1, String equipe2, String dateMatch, String resultat, AsyncHttpResponseHandler httpResponseHandler) {
         JSONObject json = new JSONObject();
         StringEntity entity;
