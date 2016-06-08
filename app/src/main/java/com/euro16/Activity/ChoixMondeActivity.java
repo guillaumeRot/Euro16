@@ -17,17 +17,23 @@ import com.euro16.Activity.Communaute.ChoixCommunauteActivity;
 import com.euro16.Activity.Competition.CompetitionActivity;
 import com.euro16.Activity.Facebook.FacebookConnexion;
 import com.euro16.Activity.Groupe.ChoixGroupeActivity;
-import com.euro16.Model.Communaute;
 import com.euro16.Model.CurrentSession;
 import com.euro16.R;
 import com.euro16.Utils.AlertMsgBox;
-import com.euro16.Utils.Enums.EUtilisateurStatut;
-import com.euro16.Utils.RowsChoix.RowChoixCommunaute;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONArray;
 
 import cz.msebera.android.httpclient.Header;
 
 public class ChoixMondeActivity extends AppCompatActivity {
+
+    private LinearLayout btnGlobal;
+
+    private TextView labelGlobal;
+
+    private boolean isInGlobal = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +49,10 @@ public class ChoixMondeActivity extends AppCompatActivity {
         title.setText(R.string.title_choix_monde);
         title.setTypeface(face);
 
-        TextView labelGlobal = (TextView) findViewById(R.id.btnGlobal);
+        initListenerGlobal();
+
+        labelGlobal = (TextView) findViewById(R.id.btnGlobal);
         labelGlobal.setTypeface(face);
-        labelGlobal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                choixGlobal();
-            }
-        });
 
         TextView labelCommunaute = (TextView) findViewById(R.id.btnChoixCommunaute);
         labelCommunaute.setTypeface(face);
@@ -70,13 +72,7 @@ public class ChoixMondeActivity extends AppCompatActivity {
             }
         });
 
-        LinearLayout btnGlobal = (LinearLayout) findViewById(R.id.layout_choix_global);
-        btnGlobal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                choixGlobal();
-            }
-        });
+        btnGlobal = (LinearLayout) findViewById(R.id.layout_choix_global);
 
         LinearLayout btnCommunaute = (LinearLayout) findViewById(R.id.layout_choix_communaute);
         btnCommunaute.setOnClickListener(new View.OnClickListener() {
@@ -136,5 +132,67 @@ public class ChoixMondeActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {}
             }
         );
+    }
+
+    private void initListenerGlobal(){
+        if(FacebookConnexion.isOnline(ChoixMondeActivity.this)) {
+            RestClient.getClassementGlobal(new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONArray arrayResponse) {
+                    try{
+                        for(int i = 0; i < arrayResponse.length(); i++) {
+                            if (arrayResponse.getJSONObject(i).getString("ID_Facebook").equalsIgnoreCase(CurrentSession.utilisateur.getId())) {
+                                isInGlobal = true;
+                            }
+                        }
+                        if(isInGlobal){
+                            labelGlobal.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    CurrentSession.communaute = null;
+                                    CurrentSession.groupe = null;
+                                    startActivity(new Intent(ChoixMondeActivity.this, CompetitionActivity.class));
+                                }
+                            });
+                            btnGlobal.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    CurrentSession.communaute = null;
+                                    CurrentSession.groupe = null;
+                                    startActivity(new Intent(ChoixMondeActivity.this, CompetitionActivity.class));
+                                }
+                            });
+                        } else {
+                            labelGlobal.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    choixGlobal();
+                                }
+                            });
+                            btnGlobal.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    choixGlobal();
+                                }
+                            });
+                        }
+                    } catch(Exception e){
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    Toast.makeText(getApplicationContext(), "Impossible de récupérer le classement global", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            new AlertMsgBox(ChoixMondeActivity.this, getResources().getString(R.string.title_msg_box), getResources().getString(R.string.body_msg_box), getResources().getString(R.string.button_msg_box), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+        }
     }
 }
